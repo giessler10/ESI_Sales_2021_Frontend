@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import SalesDrawer from './components/SalesDrawer';
+//import Dashboard from './components/Dashboard';
 
 function App() {
-  return (
+   return (
     <div className="App">
-
+      <SalesDrawer />
     </div>
   );
 }
