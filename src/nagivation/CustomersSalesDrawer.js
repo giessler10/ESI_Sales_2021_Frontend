@@ -15,7 +15,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info} from '@material-ui/icons';
+import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import Customers from '../components/Customers';
 
 const drawerWidth = 240;
 
@@ -81,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SalesDrawer() {
+export default function CustomersSalesDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -140,25 +142,31 @@ export default function SalesDrawer() {
         </div>
         <Divider />
         <List>
-           <ListItem button key="dashboard">
+          <ListItem button component={Link} to="/" key="home">
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Startseite" />
+          </ListItem>
+           <ListItem button component={Link} to="/Dashboard" key="dashboard">
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button key="customers" to="/Header">
+          <ListItem button component={Link} to="/Customers" key="customers">
             <ListItemIcon>
               <Group />
             </ListItemIcon>
             <ListItemText primary="Kunden" />
           </ListItem>
-          <ListItem button key="orders">
+          <ListItem button component={Link} to="/Orders" key="orders">
             <ListItemIcon>
               <ShoppingCart />
             </ListItemIcon>
             <ListItemText primary="Bestellungen" />
           </ListItem>
-          <ListItem button key="dispatch">
+          <ListItem button component={Link} to="/Dispatch"  key="dispatch">
             <ListItemIcon>
               <LocalShipping />
             </ListItemIcon>
@@ -195,13 +203,8 @@ export default function SalesDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          ERP System - Verkauf und Versand
-        </Typography>
-        <Typography paragraph>
-          Startseite
-        </Typography>
-      </main>
+            <Customers />
+        </main>    
     </div>
   );
 }

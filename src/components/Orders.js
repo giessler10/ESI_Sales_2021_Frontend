@@ -1,18 +1,18 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
-const Dasboard = () => {
+const Orders = () => {
     return (
         <div>
             <div />
             <Typography paragraph>
-                Dashboard
+                Übersicht Bestellungen
             </Typography>
             <Typography paragraph>
-                Dashboard
+                Neue Bestellung
             </Typography>
         </div>
     )
 }
 
-export default Dasboard
+export default Orders
