@@ -1,5 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import { Button } from '@material-ui/core';
 
 const Customers = () => {
     return (
@@ -9,7 +10,11 @@ const Customers = () => {
                 Übersicht Kunden
             </Typography>
             <Typography paragraph>
-                Neuer Kunde anlegen
+                Neuer Kunde anlegen!
+ 
+                <Button variant="contained" color="primary">
+                Neuer Kunde
+                </Button>
             </Typography>
         </div>
     )

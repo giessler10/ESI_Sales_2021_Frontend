@@ -6,7 +6,7 @@ const Homepage = () => {
         <div>
             <div />
             <Typography paragraph>
-                ERP System Verkauf und Versand
+                ERP System Verkauf und Versand 2021
             </Typography>
             <Typography paragraph>
                 Startseite
