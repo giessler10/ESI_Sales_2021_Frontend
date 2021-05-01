@@ -1,0 +1,6 @@
+{
+    "ros.distro": "foxy",
+    "python.autoComplete.extraPaths": [
+        "C:\\opt\\ros\\foxy\\x64\\Lib\\site-packages"
+    ]
+}

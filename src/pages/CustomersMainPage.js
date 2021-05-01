@@ -5,8 +5,8 @@ const Customers = () => {
     return (
         <div>
           <form>
-            <div style={{ padding: "20px" }}>
-              <h2>Neuen Kunden anlegen</h2>
+            <div >
+              <h2 >Neuen Kunden anlegen</h2>
             </div>
 
             <div style={{ width: "800px", padding: "20px" }}>
@@ -129,9 +129,7 @@ const Customers = () => {
                     </Button>
                   </Grid>
                 </Grid>
-                <div>
-                  <h3>Bestätigung: </h3>
-                </div>
+
               </FormControl>
             </div>
           </form>

@@ -18,6 +18,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import logo from './img/yourshirt_full.png'
+import { render } from "react-dom";
 
 //Import Pages
 import HomeMainPage from './pages/HomeMainPage';
@@ -27,6 +29,7 @@ import OrdersMainPage from './pages/OrdersMainPage';
 import DispatchMainPage from './pages/DispatchMainPage';
 
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,6 +105,8 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
   
   return (
     <div className={classes.root}>
@@ -111,21 +116,22 @@ function App() {
           position="fixed"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
+          })}>
+
+      <Toolbar>
+            <IconButton            
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
               className={clsx(classes.menuButton, {
                 [classes.hide]: open,
-              })}
-            >
+              })}>
+
+              
               <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
+            </IconButton>            
+            <Typography variant="h6" align="center" noWrap>
               Verkauf und Versand
             </Typography>
           </Toolbar>
@@ -141,15 +147,21 @@ function App() {
               [classes.drawerOpen]: open,
               [classes.drawerClose]: !open,
             }),
-          }}
-        >
+          }} >
+        
           <div className={classes.toolbar}>
+
+        <Toolbar>
+        <img height="50"  src={logo} alt="Logo" />        
+       </Toolbar>
+
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </div>
           <Divider />
           <List>
+
             <ListItem button component={Link} to="/" key="home">
               <ListItemIcon>
                 <Home />
@@ -231,7 +243,14 @@ function App() {
         </main>
       </Router>
     </div>
+
+
   );
+
 }
+
+
+
+
 
 export default App;

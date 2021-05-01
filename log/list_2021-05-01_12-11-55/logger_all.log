@@ -1,0 +1,68 @@
+[11.731s] colcon DEBUG Command line arguments: ['C:\\opt\\ros\\foxy\\x64\\Scripts\\colcon', 'list', '-p', '--base-paths', 'c:\\Users\\Aline\\OneDrive\\Desktop\\Studium\\HS Offenburg\\ESI\\ESI_Sales_2021_Frontend']
+[11.732s] colcon DEBUG Parsed command line arguments: Namespace(base_paths=['c:\\Users\\Aline\\OneDrive\\Desktop\\Studium\\HS Offenburg\\ESI\\ESI_Sales_2021_Frontend'], build_base='build', ignore_user_meta=False, log_base=None, log_level=None, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0x0000027C33FA43D0>>, metas=['./colcon.meta'], names_only=False, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, paths=None, paths_only=True, topological_graph=False, topological_graph_density=False, topological_graph_dot=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, topological_graph_legend=False, topological_order=False, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0x0000027C33FA43D0>, verb_name='list', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x0000027C3400E550>)
+[12.658s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) check parameters
+[12.658s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) check parameters
+[12.658s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) check parameters
+[12.658s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) check parameters
+[12.658s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) discover
+[12.658s] colcon.colcon_core.package_discovery INFO Crawling recursively for packages in 'c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend'
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['ignore', 'ignore_ament_install']
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'ignore'
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'ignore_ament_install'
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['colcon_pkg']
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'colcon_pkg'
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['colcon_meta']
+[12.658s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'colcon_meta'
+[12.666s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['ros']
+[12.666s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'ros'
+[12.791s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['cmake', 'python']
+[12.791s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'cmake'
+[12.791s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'python'
+[12.792s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extensions ['python_setup_py']
+[12.792s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend) by extension 'python_setup_py'
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\log) by extensions ['ignore', 'ignore_ament_install']
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\log) by extension 'ignore'
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\log) ignored
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['ignore', 'ignore_ament_install']
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'ignore'
+[12.793s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'ignore_ament_install'
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['colcon_pkg']
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'colcon_pkg'
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['colcon_meta']
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'colcon_meta'
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['ros']
+[12.799s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'ros'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['cmake', 'python']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'cmake'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'python'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extensions ['python_setup_py']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\public) by extension 'python_setup_py'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['ignore', 'ignore_ament_install']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'ignore'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'ignore_ament_install'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['colcon_pkg']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'colcon_pkg'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['colcon_meta']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'colcon_meta'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['ros']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'ros'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['cmake', 'python']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'cmake'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'python'
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extensions ['python_setup_py']
+[12.801s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src) by extension 'python_setup_py'
+[12.809s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['ignore', 'ignore_ament_install']
+[12.811s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'ignore'
+[12.811s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'ignore_ament_install'
+[12.812s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['colcon_pkg']
+[12.812s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'colcon_pkg'
+[12.812s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['colcon_meta']
+[12.812s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'colcon_meta'
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['ros']
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'ros'
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['cmake', 'python']
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'cmake'
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'python'
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extensions ['python_setup_py']
+[12.813s] colcon.colcon_core.package_identification Level 1 _identify(c:\Users\Aline\OneDrive\Desktop\Studium\HS Offenburg\ESI\ESI_Sales_2021_Frontend\src\pages) by extension 'python_setup_py'
+[12.813s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) using defaults
