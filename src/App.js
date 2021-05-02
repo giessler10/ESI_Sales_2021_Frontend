@@ -19,7 +19,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import logo from './img/yourshirt_full.png'
-import { render } from "react-dom";
+import Box from '@material-ui/core/Box';
+
+
+
 
 //Import Pages
 import HomeMainPage from './pages/HomeMainPage';
@@ -30,11 +33,11 @@ import DispatchMainPage from './pages/DispatchMainPage';
 
 const drawerWidth = 240;
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -107,12 +110,14 @@ function App() {
   };
 
 
+
   
   return (
     <div className={classes.root}>
       <Router>
         <CssBaseline />
         <AppBar
+         style={{backgroundColor: "#006064"}}
           position="fixed"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
@@ -131,9 +136,10 @@ function App() {
               
               <MenuIcon />
             </IconButton>            
-            <Typography variant="h6" align="center" noWrap>
+            <Typography variant="h6" noWrap >
               Verkauf und Versand
             </Typography>
+            
           </Toolbar>
         </AppBar>
         <Drawer
