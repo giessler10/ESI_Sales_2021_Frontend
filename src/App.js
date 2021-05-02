@@ -19,7 +19,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import logo from './img/yourshirt_full.png'
-import Box from '@material-ui/core/Box';
+import Footer from './footer'
+
 
 
 
@@ -30,6 +31,7 @@ import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import DispatchMainPage from './pages/DispatchMainPage';
+
 
 const drawerWidth = 240;
 
@@ -156,7 +158,8 @@ function App() {
           }} >
         
           <div className={classes.toolbar}>
-
+          <Footer>
+      </Footer>
         <Toolbar>
         <img height="50"  src={logo} alt="Logo" />        
        </Toolbar>
@@ -248,15 +251,14 @@ function App() {
           </Switch>
         </main>
       </Router>
+
+
+
     </div>
 
 
   );
 
 }
-
-
-
-
 
 export default App;
