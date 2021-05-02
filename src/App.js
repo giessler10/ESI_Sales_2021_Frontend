@@ -152,7 +152,7 @@ function App() {
           <div className={classes.toolbar}>
 
         <Toolbar>
-        <img height="50"  src={logo} alt="Logo" />        
+        <img height="50"  src={logo} alt="Logo" />  
        </Toolbar>
 
             <IconButton onClick={handleDrawerClose}>
