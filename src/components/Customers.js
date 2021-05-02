@@ -10,7 +10,7 @@ const Customers = () => {
                 Übersicht Kunden
             </Typography>
             <Typography paragraph>
-                Neuer Kunde1 anlegen!
+                Neuer Kunde2 anlegen!
  
                 <Button variant="contained" color="primary">
                 Neuer Kunde
