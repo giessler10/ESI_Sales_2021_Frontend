@@ -1,18 +1,113 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import { Button, FormControl, Grid, TextField } from '@material-ui/core';
+import MUIDataTable from "mui-datatables";
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import { CellWifi, PinDropSharp } from '@material-ui/icons';
+import classes from '*.module.scss';
+
+const options = {filterType: 'checkbox'};
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(3),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
+//TesttabelleI Aufbau
+const columnsOffeneAuftraege = ["Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY"];
+const dataOffeneAuftraege = [
+  ["1", "Schnitzelwerk", "B", "15/2/2020", "5"],
+  ["2", "Christoph", "P", "15/2/2020", "5"],
+  ["3", "Rockcafe Altdorf", "B", "15/2/2020", "5"],
+  ["4", "Edeka", "B","15/2/2020", "5"],
+];
+//TesttabelleI Aufbau Ende
+
+//TesttabelleII Aufbau
+const columnsAuftraegeInBearbeitung = ["Bearbeitung", "Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Papiere", "Order_Status"];
+const dataAuftraegeInBearbeitung = [
+  [<div className={classes.root}><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
+  ["", "21", "Max", "P", "15/2/2020", "5", "", ""],
+  ["", "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
+  ["", "41", "Luca", "B","15/2/2020", "5", "", ""],
+];
+//TesttabelleII Aufbau Ende
+
+//TesttabelleIII Aufbau
+const columnsAuftraegeMitProblemen = ["Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Order_Status", "Problems"];
+const dataAuftraegeMitProblemen = [
+  ["112", "Lena", "B", "15/2/2020", "5", "", ""],
+  ["23", "Max", "P", "15/2/2020", "5", "", ""],
+  ["22", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
+  ["32", "Luca", "B","15/2/2020", "5", "", ""],
+];
+//TesttabelleIII Aufbau Ende
+
+
+
+
 
 const Orders = () => {
+  const classes = useStyles();
     return (
-        <div>
-            <div />
-            <Typography paragraph>
-                Übersicht Bestellungen
-            </Typography>
-            <Typography paragraph>
-                Neue Bestellung
-            </Typography>
+      <div>
+        <div style={{ padding: "20px" }}>
+          <h2>Übersicht Bestellungen</h2>
+          <h3>Neue Bestellung</h3>
         </div>
+        <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
+          <form >
+            <FormControl>
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}> 
+                  <h2> Offene Aufträge </h2>
+                  </Paper>
+                </Grid> 
+              </Grid>
+            </FormControl>
+            <MUIDataTable
+              data={dataOffeneAuftraege}
+              columns={columnsOffeneAuftraege}
+              options={options}/>
+            <FormControl>
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}> 
+                  <h2> Aufträge in Bearbeitung </h2>
+                  </Paper>
+                </Grid> 
+              </Grid>
+            </FormControl>
+            <MUIDataTable
+              data={dataAuftraegeInBearbeitung}
+              columns={columnsAuftraegeInBearbeitung}
+              options={options}/>
+            <FormControl>
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}> 
+                  <h2> Aufträge mit Problemen </h2>
+                  </Paper>
+                </Grid> 
+              </Grid>
+            </FormControl>
+            <MUIDataTable
+              data={dataAuftraegeMitProblemen}
+              columns={columnsAuftraegeMitProblemen}
+              options={options}/>
+          </form>
+        </div>
+      </div>
     )
-}
+  }
 
 export default Orders
