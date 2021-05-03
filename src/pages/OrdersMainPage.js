@@ -5,7 +5,8 @@ import MUIDataTable from "mui-datatables";
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { CellWifi, PinDropSharp } from '@material-ui/icons';
-import classes from '*.module.scss';
+//import 'scss/modules.container.scss'
+
 
 const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({
@@ -34,10 +35,10 @@ const dataOffeneAuftraege = [
 //TesttabelleII Aufbau
 const columnsAuftraegeInBearbeitung = ["Bearbeitung", "Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Papiere", "Order_Status"];
 const dataAuftraegeInBearbeitung = [
-  [<div className={classes.root}><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
-  ["", "21", "Max", "P", "15/2/2020", "5", "", ""],
-  ["", "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
-  ["", "41", "Luca", "B","15/2/2020", "5", "", ""],
+  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
+  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "21", "Max", "P", "15/2/2020", "5", "", ""],
+  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
+  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "41", "Luca", "B","15/2/2020", "5", "", ""],
 ];
 //TesttabelleII Aufbau Ende
 
@@ -51,55 +52,41 @@ const dataAuftraegeMitProblemen = [
 ];
 //TesttabelleIII Aufbau Ende
 
-
-
-
-
 const Orders = () => {
   const classes = useStyles();
     return (
       <div>
-        <div style={{ padding: "20px" }}>
-          <h2>Übersicht Bestellungen</h2>
-          <h3>Neue Bestellung</h3>
-        </div>
         <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
-          <form >
-            <FormControl>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}> 
-                  <h2> Offene Aufträge </h2>
-                  </Paper>
-                </Grid> 
-              </Grid>
-            </FormControl>
+          <form > 
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}> 
+              <h2> Offene Aufträge </h2>
+              </Paper>
+            </Grid> 
+          </Grid>
             <MUIDataTable
               data={dataOffeneAuftraege}
               columns={columnsOffeneAuftraege}
               options={options}/>
-            <FormControl>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}> 
-                  <h2> Aufträge in Bearbeitung </h2>
-                  </Paper>
-                </Grid> 
-              </Grid>
-            </FormControl>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}> 
+              <h2> Aufträge in Bearbeitung </h2>
+              </Paper>
+            </Grid> 
+          </Grid>
             <MUIDataTable
               data={dataAuftraegeInBearbeitung}
               columns={columnsAuftraegeInBearbeitung}
               options={options}/>
-            <FormControl>
-              <Grid container spacing={4}>
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}> 
-                  <h2> Aufträge mit Problemen </h2>
-                  </Paper>
-                </Grid> 
-              </Grid>
-            </FormControl>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}> 
+              <h2> Aufträge mit Problemen </h2>
+              </Paper>
+            </Grid> 
+          </Grid>
             <MUIDataTable
               data={dataAuftraegeMitProblemen}
               columns={columnsAuftraegeMitProblemen}
