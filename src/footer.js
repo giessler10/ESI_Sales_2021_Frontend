@@ -6,7 +6,7 @@ const Footer = () => (
     
    
 
-     © CSM-Sonsulting
+     © CSM-Consulting
      
   </div>
 
