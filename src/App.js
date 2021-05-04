@@ -20,6 +20,8 @@ import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveSho
 import { Link } from 'react-router-dom';
 import logo from './img/yourshirt_full.png'
 import Footer from './footer'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
 
 
 
@@ -31,15 +33,24 @@ import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import DispatchMainPage from './pages/DispatchMainPage';
+import EinstellungPage from './pages/Einstellungen.js';
+import HilfebereichPage from './pages/Hilfebereich.js';
 
 
 const drawerWidth = 240;
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   
+ 
+  active:{
+    backgroundColor: "#006064",
+  },
+
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -171,13 +182,13 @@ function App() {
           <Divider />
           <List>
 
-            <ListItem button component={Link} to="/" key="home">
+            <ListItem button component={Link} to="/" key="home"  classes={{ selected: classes.active }}>
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
               <ListItemText primary="Startseite" />
             </ListItem>
-            <ListItem button component={Link} to="/Dashboard" key="dashboard">
+            <ListItem button component={Link} to="/Dashboard" key="dashboard"  classes={{ selected: classes.active }}>
               <ListItemIcon>
                 <Dashboard />
               </ListItemIcon>
@@ -201,34 +212,44 @@ function App() {
               </ListItemIcon>
               <ListItemText primary="Versand" />
             </ListItem>
+
+            <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
+              <ListItemIcon>
+                <LocalShipping />
+              </ListItemIcon>
+              <ListItemText primary="Einstellungen" />
+            </ListItem>
+
+            <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich">
+              <ListItemIcon>
+                <LocalShipping />
+              </ListItemIcon>
+              <ListItemText primary="Hilfebereich" />
+            </ListItem>
+
+
           </List>
           <Divider />
           <List>
-          <ListItem button key="status">
-              <ListItemIcon>
-                  <Info />
-              </ListItemIcon>
-              <ListItemText primary="Status" />
-            </ListItem>
-            <ListItem button key="claim">
-              <ListItemIcon>
-                  <RemoveShoppingCart />
-              </ListItemIcon>
-              <ListItemText primary="Reklamationen" />
-            </ListItem>
-            <ListItem button key="return">
-              <ListItemIcon>
-                  <Undo />
-              </ListItemIcon>
-              <ListItemText primary="Retouren" />
-            </ListItem>
-            <ListItem button key="statistic">
-                <ListItemIcon>
-                  <BarChart />
-                </ListItemIcon>
-                <ListItemText primary="Statistik" />
-            </ListItem>
-          </List>
+       
+       <ListItem button onClick={(e) => {
+     e.preventDefault();
+     window.location.href='http://yourshirt.epizy.com/';
+     }}>
+           <ListItemIcon>
+             <ArrowForwardIosIcon />
+           </ListItemIcon>
+           <ListItemText primary="YourShirt" />   
+        </ListItem>  
+     
+       </List>
+
+          <Divider />
+
+
+
+          
+         
         </Drawer>
         <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -247,6 +268,12 @@ function App() {
             </Route>
             <Route exact path="/Dispatch">
               <DispatchMainPage />
+            </Route>
+            <Route exact path="/Hilfebereich">
+              <HilfebereichPage />
+            </Route>
+            <Route exact path="/Einstellungen">
+              <EinstellungPage />
             </Route>
           </Switch>
         </main>

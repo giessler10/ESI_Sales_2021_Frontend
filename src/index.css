@@ -31,3 +31,7 @@ code {
   width: 2em;
   height: 2em;
 }
+
+button :focus {
+  color: red;
+}
