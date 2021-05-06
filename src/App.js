@@ -18,35 +18,42 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import logo from './img/yourshirt_full.png'
-import Footer from './footer'
+import logo from './img/yourshirt_full.png';
+import yourshirt from './img/android-chrome-144x144.png';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
+import SvgIcon from '@material-ui/core/SvgIcon';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HelpIcon from '@material-ui/icons/Help';
+import Icon from '@material-ui/core/Icon';
 
 
 
 
 
 //Import Pages
-import HomeMainPage from './pages/HomeMainPage';
 import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import DispatchMainPage from './pages/DispatchMainPage';
 import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
+import Footer from './footer'
 
 
 const drawerWidth = 240;
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   
- 
+  imageIcon: {
+    height: '100%'
+  },
+  iconRoot: {
+    textAlign: 'center'
+  }, 
+
   active:{
     backgroundColor: "#006064",
   },
@@ -108,6 +115,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
+
+
 
 function App() {
   const classes = useStyles();
@@ -182,12 +191,6 @@ function App() {
           <Divider />
           <List>
 
-            <ListItem button component={Link} to="/" key="home"  classes={{ selected: classes.active }}>
-              <ListItemIcon>
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Startseite" />
-            </ListItem>
             <ListItem button component={Link} to="/Dashboard" key="dashboard"  classes={{ selected: classes.active }}>
               <ListItemIcon>
                 <Dashboard />
@@ -212,17 +215,17 @@ function App() {
               </ListItemIcon>
               <ListItemText primary="Versand" />
             </ListItem>
-
+            <Divider />
             <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
               <ListItemIcon>
-                <LocalShipping />
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Einstellungen" />
             </ListItem>
 
             <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich">
               <ListItemIcon>
-                <LocalShipping />
+                <HelpIcon />
               </ListItemIcon>
               <ListItemText primary="Hilfebereich" />
             </ListItem>
@@ -236,10 +239,14 @@ function App() {
      e.preventDefault();
      window.location.href='http://yourshirt.epizy.com/';
      }}>
+
+
            <ListItemIcon>
-             <ArrowForwardIosIcon />
+           <Icon classes={{root: classes.iconRoot}}>
+                <img className={classes.imageIcon} src={yourshirt}/>
+          </Icon>
            </ListItemIcon>
-           <ListItemText primary="YourShirt" />   
+           <ListItemText primary="YourShirt"/>   
         </ListItem>  
      
        </List>
@@ -254,9 +261,6 @@ function App() {
         <main className={classes.content}>
         <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/">
-              <HomeMainPage />
-            </Route>
             <Route exact path="/Dashboard">
               <DashboardMainPage />
             </Route>

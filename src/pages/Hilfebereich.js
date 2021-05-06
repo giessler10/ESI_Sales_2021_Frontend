@@ -1,9 +1,9 @@
 import React from 'react';
-import FaqBereich from './Faq.js';
+import FaqBereich from './pageContent/Faq.js';
 const Hilfebereich = () => {
     return (
         <div>
-            <text>Hilfebereich<br></br> </text>   
+            <h2>Hilfebereich<br></br> </h2>   
            <FaqBereich/>
            <br></br>
         </div>

@@ -11,6 +11,14 @@ import Box from '@material-ui/core/Box';
 import MUIDataTable from "mui-datatables";
 import Paper from '@material-ui/core/Paper';
 
+
+//Seitenimport
+import AddCustomerForm from './pageContent/AddCustomerForm';
+import LastOrdersForm from './pageContent/lastOrdersForm';
+import RecentOrdersTable from './pageContent/recentOrderTable';
+
+
+
 //Testtabelle Aufbau
 const columns = ["Order. No.", "customer_name", "customer_type", "customer_number", "Order_date", "Summe_QTY", "Order_Status" ];
 
@@ -35,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
+
+  tab: {
+    color: '#006064',
+    backgroundColor: '#006064'},
+    
 }));
 
 
@@ -97,144 +110,32 @@ export default function ScrollableTabsButtonForce() {
       </AppBar>
       <TabPanel value={value} index={0}>
         
-        <div>
-          <form>
-            <div >
-              <h2 >Neuen Kunden anlegen</h2>
-            </div>
-            <div style={{ width: "800px", padding: "20px" }}>
-              <FormControl>
-                <Grid container direction="row" justify="center" alignItems="flex-start">
-                <Grid container spacing={3}>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Vorname*"
-                      type="text"
-                      name="firstName"
-                      value=""
-                      title= "Vorname des Kunden"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Nachname*"
-                      type="text"
-                      name="surName"
-                      value=""
-                      title="Nachname des Kunden"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Straße*"
-                      type="text"
-                      name="street"
-                      value=""
-                      title="Straße und Hausnummer"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Postleitzahl*"
-                      type="number"
-                      name="PostCode"
-                      value=""
-                      title="Postleitzahl der Stadt"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Stadt*"
-                      type="text"
-                      name="city"
-                      value=""
-                      title="Name der Stadt"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Land*"
-                      type="text"
-                      name="country"
-                      value=""
-                      title="Kürzel des Landes, z.B. Deutschland = DE"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Telefon*"
-                      type="number"
-                      name="phone"
-                      value=""
-                      title="Telefonnummer mit Länder- und Ortsvorwahl"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      label="Mail*"
-                      type="text"
-                      name="mail"
-                      value=""
-                      title="E-Mail-Adresse des Kunden"
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <div>
-                      {" "}
-                      Geschäftskunde <br />
-                      <input
-                        type="radio"
-                        value={true}
-                        name="business"
-                        //defaultChecked
-                      /> Ja <br />
-                      <input
-                        type="radio"
-                        value={false}
-                        name="business"
-                      />{" "}
-                      Nein
-                    </div>
-                  </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Firma"
-                        type="text"
-                        name="company"
-                        value=""
-                        title="Firmenname, falls vorhanden"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Button
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      title="Kunde zur Kundendatenbank hinzufügen"
-                    >
-                      Kunden speichern
-                    </Button>
-                  </Grid>
-                </Grid>
-              </FormControl>
-            </div>
-          </form>
-        </div>  
-      
+
+
+<AddCustomerForm>
+</AddCustomerForm>
+
+
     </TabPanel>
     <TabPanel value={value} index={1}>
+
+
         <div>
+        <Grid item xs={12}>
+            <Paper className={classes.paper}>  
+<LastOrdersForm></LastOrdersForm>
+
+
+        </Paper>
+        </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}> 
             <h2> Kundendetails: letzte Aufträge </h2>
             </Paper>
+        <RecentOrdersTable></RecentOrdersTable>
           </Grid>
 
-          <MUIDataTable
-            data={data}
-            columns={columns}
-            options={options}/>
+
         </div>
       </TabPanel>
     </div>
