@@ -1,10 +1,13 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import { green } from '@material-ui/core/colors';
 // Generate Sales Data
 function createData(time, amount) {
   return { time, amount };
 }
+
+
 const data = [
   createData('1. April', 0),
   createData('5. April', 300),
@@ -24,10 +27,11 @@ export default function Chart() {
         <LineChart
           data={data}
           margin={{
-            top: 16,
+            top: 5,
             right: 16,
             bottom: 0,
             left: 24,
+            
           }}
         >
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
@@ -35,12 +39,12 @@ export default function Chart() {
             <Label
               angle={270}
               position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
+              style={{ textAnchor: 'middle', stroke: green}}
             >
               Menge (Stück)
             </Label>
           </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
+          <Line type="monotone" dataKey="amount" stroke="#006064" dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>

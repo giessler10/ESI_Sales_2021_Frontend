@@ -8,6 +8,11 @@ import { CellWifi, PinDropSharp } from '@material-ui/icons';
 //import 'scss/modules.container.scss'
 
 
+//importierte Seiten
+import OrdersWithProblems from '../components/ordersWithProblemsTable';
+import OrdersInProgress from '../components/ordersInProgressTable';
+import OrdersOpen from '../components/openOrdersTable';
+
 const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,35 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//TesttabelleI Aufbau
-const columnsOffeneAuftraege = ["Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY"];
-const dataOffeneAuftraege = [
-  ["1", "Schnitzelwerk", "B", "15/2/2020", "5"],
-  ["2", "Christoph", "P", "15/2/2020", "5"],
-  ["3", "Rockcafe Altdorf", "B", "15/2/2020", "5"],
-  ["4", "Edeka", "B","15/2/2020", "5"],
-];
-//TesttabelleI Aufbau Ende
 
-//TesttabelleII Aufbau
-const columnsAuftraegeInBearbeitung = ["Bearbeitung", "Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Papiere", "Order_Status"];
-const dataAuftraegeInBearbeitung = [
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "21", "Max", "P", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "41", "Luca", "B","15/2/2020", "5", "", ""],
-];
-//TesttabelleII Aufbau Ende
 
-//TesttabelleIII Aufbau
-const columnsAuftraegeMitProblemen = ["Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Order_Status", "Problems"];
-const dataAuftraegeMitProblemen = [
-  ["112", "Lena", "B", "15/2/2020", "5", "", ""],
-  ["23", "Max", "P", "15/2/2020", "5", "", ""],
-  ["22", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
-  ["32", "Luca", "B","15/2/2020", "5", "", ""],
-];
-//TesttabelleIII Aufbau Ende
+
 
 const Orders = () => {
   const classes = useStyles();
@@ -63,12 +42,14 @@ const Orders = () => {
               <Paper className={classes.paper}> 
               <h2> Offene Aufträge </h2>
               </Paper>
+              <OrdersOpen></OrdersOpen>
             </Grid> 
+
           </Grid>
-            <MUIDataTable
-              data={dataOffeneAuftraege}
-              columns={columnsOffeneAuftraege}
-              options={options}/>
+
+
+
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}> 
@@ -76,10 +57,10 @@ const Orders = () => {
               </Paper>
             </Grid> 
           </Grid>
-            <MUIDataTable
-              data={dataAuftraegeInBearbeitung}
-              columns={columnsAuftraegeInBearbeitung}
-              options={options}/>
+
+           <OrdersInProgress></OrdersInProgress>
+
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}> 
@@ -87,10 +68,8 @@ const Orders = () => {
               </Paper>
             </Grid> 
           </Grid>
-            <MUIDataTable
-              data={dataAuftraegeMitProblemen}
-              columns={columnsAuftraegeMitProblemen}
-              options={options}/>
+          
+<OrdersWithProblems></OrdersWithProblems>
           </form>
         </div>
       </div>

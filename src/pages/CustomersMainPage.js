@@ -2,6 +2,11 @@ import React from 'react';
 import { Typography, Button, FormControl, Grid, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import {
+  useTheme,
+  createMuiTheme,
+  MuiThemeProvider
+} from "@material-ui/core/styles";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,43 +19,41 @@ import Paper from '@material-ui/core/Paper';
 //Seitenimport
 //import AddCustomerForm from './pageContent/AddCustomerForm';
 import AddCustomerForm from '../components/AddCustomerForm';
-import LastOrdersForm from './pageContent/lastOrdersForm';
-import RecentOrdersTable from './pageContent/recentOrderTable';
+import LastOrdersForm from '../components/lastOrdersForm';
+import RecentOrdersTable from '../components/recentOrderTable';
 
-//Testtabelle Aufbau
-const columns = ["Order. No.", "customer_name", "customer_type", "customer_number", "Order_date", "Summe_QTY", "Order_Status" ];
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#00695f"
+      ,
+    },
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
-const data = [
-["1", "Schnitzelwerk", "B","1", "15/2/2020", "5", "Versand"],
-["2", "Christoph", "P","2", "15/2/2020", "5", "in Produktion"],
-["3", "Rockcafe Altdorf", "B", "3", "15/2/2020", "5", "Retoure"],
-["4", "Edeka", "B","4", "15/2/2020", "5", "QS"],
-];
-
-//Testtabelle aufbau ende
 
 const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
   root: {
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-  },
-
-  tab: {
-    color: '#006064',
-    backgroundColor: '#006064'},    
+    textColor: "green",
+  },  
 }));
+
+
 
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -87,11 +90,13 @@ export default function ScrollableTabsButtonForce() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
+          TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
           value={value}
           onChange={handleChange}
           variant="scrollable"
@@ -105,7 +110,9 @@ export default function ScrollableTabsButtonForce() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        
+      <Paper className={classes.paper}> 
+      <h2> Kunde hinzufügen </h2> 
+      </Paper>
 <AddCustomerForm>
 </AddCustomerForm>
 
@@ -114,10 +121,13 @@ export default function ScrollableTabsButtonForce() {
 
         <div>
         <Grid item xs={12}>
-            <Paper className={classes.paper}>  
+            <Paper className={classes.paper}> 
+
+        <h2 >Kundendetails abfragen</h2>
+        </Paper>
         <LastOrdersForm></LastOrdersForm>
 
-        </Paper>
+        
         </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}> 

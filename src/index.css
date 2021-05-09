@@ -35,3 +35,25 @@ code {
 button :focus {
   color: red;
 }
+
+
+.MuiTab-wrapper{
+  color:#006064;
+}
+
+.MuiInputBase-input:focus{
+color: #006064;
+}
+
+
+/*.MultiButtonBase-root:focus{
+
+  background-color: aqua;
+}
+
+
+
+
+
+
+

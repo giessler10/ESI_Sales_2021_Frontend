@@ -1,5 +1,5 @@
 import React from 'react';
-import FaqBereich from './pageContent/Faq.js';
+import FaqBereich from '../components/Faq.js';
 const Hilfebereich = () => {
     return (
         <div>

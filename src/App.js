@@ -25,7 +25,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
 import Icon from '@material-ui/core/Icon';
-
+import { createMuiTheme } from '@material-ui/core/styles';
 
 
 
@@ -41,6 +41,8 @@ import Footer from './footer'
 
 
 const drawerWidth = 240;
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -178,8 +180,7 @@ function App() {
           }} >
         
           <div className={classes.toolbar}>
-          <Footer>
-      </Footer>
+
         <Toolbar>
         <img height="50"  src={logo} alt="Logo" />  
        </Toolbar>
@@ -235,13 +236,11 @@ function App() {
           <Divider />
           <List>
        
-       <ListItem button onClick={(e) => {
+      <ListItem button onClick={(e) => {
      e.preventDefault();
      window.location.href='http://yourshirt.epizy.com/';
      }}>
-
-
-           <ListItemIcon>
+       <ListItemIcon>
            <Icon classes={{root: classes.iconRoot}}>
                 <img className={classes.imageIcon} src={yourshirt}/>
           </Icon>
@@ -250,6 +249,9 @@ function App() {
         </ListItem>  
      
        </List>
+
+       <Footer>
+      </Footer>
 
           <Divider />
 

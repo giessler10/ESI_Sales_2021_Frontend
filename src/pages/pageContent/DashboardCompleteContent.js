@@ -8,9 +8,9 @@ import Paper from '@material-ui/core/Paper';
 
 
 //imported Pages
-import Chart from './DashboardCurrMonth';
-import Deposits from './DashboardDeposits';
-import Orders from './recentOrderTable';
+import Chart from '../../components/DashboardCurrMonth';
+import Deposits from '../../components/DashboardDeposits';
+import Orders from '../../components/recentOrderTable';
 
 //import Orders from './DashboardTable';
 const drawerWidth = 240;
