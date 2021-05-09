@@ -12,7 +12,8 @@ import MUIDataTable from "mui-datatables";
 import Paper from '@material-ui/core/Paper';
 
 //Seitenimport
-import AddCustomerForm from './pageContent/AddCustomerForm';
+//import AddCustomerForm from './pageContent/AddCustomerForm';
+import AddCustomerForm from '../components/AddCustomerForm';
 import LastOrdersForm from './pageContent/lastOrdersForm';
 import RecentOrdersTable from './pageContent/recentOrderTable';
 
