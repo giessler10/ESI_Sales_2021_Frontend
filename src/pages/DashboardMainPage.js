@@ -11,13 +11,8 @@ import Box from '@material-ui/core/Box';
 import MUIDataTable from "mui-datatables";
 import Paper from '@material-ui/core/Paper';
 
-
 //Seitenimport
 import Dashboard from './pageContent/DashboardCompleteContent';
-
-
-
-
 
 const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({

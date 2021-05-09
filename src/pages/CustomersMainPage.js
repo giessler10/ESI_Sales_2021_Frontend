@@ -11,13 +11,10 @@ import Box from '@material-ui/core/Box';
 import MUIDataTable from "mui-datatables";
 import Paper from '@material-ui/core/Paper';
 
-
 //Seitenimport
 import AddCustomerForm from './pageContent/AddCustomerForm';
 import LastOrdersForm from './pageContent/lastOrdersForm';
 import RecentOrdersTable from './pageContent/recentOrderTable';
-
-
 
 //Testtabelle Aufbau
 const columns = ["Order. No.", "customer_name", "customer_type", "customer_number", "Order_date", "Summe_QTY", "Order_Status" ];
@@ -46,8 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
   tab: {
     color: '#006064',
-    backgroundColor: '#006064'},
-    
+    backgroundColor: '#006064'},    
 }));
 
 
@@ -84,7 +80,6 @@ function a11yProps(index) {
   };
 }
 
-
 export default function ScrollableTabsButtonForce() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -110,21 +105,16 @@ export default function ScrollableTabsButtonForce() {
       </AppBar>
       <TabPanel value={value} index={0}>
         
-
-
 <AddCustomerForm>
 </AddCustomerForm>
-
 
     </TabPanel>
     <TabPanel value={value} index={1}>
 
-
         <div>
         <Grid item xs={12}>
             <Paper className={classes.paper}>  
-<LastOrdersForm></LastOrdersForm>
-
+        <LastOrdersForm></LastOrdersForm>
 
         </Paper>
         </Grid>
@@ -135,10 +125,8 @@ export default function ScrollableTabsButtonForce() {
         <RecentOrdersTable></RecentOrdersTable>
           </Grid>
 
-
         </div>
       </TabPanel>
     </div>
 )
-
 }
