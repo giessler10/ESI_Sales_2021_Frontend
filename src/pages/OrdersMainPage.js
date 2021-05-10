@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
 const Orders = () => {
   const classes = useStyles();
     return (
@@ -42,13 +38,9 @@ const Orders = () => {
               <Paper className={classes.paper}> 
               <h2> Offene Aufträge </h2>
               </Paper>
-              <OrdersOpen></OrdersOpen>
+              <OrdersOpen />
             </Grid> 
-
           </Grid>
-
-
-
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -57,8 +49,7 @@ const Orders = () => {
               </Paper>
             </Grid> 
           </Grid>
-
-           <OrdersInProgress></OrdersInProgress>
+           <OrdersInProgress />
 
 
           <Grid container spacing={3}>
@@ -69,7 +60,7 @@ const Orders = () => {
             </Grid> 
           </Grid>
           
-<OrdersWithProblems></OrdersWithProblems>
+<OrdersWithProblems />
           </form>
         </div>
       </div>

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import { Button, FormControl, Grid, TextField } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = theme => ({
-    paper: {
+    root: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
@@ -98,13 +97,13 @@ class AddCustomerForm extends Component {
         let content = "";
   
         return (
-            <div>
+            <div className={classes.root}>
                 <form onSubmit={this.submitHandler}>
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
                         <FormControl>
                             <Grid container spacing={4}>
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}>
+                                    
                                         <TextField
                                             label="Vorname*"
                                             type="text"
@@ -112,11 +111,11 @@ class AddCustomerForm extends Component {
                                             value={C_FIRSTNAME}
                                             onChange={this.changeHandler}
                                             title= "Vorname des Kunden"/>
-                                    </Paper>
+                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}>                        
+                                                          
                                         <TextField
                                             label="Nachname*"
                                             type="text"
@@ -124,11 +123,11 @@ class AddCustomerForm extends Component {
                                             value={C_LASTNAME}
                                             onChange={this.changeHandler}
                                             title="Nachname des Kunden"/>
-                                    </Paper>
+                                    
                                 </Grid>
                 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}>            
+                                             
                                         <TextField
                                             label="Straße*"
                                             type="text"
@@ -136,11 +135,11 @@ class AddCustomerForm extends Component {
                                             value={C_STREET}
                                             onChange={this.changeHandler}
                                             title="Straße" />
-                                    </Paper>
+                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}>            
+                                               
                                         <TextField
                                             label="Hausnummer*"
                                             type="text"
@@ -148,11 +147,11 @@ class AddCustomerForm extends Component {
                                             value={C_HOUSENR}
                                             onChange={this.changeHandler}
                                             title="Hausnummer" />
-                                    </Paper>
+                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                    
                                         <TextField
                                             label="Postleitzahl*"
                                             type="number"
@@ -160,11 +159,11 @@ class AddCustomerForm extends Component {
                                             value={C_CI_PC}
                                             onChange={this.changeHandler}
                                             title="Postleitzahl" />
-                                    </Paper>
+                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                    
                                         <TextField
                                             label="Stadt*"
                                             type="text"
@@ -172,11 +171,11 @@ class AddCustomerForm extends Component {
                                             value={CI_DESC}
                                             onChange={this.changeHandler}
                                             title="Stadt"/>
-                                    </Paper>
+                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                     
                                         <TextField
                                             label="Land*"
                                             type="text"
@@ -184,11 +183,11 @@ class AddCustomerForm extends Component {
                                             value={CO_DESC}
                                             onChange={this.changeHandler}
                                             title="Land"/>
-                                        </Paper>
+                                        
                                 </Grid>    
         
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                     
                                         <TextField
                                             label="Telefon*"
                                             type="text"
@@ -196,11 +195,11 @@ class AddCustomerForm extends Component {
                                             value={C_TEL}
                                             onChange={this.changeHandler}
                                             title="Telefonnummer mit Länder- und Ortsvorwahl"/>
-                                    </Paper>
+                                    
                                 </Grid>       
         
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                     
                                         <TextField
                                             label="E-Mail*"
                                             type="text"
@@ -208,11 +207,11 @@ class AddCustomerForm extends Component {
                                             value={C_EMAIL}
                                             onChange={this.changeHandler}
                                             title="E-Mail-Adresse des Kunden"/>
-                                    </Paper>
+                                    
                                 </Grid> 
         
                                 <Grid item sm={6} xs={12}>
-                                    <Paper className={classes.paper}> 
+                                     
                                         <TextField
                                             label="Firma"
                                             type="text"
@@ -220,11 +219,11 @@ class AddCustomerForm extends Component {
                                             value={C_COMPANY}
                                             onChange={this.changeHandler}
                                             title="Firmenname, falls vorhanden"/>
-                                    </Paper>
+                                    
                                 </Grid>  
 
                                 <Grid item xs={12}>
-                                    <Paper className={classes.paper}> 
+                                     
                                         <Button
                                             style={{ background: "#006064", color: "#ffffff"}}
                                             type="submit"
@@ -232,7 +231,7 @@ class AddCustomerForm extends Component {
                                             title="Kunde anlegen">
                                             Kunde anlegen
                                         </Button>
-                                    </Paper>
+                                    
                                 </Grid> 
                             </Grid>
                             <div>

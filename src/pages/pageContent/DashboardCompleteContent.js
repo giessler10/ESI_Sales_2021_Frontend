@@ -70,10 +70,10 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
+            <Grid item xs={12} className={Paper}>
+              
                 <Orders />
-              </Paper>
+              
             </Grid>
           </Grid>
         </Container>

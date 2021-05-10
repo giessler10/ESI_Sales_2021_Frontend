@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardContent = () => {
   return (
-      <Dashboard></Dashboard>
+      <Dashboard />
   )
 }
 

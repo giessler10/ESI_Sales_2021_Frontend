@@ -2,11 +2,7 @@ import React from 'react';
 import { Typography, Button, FormControl, Grid, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  useTheme,
-  createMuiTheme,
-  MuiThemeProvider
-} from "@material-ui/core/styles";
+import {useTheme, createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -21,6 +17,9 @@ import Paper from '@material-ui/core/Paper';
 import AddCustomerForm from '../components/AddCustomerForm';
 import LastOrdersForm from '../components/lastOrdersForm';
 import RecentOrdersTable from '../components/recentOrderTable';
+import Test from './pageContent/specOrderDetails';
+
+
 
 const theme = createMuiTheme({
   palette: {
@@ -46,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper,
     textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+
   },  
 }));
 
@@ -110,34 +112,43 @@ export default function ScrollableTabsButtonForce() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-      <Paper className={classes.paper}> 
+      <div className={classes.root}>
+        <Grid item xs={12}>
       <h2> Kunde hinzufügen </h2> 
-      </Paper>
+      </Grid>
+      </div>
 <AddCustomerForm>
 </AddCustomerForm>
 
     </TabPanel>
     <TabPanel value={value} index={1}>
 
-        <div>
+        <div className={classes.root}>
         <Grid item xs={12}>
-            <Paper className={classes.paper}> 
+            
 
         <h2 >Kundendetails abfragen</h2>
-        </Paper>
+        
         <LastOrdersForm></LastOrdersForm>
 
         
         </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}> 
-            <h2> Kundendetails: letzte Aufträge </h2>
-            </Paper>
-        <RecentOrdersTable></RecentOrdersTable>
-          </Grid>
 
+            <h2> Kundendetails: letzte Aufträge </h2>
+            
+        <RecentOrdersTable></RecentOrdersTable>
+
+
+
+        <Test></Test>
+          </Grid>
         </div>
+        
       </TabPanel>
+
+
+     
     </div>
 )
 }

@@ -16,7 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {ShoppingCart, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
+import {ShoppingCart, FindInPage, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import logo from './img/yourshirt_full.png';
 import yourshirt from './img/android-chrome-144x144.png';
@@ -29,7 +29,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 
 
-
 //Import Pages
 import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
@@ -37,6 +36,7 @@ import OrdersMainPage from './pages/OrdersMainPage';
 import DispatchMainPage from './pages/DispatchMainPage';
 import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
+import SearchMainPage from './pages/SearchMainPage';
 import Footer from './footer'
 
 
@@ -216,6 +216,12 @@ function App() {
               </ListItemIcon>
               <ListItemText primary="Versand" />
             </ListItem>
+            <ListItem button component={Link} to="/Search"  key="search">
+              <ListItemIcon>
+                <FindInPage />
+              </ListItemIcon>
+              <ListItemText primary="Suche" />
+            </ListItem>
             <Divider />
             <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
               <ListItemIcon>
@@ -274,6 +280,9 @@ function App() {
             </Route>
             <Route exact path="/Dispatch">
               <DispatchMainPage />
+            </Route>
+            <Route exact path="/Search">
+              <SearchMainPage />
             </Route>
             <Route exact path="/Hilfebereich">
               <HilfebereichPage />
