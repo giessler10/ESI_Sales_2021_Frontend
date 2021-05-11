@@ -38,6 +38,7 @@ import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
 import SearchMainPage from './pages/SearchMainPage';
 import Footer from './footer'
+import OrderDetails from './components/specOrderDetails';
 
 
 const drawerWidth = 240;
@@ -237,6 +238,7 @@ function App() {
               <ListItemText primary="Hilfebereich" />
             </ListItem>
 
+ 
 
           </List>
           <Divider />
@@ -289,6 +291,9 @@ function App() {
             </Route>
             <Route exact path="/Einstellungen">
               <EinstellungPage />
+            </Route>
+            <Route exact path="/OrderDetails">
+              <OrderDetails/>
             </Route>
           </Switch>
         </main>

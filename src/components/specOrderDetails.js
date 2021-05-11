@@ -5,8 +5,8 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
 //import Seiteninhalte
-import SpecOrderForm from '../../components/specOrderForm';
-import SpecOrderTable from '../../components/specOrderTable';
+import SpecOrderForm from './specOrderForm';
+import SpecOrderTable from './specOrderTable';
 
 
 const options = {filterType: 'checkbox'};

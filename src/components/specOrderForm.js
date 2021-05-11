@@ -24,6 +24,20 @@ const SpecOrders = () => {
                   
           <FormControl className={classes.gridStyle}>
           <Grid container spacing={4}>
+          <Grid item sm={6} xs={12}></Grid>
+          <Grid item sm={6} xs={12}>
+
+        <TextField
+          id="date"
+          label="Datum"
+          type="date"
+          defaultValue="2017-05-24"
+          className={classes.textField}
+          InputLabelProps={{
+          shrink: true,
+          width: "20px"
+          }}/>
+          </Grid> 
         <Grid item sm={6} xs={12}>
 
           <TextField
@@ -43,7 +57,7 @@ const SpecOrders = () => {
                         title="Nachname des Kunden"/>
         </Grid> 
         
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         <Grid item sm={6} xs={12}>
         
           <TextField
@@ -63,27 +77,9 @@ const SpecOrders = () => {
                         value=""
                         title="Status" />
         </Grid>  
-        <Grid item sm={6} xs={12}>
-
-        <TextField
-    id="date"
-    label="Datum"
-    type="date"
-    defaultValue="2017-05-24"
-    className={classes.textField}
-    InputLabelProps={{
-      shrink: true,
-    }}/>
-    </Grid> 
-      <Grid item xs={12}>
-          <Button
-                      style={{ background: "#006064", color: "#ffffff"}}
-                      type="submit"
-                      variant="contained"
-                      title="Kundendetails abfragen">
-                        submit
-                        </Button>
-        </Grid> 
+        
+      <Grid item xs={12}/>
+        
      </Grid>
      </Grid>
      </FormControl>

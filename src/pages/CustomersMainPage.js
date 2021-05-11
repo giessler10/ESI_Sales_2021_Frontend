@@ -17,7 +17,6 @@ import Paper from '@material-ui/core/Paper';
 import AddCustomerForm from '../components/AddCustomerForm';
 import LastOrdersForm from '../components/lastOrdersForm';
 import RecentOrdersTable from '../components/recentOrderTable';
-import Test from './pageContent/specOrderDetails';
 
 
 
@@ -141,7 +140,7 @@ export default function ScrollableTabsButtonForce() {
 
 
 
-        <Test></Test>
+     
           </Grid>
         </div>
         
