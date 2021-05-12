@@ -209,7 +209,7 @@ function App() {
               <ListItemIcon>
                 <ShoppingCart />
               </ListItemIcon>
-              <ListItemText primary="Bestellungen" />
+              <ListItemText primary="Aufträge" />
             </ListItem>
             <ListItem button component={Link} to="/Dispatch"  key="dispatch">
               <ListItemIcon>

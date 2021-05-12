@@ -116,8 +116,8 @@ export default function ScrollableTabsButtonForce() {
       <h2> Kunde hinzufügen </h2> 
       </Grid>
       </div>
-<AddCustomerForm>
-</AddCustomerForm>
+        <AddCustomerForm>
+        </AddCustomerForm>
 
     </TabPanel>
     <TabPanel value={value} index={1}>
@@ -130,7 +130,7 @@ export default function ScrollableTabsButtonForce() {
         
         <LastOrdersForm></LastOrdersForm>
 
-        
+
         </Grid>
           <Grid item xs={12}>
 
