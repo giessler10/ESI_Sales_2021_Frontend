@@ -92,7 +92,6 @@ export default function ScrollableTabsButtonForce() {
     setValue(newValue);
   };
   
-
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -111,43 +110,26 @@ export default function ScrollableTabsButtonForce() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-      <div className={classes.root}>
-        <Grid item xs={12}>
-      <h2> Kunde hinzufügen </h2> 
-      </Grid>
-      </div>
-        <AddCustomerForm>
-        </AddCustomerForm>
-
-    </TabPanel>
-    <TabPanel value={value} index={1}>
-
         <div className={classes.root}>
-        <Grid item xs={12}>
-            
-
-        <h2 >Kundendetails abfragen</h2>
-        
-        <LastOrdersForm></LastOrdersForm>
-
-
-        </Grid>
           <Grid item xs={12}>
-
-            <h2> Kundendetails: letzte Aufträge </h2>
-            
-        <RecentOrdersTable></RecentOrdersTable>
-
-
-
-     
+            <h2> Kunde hinzufügen </h2> 
           </Grid>
         </div>
-        
+        <AddCustomerForm>
+        </AddCustomerForm>
       </TabPanel>
-
-
-     
+      <TabPanel value={value} index={1}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Kundendetails abfragen</h2>
+            <LastOrdersForm></LastOrdersForm>
+          </Grid>
+          <Grid item xs={12}>
+            <h2> Kundendetails: letzte Aufträge </h2>
+            <RecentOrdersTable></RecentOrdersTable>
+          </Grid>
+        </div>
+      </TabPanel>
     </div>
-)
+  )
 }

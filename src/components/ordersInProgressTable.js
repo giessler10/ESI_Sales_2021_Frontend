@@ -7,16 +7,16 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //importierte Seiten
 import OrderDetails from './specOrderDetails';
-
+import FullScreenDialog from'./FullScreenDialog';
 
 
 //TesttabelleII Aufbau
 const columnsAuftraegeInBearbeitung = ["Bearbeitung", "Order. No.", "customer_name", "customer_type", "Order_date", "Summe_QTY", "Papiere", "Order_Status"];
 const dataAuftraegeInBearbeitung = [
-  [<div><Button component={Link} to="/OrderDetails" key="OrderDetails" style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "21", "Max", "P", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
-  [<div><Button style={{ background: "#006064", color: "#ffffff"}} type="submit" variant="contained" title="Auftrag bearbeiten"> submit </Button></div>, "41", "Luca", "B","15/2/2020", "5", "", ""],
+  [<div><FullScreenDialog/></div>, "12", "Lena", "B", "15/2/2020", "5", "", ""],
+  [<div><FullScreenDialog/></div>, "21", "Max", "P", "15/2/2020", "5", "", ""],
+  [<div><FullScreenDialog/></div>, "332", "Deutsche Post", "B", "15/2/2020", "5", "", ""],
+  [<div><FullScreenDialog/></div>, "41", "Luca", "B","15/2/2020", "5", "", ""],
 ];
 //TesttabelleII Aufbau Ende
 
