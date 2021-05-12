@@ -33,7 +33,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
-import DispatchMainPage from './pages/DispatchMainPage';
 import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
 import SearchMainPage from './pages/SearchMainPage';
@@ -211,12 +210,6 @@ function App() {
               </ListItemIcon>
               <ListItemText primary="Aufträge" />
             </ListItem>
-            <ListItem button component={Link} to="/Dispatch"  key="dispatch">
-              <ListItemIcon>
-                <LocalShipping />
-              </ListItemIcon>
-              <ListItemText primary="Versand" />
-            </ListItem>
             <ListItem button component={Link} to="/Search"  key="search">
               <ListItemIcon>
                 <FindInPage />
@@ -279,9 +272,6 @@ function App() {
             </Route>
             <Route exact path="/Orders">
               <OrdersMainPage />
-            </Route>
-            <Route exact path="/Dispatch">
-              <DispatchMainPage />
             </Route>
             <Route exact path="/Search">
               <SearchMainPage />
