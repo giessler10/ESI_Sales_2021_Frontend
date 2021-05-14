@@ -22,15 +22,18 @@ import OrderTable from '../components/OrderTable'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
   root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+
+  },  
 }));
 
 function TabPanel(props) {

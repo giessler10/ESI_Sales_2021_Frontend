@@ -3,12 +3,12 @@ import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 
 //TesttabelleI Aufbau
-const columnsShippingOrders =  ["Order No.", "Customer No.", "Order Type", "Order State", "Date"];
+const columnsShippingOrders =  ["Order No.", "Customer No.", "Postcode", "Date", "Order State"];
 const dataShippingOrders = [
-    ["1", "37", "B", "In Production", "15/2/2020"],
-    ["31", "232", "P", "Customer", "19/1/2020"],
-    ["122", "2441", "B", "Shipping", "1/8/2019"],
-    ["123", "23", "P", "In Production", "18/2/2021"],
+    ["1", "37", "88739", "15/2/2020", "Ready"],
+    ["31", "232", "22131", "19/1/2020", "Ready"],
+    ["122", "2441", "33245", "1/8/2019", "Ready"],
+    ["123", "23", "77883", "18/2/2021", "Ready"],
 ];
 //TesttabelleI Aufbau Ende
 
@@ -22,13 +22,15 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
+
 const ShippingOrders = () => {
   return (
     <MuiThemeProvider theme={getMuiTheme()}> 
-    <MUIDataTable
-      data={dataShippingOrders}
-      columns={columnsShippingOrders}/>
+      <MUIDataTable
+        data={dataShippingOrders}
+        columns={columnsShippingOrders}/>
     </MuiThemeProvider>
+    
   )
 }
             

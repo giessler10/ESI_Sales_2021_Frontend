@@ -12,19 +12,23 @@ import AlarmOnTwoToneIcon from '@material-ui/icons/AlarmOnTwoTone';
 
 //importierte Seiten
 import ShippingTable from '../components/ShippingTable';
+import ShippingButton from '../components/ShippingButton'
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(3),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
     },
-  },
-}));
+    root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: theme.palette.background.paper,
+      textColor: "green",
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+  
+    },  
+  }));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,31 +70,40 @@ export default function ScrollableTabsButtonForce() {
   };
 
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary"
-          aria-label="scrollable force tabs example"
-        >
-          <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" color="default">
+                <Tabs
+                TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
+                value={value}
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons="on"
+                indicatorColor="primary"
+                textColor="primary"
+                aria-label="scrollable force tabs example"
+                >
+                <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
+                </Tabs>
+            </AppBar>
 
-      <TabPanel value={value} index={0}>
-      <div className={classes.root}>
-        <Grid item xs={12}>
-          <h2> Versandbereite Aufträge </h2> 
-        </Grid>
-      </div>
-      <ShippingTable></ShippingTable>
-      </TabPanel>
-        
-    </div>
-  )}
+            <TabPanel value={value} index={0}>
+                <div className={classes.root}>
+                    <Grid item xs={12}>
+                        <h2> Versandbereite Aufträge </h2> 
+                    </Grid>
+                </div>
+                <ShippingTable></ShippingTable>
+
+                <div className={classes.root}>
+                    <Grid item xs={12}>
+                        <h2 >Ausgewählte Ware versenden</h2>
+                        <ShippingButton></ShippingButton>
+                    </Grid>
+                </div>
+
+            </TabPanel>   
+        </div>
+    )
+}
+
