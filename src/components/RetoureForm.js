@@ -52,7 +52,7 @@ const SearchForm = () => {
           <FormControl className={classes.gridStyle}>
           <Grid container spacing={4}>
           <Grid item sm={12} xs={12}>
-          <h2> suchen</h2> 
+          <h2> </h2> 
           </Grid>
 
         <Grid item sm={6} xs={12}>
@@ -81,11 +81,11 @@ const SearchForm = () => {
     <FormControlLabel
       value="a"
       control={<GreenRadio />}
-      label="Auftrag suchen"/>
+      label="nach Auftragsnummer suchen"/>
         <FormControlLabel
       value="k"
       control={<GreenRadio />}
-      label="Kunde suchen"
+      label="nach Kundennummer suchen"
     />
     </RadioGroup>
     </Grid>

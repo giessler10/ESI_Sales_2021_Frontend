@@ -25,6 +25,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
 import Icon from '@material-ui/core/Icon';
+import RestoreIcon from '@material-ui/icons/Restore';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
@@ -35,7 +36,7 @@ import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
-import SearchMainPage from './pages/SearchMainPage';
+import SearchMainPage from './pages/RetoureMainPage';
 import Footer from './footer'
 import OrderDetails from './components/specOrderDetails';
 
@@ -210,11 +211,11 @@ function App() {
               </ListItemIcon>
               <ListItemText primary="Aufträge" />
             </ListItem>
-            <ListItem button component={Link} to="/Search"  key="search">
+            <ListItem button component={Link} to="/Retoure"  key="retoure">
               <ListItemIcon>
-                <FindInPage />
+                <RestoreIcon />
               </ListItemIcon>
-              <ListItemText primary="Suche" />
+              <ListItemText primary="Retoure" />
             </ListItem>
             <Divider />
             <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
@@ -273,7 +274,7 @@ function App() {
             <Route exact path="/Orders">
               <OrdersMainPage />
             </Route>
-            <Route exact path="/Search">
+            <Route exact path="/Retoure">
               <SearchMainPage />
             </Route>
             <Route exact path="/Hilfebereich">

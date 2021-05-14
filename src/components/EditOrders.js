@@ -94,10 +94,10 @@ const EditOrders = () => {
         </Grid>
       </div>
       <div className={classes.root}>
-        <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
-          <FormControl>
+        <div style={{ width:"800", padding: "20px", alignContent:"center", fontSize: 12}}>
+          
             <RecentProblems></RecentProblems>
-          </FormControl>
+          
         </div>
       </div>
 

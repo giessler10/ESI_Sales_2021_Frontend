@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import EditOrders from './EditOrders';
+import RetoureContent from './retoureContent';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  Button:{
+    color: "#006064",
+    backgroundColor: "#006064",
+  } 
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -40,7 +44,7 @@ export default function FullScreenDialog() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Auftrag Bearbeiten
+       Auftrag bearbeiten
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -49,15 +53,16 @@ export default function FullScreenDialog() {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Auftrag bearbeiten
+              Retoure
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
-            <EditOrders/>
+        <RetoureContent></RetoureContent>
       </Dialog>
+
     </div>
   );
 }

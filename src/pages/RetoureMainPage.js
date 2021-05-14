@@ -2,14 +2,13 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
 //Seiteninhalte importieren
-import SearchForm from '../components/SearchForm';
-import SearchTable from '../components/SearchTable'
+import RetoureForm from '../components/RetoureForm';
+import RetoureTable from '../components/RetoureTable'
 const Search = () => {
     return (
 <div>
-    <SearchForm />
 
-    <SearchTable />
+    <RetoureTable />
 
     </div>
     )
