@@ -1,15 +1,16 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
+import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 
 //TesttabelleI Aufbau
-const columnsCustomers = ["Customer No.", "Customer Firstname", "Customer Lastname", "Customer ZIP", "Customer Type"];
+const columnsCustomers = ["Detailanzeige", "Customer No.", "Firstname", "Lastname", "Postcode ZIP", "Customer Type"];
 const dataCustomers = [
-  ["1", "Lena", "Müller", "77865", "B"],
-  ["2", "Marco", "Braun", "67889", "P"],
-  ["3", "Siggy", "Franz", "11029", "P"],
-  ["4", "Mira", "Graf", "77817", "P"],
-  ["5", "Ludwig", "Steininger", "45467", "B"],
+  [<div><FullScreenDialogCustomerDetails/></div>, "1", "Lena", "Müller", "77865", "B"],
+  [<div><FullScreenDialogCustomerDetails/></div>,"2", "Marco", "Braun", "67889", "P"],
+  [<div><FullScreenDialogCustomerDetails/></div>,"3", "Siggy", "Franz", "11029", "P"],
+  [<div><FullScreenDialogCustomerDetails/></div>,"4", "Mira", "Graf", "77817", "P"],
+  [<div><FullScreenDialogCustomerDetails/></div>,"5", "Ludwig", "Steininger", "45467", "B"],
 ];
 //TesttabelleI Aufbau Ende
 

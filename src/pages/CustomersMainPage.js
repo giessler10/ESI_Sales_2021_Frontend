@@ -16,7 +16,7 @@ import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import AddCustomerForm from '../components/AddCustomerForm';
 import LastOrdersForm from '../components/lastOrdersForm';
 import RecentOrdersTable from '../components/recentOrderTable';
-import CustomerTable from '../components/recentOrderTable';
+import CustomerTable from '../components/CustomerTable';
 
 
 
