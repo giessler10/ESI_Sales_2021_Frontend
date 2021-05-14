@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import CustomerDetailsTable from './CustomerDetailsTable';
+import {Grid} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -56,7 +58,12 @@ export default function FullScreenDialog() {
             </Button>
           </Toolbar>
         </AppBar>
-            <CustomerDetailsTable/>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Einsicht in Kundendetails</h2>
+          </Grid>
+        </div>
+        <CustomerDetailsTable/>           
       </Dialog>
     </div>
   );

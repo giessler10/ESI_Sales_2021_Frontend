@@ -13,6 +13,7 @@ import AlarmOnTwoToneIcon from '@material-ui/icons/AlarmOnTwoTone';
 //importierte Seiten
 import ShippingTable from '../components/ShippingTable';
 import ShippingButton from '../components/ShippingButton'
+import QSButton from '../components/QSButton'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -94,6 +95,13 @@ export default function ScrollableTabsButtonForce() {
                     </Grid>
                 </div>
                 <ShippingTable></ShippingTable>
+
+                <div className={classes.root}>
+                    <Grid item xs={12}>
+                        <h2 >QS Problem der ausgewählten Ware melden</h2>
+                        <QSButton></QSButton>
+                    </Grid>
+                </div>
 
                 <div className={classes.root}>
                     <Grid item xs={12}>
