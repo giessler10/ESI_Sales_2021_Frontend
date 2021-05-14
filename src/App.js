@@ -192,7 +192,7 @@ function App() {
           <Divider />
           <List>
 
-            <ListItem button component={Link} to="/Dashboard" key="dashboard"  classes={{ selected: classes.active }}>
+            <ListItem button component={Link} to="/" key="dashboard"  classes={{ selected: classes.active }}>
               <ListItemIcon>
                 <Dashboard />
               </ListItemIcon>
@@ -264,7 +264,7 @@ function App() {
         <main className={classes.content}>
         <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/Dashboard">
+            <Route exact path="/">
               <DashboardMainPage />
             </Route>
             <Route exact path="/Customers">
