@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import CustomerEditingTable from './CustomerEditingTable';
 
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
@@ -40,7 +41,7 @@ export default function FullScreenDialog() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Kundendetail
+        Edit
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -49,14 +50,14 @@ export default function FullScreenDialog() {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Kundendetail
+              Edit
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
-            <CustomerEditingTable/>
+        <CustomerEditingTable/>
       </Dialog>
     </div>
   );

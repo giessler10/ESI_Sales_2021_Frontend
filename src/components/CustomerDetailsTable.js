@@ -1,7 +1,7 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
-import FullScreenDialogCustomerEditing from'./FullScreenDialogCustomerEditing';
+import FullScreenDialogCustomerEditing from './FullScreenDialogCustomerEditing';
 
 //TesttabelleI Aufbau
 const columnsCustomersDetails = ["Customer No.", "Firstname", "Lastname", "Streetname", "Housenumber", "City", "Postcode", "Mail-Address", "Phone Number", "Customer Type", "Edit"];

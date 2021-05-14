@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
-import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -12,11 +11,13 @@ import Box from '@material-ui/core/Box';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 //importierte Seiten
 import OrdersWithProblems from '../components/ordersWithProblemsTable';
 import OrdersInProgress from '../components/ordersInProgressTable';
 import OrdersOpen from '../components/openOrdersTable';
+import OrderTable from '../components/OrderTable'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,38 +86,49 @@ export default function ScrollableTabsButtonForce() {
           textColor="primary"
           aria-label="scrollable force tabs example"
         >
+          <Tab label="Alle Aufträge" icon={<AllInclusiveIcon />} {...a11yProps(2)} />
           <Tab label="Offene Aufträge" icon={<AssignmentIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
+
       <TabPanel value={value} index={0}>
       <div className={classes.root}>
         <Grid item xs={12}>
-      <h2> Offene Aufträge </h2> 
-      </Grid>
+          <h2> Alle Aufträge </h2> 
+        </Grid>
       </div>
+      <OrderTable></OrderTable>
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2> Offene Aufträge </h2> 
+          </Grid>
+        </div>
       <OrdersOpen />
+      </TabPanel>
 
-    </TabPanel>
-    <TabPanel value={value} index={1}>
-      <div className={classes.root}>
-        <Grid item xs={12}>
-      <h2> Aufträge in Bearbeitung </h2> 
-      </Grid>
-      </div>
-      <OrdersInProgress />
+      <TabPanel value={value} index={2}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+        <h2> Aufträge in Bearbeitung </h2> 
+        </Grid>
+        </div>
+        <OrdersInProgress />
 
-    </TabPanel>
-    <TabPanel value={value} index={2}>
-      <div className={classes.root}>
-        <Grid item xs={12}>
-      <h2> Aufträge mit Problemen </h2> 
-      </Grid>
-      </div>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+        <h2> Aufträge mit Problemen </h2> 
+        </Grid>
+        </div>
       <OrdersWithProblems />
 
-    </TabPanel>
+      </TabPanel>
         
     </div>
   )}

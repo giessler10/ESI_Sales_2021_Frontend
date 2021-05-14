@@ -26,7 +26,6 @@ const RecentOrders = () => {
   return (
     <MuiThemeProvider theme={getMuiTheme()}> 
     <MUIDataTable
-      title="Letzte Bestellungen"
       data={dataAuftraege}
       columns={columnsAuftraege}/>
     </MuiThemeProvider>
