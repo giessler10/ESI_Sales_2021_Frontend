@@ -9,31 +9,17 @@ import Tab from '@material-ui/core/Tab';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import HelpIcon from '@material-ui/icons/Help';
 import Box from '@material-ui/core/Box';
-import MUIDataTable from "mui-datatables";
-import Paper from '@material-ui/core/Paper';
+import AccessibilityIcon from '@material-ui/icons/Accessibility';
 
 //Seitenimport
 //import AddCustomerForm from './pageContent/AddCustomerForm';
 import AddCustomerForm from '../components/AddCustomerForm';
 import LastOrdersForm from '../components/lastOrdersForm';
 import RecentOrdersTable from '../components/recentOrderTable';
+import CustomerTable from '../components/recentOrderTable';
 
 
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#00695f"
-      ,
-    },
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
-
-
-const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -49,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
   },  
 }));
-
-
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -105,20 +88,31 @@ export default function ScrollableTabsButtonForce() {
           textColor="primary"
           aria-label="scrollable force tabs example"
         >
+          <Tab label="Alle Kunden" icon={<AccessibilityIcon />} {...a11yProps(2)} />
           <Tab label="Neuen Kunden anlegen" icon={<PersonPinIcon />} {...a11yProps(2)} />
           <Tab label="Letzte Aufträge" icon={<HelpIcon />} {...a11yProps(3)} />
         </Tabs>
       </AppBar>
+
       <TabPanel value={value} index={0}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Liste aller Kunden</h2>
+          </Grid>
+        </div>
+        <CustomerTable></CustomerTable>
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2> Kunde hinzufügen </h2> 
           </Grid>
         </div>
-        <AddCustomerForm>
-        </AddCustomerForm>
+        <AddCustomerForm></AddCustomerForm>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+
+      <TabPanel value={value} index={2}>
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Kundendetails abfragen</h2>
@@ -130,6 +124,7 @@ export default function ScrollableTabsButtonForce() {
           </Grid>
         </div>
       </TabPanel>
+
     </div>
   )
 }

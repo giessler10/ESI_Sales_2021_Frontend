@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Button, FormControl, Grid, TextField, Select, MenuItem, InputLabel, FormLabel, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { ContactsOutlined } from '@material-ui/icons';
 
 const useStyles = theme => ({
     root: {
@@ -14,7 +13,6 @@ const useStyles = theme => ({
         color: "red"
     }
 });
-
 
 class AddCustomerForm extends Component {
     constructor(props) {
@@ -205,7 +203,6 @@ class AddCustomerForm extends Component {
             errors["C_CT_ID"] = "Kundentyp angeben";
         }
 
-            
         //Firma prüfen
         if(this.state.C_COMPANY === "" && this.state.C_CT_ID === "B2B"){
             formIsValid = false;
@@ -242,20 +239,19 @@ class AddCustomerForm extends Component {
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
                         <FormControl>
                             <Grid container spacing={4}>
-                                <Grid item sm={6} xs={12}>
-                                    
-                                        <TextField
-                                            label="Vorname*"
-                                            type="text"
-                                            name="C_FIRSTNAME"
-                                            value={C_FIRSTNAME}
-                                            onChange={this.changeHandler}
-                                            title= "Vorname des Kunden"/>
-                                        <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
-                                </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                                          
+                                    <TextField
+                                        label="Vorname*"
+                                        type="text"
+                                        name="C_FIRSTNAME"
+                                        value={C_FIRSTNAME}
+                                        onChange={this.changeHandler}
+                                        title= "Vorname des Kunden"/>
+                                    <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
+                                </Grid>
+
+                                    <Grid item sm={6} xs={12}>                
                                         <TextField
                                             label="Nachname*"
                                             type="text"
@@ -264,58 +260,50 @@ class AddCustomerForm extends Component {
                                             onChange={this.changeHandler}
                                             title="Nachname des Kunden"/>
                                         <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
-                                    
                                 </Grid>
                 
                                 <Grid item sm={6} xs={12}>
-                                             
-                                        <TextField
-                                            label="Straße*"
-                                            type="text"
-                                            name="C_STREET"
-                                            value={C_STREET}
-                                            onChange={this.changeHandler}
-                                            title="Straße" />
-                                        <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
+                                    <TextField
+                                        label="Straße*"
+                                        type="text"
+                                        name="C_STREET"
+                                        value={C_STREET}
+                                        onChange={this.changeHandler}
+                                        title="Straße" />
+                                    <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
+                                </Grid>
+
+                                <Grid item sm={6} xs={12}>         
+                                    <TextField
+                                        label="Hausnummer*"
+                                        type="text"
+                                        name="C_HOUSENR"
+                                        value={C_HOUSENR}
+                                        onChange={this.changeHandler}
+                                        title="Hausnummer" />
+                                    <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
-                                               
-                                        <TextField
-                                            label="Hausnummer*"
-                                            type="text"
-                                            name="C_HOUSENR"
-                                            value={C_HOUSENR}
-                                            onChange={this.changeHandler}
-                                            title="Hausnummer" />
-                                        <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
-                                    
+                                    <TextField
+                                        label="Postleitzahl*"
+                                        type="number"
+                                        name="C_CI_PC"
+                                        value={C_CI_PC}
+                                        onChange={this.changeHandler}
+                                        title="Postleitzahl" />
+                                    <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
-                                    
-                                        <TextField
-                                            label="Postleitzahl*"
-                                            type="number"
-                                            name="C_CI_PC"
-                                            value={C_CI_PC}
-                                            onChange={this.changeHandler}
-                                            title="Postleitzahl" />
-                                        <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
-                                    
-                                </Grid>
-
-                                <Grid item sm={6} xs={12}>
-                                    
-                                        <TextField
-                                            label="Stadt*"
-                                            type="text"
-                                            name="CI_DESC"
-                                            value={CI_DESC}
-                                            onChange={this.changeHandler}
-                                            title="Stadt"/>
-                                        <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>
-                                    
+                                <Grid item sm={6} xs={12}>                                    
+                                    <TextField
+                                        label="Stadt*"
+                                        type="text"
+                                        name="CI_DESC"
+                                        value={CI_DESC}
+                                        onChange={this.changeHandler}
+                                        title="Stadt"/>
+                                    <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>                                   
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
@@ -325,72 +313,70 @@ class AddCustomerForm extends Component {
                                             name="CO_ID"
                                             value={CO_ID}
                                             onChange={this.changeHandler}
-                                            >
-                                                {this.state.menuItemCountry}
-                                            </Select>
-                                            <span className={classes.error}>{this.state.errors["CO_ID"]}</span>
+                                        >
+                                        {this.state.menuItemCountry}
+                                        </Select>
+                                        <span className={classes.error}>{this.state.errors["CO_ID"]}</span>
                                     </FormControl>
                                 </Grid>    
         
-                                <Grid item sm={6} xs={12}>
-                                     
-                                        <TextField
-                                            label="Telefon*"
-                                            type="text"
-                                            name="C_TEL"
-                                            value={C_TEL}
-                                            onChange={this.changeHandler}
-                                            title="Telefonnummer mit Länder- und Ortsvorwahl"/>
-                                        <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
+                                <Grid item sm={6} xs={12}>                                    
+                                    <TextField
+                                        label="Telefon*"
+                                        type="text"
+                                        name="C_TEL"
+                                        value={C_TEL}
+                                        onChange={this.changeHandler}
+                                        title="Telefonnummer mit Länder- und Ortsvorwahl"/>
+                                    <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
                                 </Grid>       
         
-                                <Grid item sm={6} xs={12}>
-                                     
-                                        <TextField
-                                            label="E-Mail*"
-                                            type="text"
-                                            name="C_EMAIL"
-                                            value={C_EMAIL}
-                                            onChange={this.changeHandler}
-                                            title="E-Mail-Adresse des Kunden"/>
-                                        <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>
-                                    
+                                <Grid item sm={6} xs={12}>                                    
+                                    <TextField
+                                        label="E-Mail*"
+                                        type="text"
+                                        name="C_EMAIL"
+                                        value={C_EMAIL}
+                                        onChange={this.changeHandler}
+                                        title="E-Mail-Adresse des Kunden"/>
+                                    <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>                                    
                                 </Grid>
+
+                                <Grid item sm={6} xs={12}>                                    
+                                    <TextField
+                                        label="Firma"
+                                        type="text"
+                                        name="C_COMPANY"
+                                        value={C_COMPANY}
+                                        onChange={this.changeHandler}
+                                        title="Firmenname, falls vorhanden"/>
+                                    <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
+                                </Grid> 
 
                                 <Grid item sm={6} xs={12}>
                                     <FormControl component="fieldset">
                                         <FormLabel>Kundentyp</FormLabel>
+        
                                         <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
                                             {this.state.radioButtonCustomerType}
                                         </RadioGroup>
                                         <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
+
                                     </FormControl>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
-                                     
-                                        <TextField
-                                            label="Firma"
-                                            type="text"
-                                            name="C_COMPANY"
-                                            value={C_COMPANY}
-                                            onChange={this.changeHandler}
-                                            title="Firmenname, falls vorhanden"/>
-                                        <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>
-                                    
-                                </Grid>  
+ 
 
-                                <Grid item xs={12}>
-                                     
-                                        <Button
-                                            style={{ background: "#006064", color: "#ffffff"}}
-                                            type="submit"
-                                            variant="contained"
-                                            title="Kunde anlegen">
-                                            Kunde anlegen
-                                        </Button>
-                                    
+                                <Grid item xs={12}>                                    
+                                    <Button
+                                        style={{ background: "#006064", color: "#ffffff"}}
+                                        type="submit"
+                                        variant="contained"
+                                        title="Kunde anlegen">
+                                        Kunde anlegen
+                                    </Button>                                    
                                 </Grid> 
+
                             </Grid>
                             <div>
                                 <h3>Bestätigung: {(content = this.state.data)}</h3>

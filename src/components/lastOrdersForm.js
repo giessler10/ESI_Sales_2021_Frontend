@@ -2,8 +2,6 @@ import React from 'react';
 import { Button, FormControl, Grid, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-const options = {filterType: 'checkbox'};
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
     padding: theme.spacing(2),

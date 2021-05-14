@@ -22,18 +22,15 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
-
-
-
 const RecentOrders = () => {
-    return (
-      <MuiThemeProvider theme={getMuiTheme()}> 
+  return (
+    <MuiThemeProvider theme={getMuiTheme()}> 
     <MUIDataTable
-              title="Letzte Bestellungen"
-              data={dataAuftraege}
-              columns={columnsAuftraege}/>
-      </MuiThemeProvider>
-              )
-            }
+      title="Letzte Bestellungen"
+      data={dataAuftraege}
+      columns={columnsAuftraege}/>
+    </MuiThemeProvider>
+  )
+}
             
-            export default RecentOrders
+export default RecentOrders
