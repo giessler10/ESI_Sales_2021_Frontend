@@ -8,7 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import RetoureContent from './retoureContent';
+import CustomerDetailsTable from './CustomerDetailsTable';
+import {Grid} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -19,10 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
-  Button:{
-    color: "#006064",
-    backgroundColor: "#006064",
-  } 
+  
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -44,7 +42,7 @@ export default function FullScreenDialog() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       Retoure / Reklamation erfassen
+        Detailanzeige
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -53,16 +51,20 @@ export default function FullScreenDialog() {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Retoure
+              Kundendetail
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
-        <RetoureContent></RetoureContent>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Einsicht in Kundendetails</h2>
+          </Grid>
+        </div>
+        <CustomerDetailsTable/>           
       </Dialog>
-
     </div>
   );
 }

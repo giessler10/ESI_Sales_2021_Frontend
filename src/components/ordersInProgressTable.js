@@ -1,8 +1,6 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, FormControl, Grid, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //importierte Seiten
@@ -25,35 +23,30 @@ const options = {filterType: 'checkbox'};
 const getMuiTheme = () => createMuiTheme({
   overrides: {
     MuiTypography: {
-          h6: {
-            fontWeight: "600",
-          }
+      h6: {
+        fontWeight: "600",
       }
+    }
   }
 });
 
 
-
 const ProgressOrders = () => {
-    return (
-     
-
-      <MuiThemeProvider theme={getMuiTheme()}> 
-<MUIDataTable
-              data={dataAuftraegeInBearbeitung}
-              columns={columnsAuftraegeInBearbeitung}
-              options={options}/>
-<Switch>
-<Router>
-<Route exact path="/OrderDetails">
-<OrderDetails />
-</Route>
-</Router>
-</Switch>
-      </MuiThemeProvider>
-
-
-              )
-            }
+  return (
+    <MuiThemeProvider theme={getMuiTheme()}> 
+    <MUIDataTable
+      data={dataAuftraegeInBearbeitung}
+      columns={columnsAuftraegeInBearbeitung}
+      options={options}/>
+      <Switch>
+        <Router>
+          <Route exact path="/OrderDetails">
+            <OrderDetails />
+          </Route>
+        </Router>
+      </Switch>
+    </MuiThemeProvider>
+  )
+}
             
-            export default ProgressOrders
+export default ProgressOrders
