@@ -9,6 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { green } from '@material-ui/core/colors';
+import Paper from '@material-ui/core/Paper';
 
 
 //Seiteninhalte
@@ -30,7 +31,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 
-  },  
+  }, 
+  
+  paper:{
+    width: "1200px",
+    height:"700%",
+
+  },
+
 }));
 
 
@@ -81,8 +89,10 @@ const RetoureContent = () => {
           <h2> Details zu Auftrag: xxxxx </h2> 
         </Grid>
       </div>
+      
       <div className={classes.root}>
-        <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
+        <div style={{ padding: "100px", alignContent:"center", fontSize: 12}}>
+        <Paper elevation={3} style={{padding: "100px"}} className={classes.paper}>
           <FormControl>
             <Grid container spacing={4}>
               <Grid item sm={6} xs={12}>
@@ -119,13 +129,8 @@ const RetoureContent = () => {
                         title= "Grund der Reklamation / Retoure"
                         style = {{width: 500}}/>        
             </Grid>
-            </Grid>
-            
-          </FormControl>
-        </div>
-      </div>
 
-      <div className={classes.root} style={{ paddingLeft: "500px", alignContent:"center", fontSize: 12}}>       
+            <div className={classes.root}>       
       <Grid container spacing={3}>
       <Grid item sm={12} xs={12}>
               <RadioGroup defaultValue="a" aria-label="retourenArt" name="customized-radios">
@@ -140,10 +145,20 @@ const RetoureContent = () => {
                </RadioGroup>
               </Grid> 
             </Grid>
-              
+            
       </div>
+            </Grid>
+            
+          </FormControl>
+          </Paper>  
+        </div>
+      </div>
+      
 
-      <div className={classes.root} style={{ padding: "70px", alignContent:"center", fontSize: 12}}>       
+
+   
+      <div className={classes.root} style={{ padding: "100px", alignContent:"center", fontSize: 12}}>    
+      <Paper elevation={3} style={{padding: "60px"}} className={classes.paper}>
       <Grid container spacing={3}>
       <Grid item xs={12} md={12} lg={12}>            
                 <h1>Auftragspositionen</h1>    
@@ -158,7 +173,7 @@ const RetoureContent = () => {
             
             </Grid>
           </Grid>
-              
+          </Paper>         
       </div>
 
       
