@@ -4,6 +4,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Box from '@material-ui/core/Box';
 import { Typography} from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
@@ -14,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 //Seiteninhalte
 import OrderPositions from './orderPositionsTable';
 import RetoureReasons from './retoureReasons';
+import RetoureTest from './retoureContent copy';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -82,40 +84,47 @@ TabPanel.propTypes = {
 const RetoureContent = () => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+<div>    
       <div className={classes.root}>
-        <Grid item xs={12}>
-          <h2> Details zu Auftrag: xxxxx </h2> 
-        </Grid>
-      </div>
-      
-      <div className={classes.root}>
-        <div style={{ padding: "100px", alignContent:"center", fontSize: 12}}>
-        <Paper elevation={3} style={{padding: "100px"}} className={classes.paper}>
+        <div style={{ paddingLeft:"100px", paddingBotton:"20px", alignContent:"center", fontSize: 12}}>
+        <Paper elevation={3} style={{padding: "60px"}} className={classes.paper}>
+
           <FormControl>
             <Grid container spacing={4}>
-              <Grid item sm={6} xs={12}>
+            <Grid item xs={12}>
+          <h1> Details zu Auftrag: xxxxx </h1> 
+        </Grid>
+              <Grid item sm={3} xs={12}>
                 <h2>Kundeninformation</h2>
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}>
                 <h2>Bestelldetails</h2>
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}>
                 <Input defaultValue="Name" disabled inputProps={{ 'aria-label': 'Name' }} />
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}>
                 <Input defaultValue="Status" disabled inputProps={{ 'aria-label': 'Name' }} />
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}>
                 <Input defaultValue="Vorname" disabled inputProps={{ 'aria-label': 'Name' }} />  
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}>
                 <Input defaultValue="Datum" disabled inputProps={{ 'aria-label': 'Name' }} />  
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}/>
+              <Grid item sm={3} xs={12}>
                 <Input defaultValue="Unternehmen" disabled inputProps={{ 'aria-label': 'Name' }} />  
               </Grid>
-              <Grid item xs={12} md={12} lg={12}>            
+              <Grid item sm={3} xs={12}/>     
+              <Divider/>
+              <Grid item sm={6} xs={12}>            
             <TextField
                         variant="outlined" 
                         size="large"
@@ -128,10 +137,8 @@ const RetoureContent = () => {
                         title= "Grund der Reklamation / Retoure"
                         style = {{width: 500}}/>        
             </Grid>
-
-            <div className={classes.root}>       
-      <Grid container spacing={3}>
-      <Grid item sm={12} xs={12}>
+            <Grid item sm={6} xs={12}>
+              <h2>Art der Beanstandung: </h2>
               <RadioGroup defaultValue="a" aria-label="retourenArt" name="customized-radios">
                 <FormControlLabel
                   value="a"
@@ -143,59 +150,45 @@ const RetoureContent = () => {
                   label="Retoure"/>
                </RadioGroup>
               </Grid> 
-            </Grid>
-            
-      </div>
-            </Grid>
-            
+            </Grid>           
           </FormControl>
           </Paper>  
         </div>
       </div>
-      
 
-
-   
-      <div className={classes.root} style={{ padding: "100px", alignContent:"center", fontSize: 12}}>    
+      <div className={classes.root} style={{ paddingLeft:"100px", paddingBotton:"20px", alignContent:"center", fontSize: 12}}>    
       <Paper elevation={3} style={{padding: "60px"}} className={classes.paper}>
       <Grid container spacing={3}>
       <Grid item xs={12} md={12} lg={12}>            
-                <h1>Auftragspositionen</h1>    
+                <h1>Auftragspositionen auswählen:</h1>    
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>            
+            <Grid item xs={12} md={12} lg={12}>            
                 <OrderPositions />        
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>           
+            <Grid item xs={12} md={12} lg={12}> 
+            <h1>Aktuelle Beanstandung der Position:</h1>              
                 <RetoureReasons />
             </Grid>
-            <Grid item xs={12}>             
-            
-            </Grid>
+            <Grid item xs={12}/>                     
+            <Grid item sm={12} xs={12}>
+            <Button
+              style={{ background: "#006064", color: "#ffffff"}}
+              type="submit"
+              variant="contained"
+              title="Beanstandung anlegen">
+              Beanstandung anlegen
+            </Button>
+              </Grid> 
           </Grid>
           </Paper>         
       </div>
 
       
-      <Grid container spacing={3}>
-      <Grid item sm={12} xs={12}>
-      <Button
-  style={{ background: "#006064", color: "#ffffff"}}
-  type="submit"
-  variant="contained"
-  title="Kunde anlegen">
-  Beanstandung anlegen
-</Button>
-              </Grid> 
+    
 
-              <Grid item sm={12} xs={12}>
-      
-              </Grid> 
-            </Grid>
-   
-        
+</div>
 
 
-    </div>
   )
 }
 
