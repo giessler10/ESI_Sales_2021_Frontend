@@ -40,11 +40,16 @@ class AddCustomerForm extends Component {
         };
 
         //Länder laden
-        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/allCountries')
+        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/countries')
         .then(
             (res) => {
-                //console.log(res.data.body);
-                return res.data.body;    
+                console.log(res.status);
+                if(res.status === 200){
+                    return res.data;
+                }
+                else{
+                    throw res.data.errorMessage;
+                }
             }
         )
         .then(
@@ -57,13 +62,22 @@ class AddCustomerForm extends Component {
             }
             
         )
+        .catch(function(e) {
+            //console.log(e);
+            //alert(e);
+        });
 
         //CustomerTypes laden
-        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/allCustomerTypes')
+        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/types')
         .then(
             (res) => {
-                //console.log(res.data.body);
-                return res.data.body;    
+                console.log(res.status);
+                if(res.status === 200){
+                    return res.data;
+                }
+                else{
+                    throw res.data.errorMessage;
+                }  
             }
         )
         .then(
@@ -75,6 +89,11 @@ class AddCustomerForm extends Component {
                 });
             }
         )
+        .catch(function(e) {
+            //console.log(e);
+            //alert(e);
+        });
+
     }
   
     changeHandler = (e) => {
@@ -90,7 +109,7 @@ class AddCustomerForm extends Component {
             console.log(this.state);
             axios
                 .post(
-                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/newCustomer",
+                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers",
                     this.state
                 )
                 .then(console.log(this.state))
