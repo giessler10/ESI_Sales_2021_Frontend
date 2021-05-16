@@ -48,7 +48,8 @@ class AddCustomerForm extends Component {
                     return res.data;
                 }
                 else{
-                    throw res.data.errorMessage;
+                    alert(res.data.errorMessage);
+                    //throw res.data.errorMessage;
                 }
             }
         )
@@ -63,7 +64,7 @@ class AddCustomerForm extends Component {
             
         )
         .catch(function(e) {
-            //console.log(e);
+            console.log(e);
             //alert(e);
         });
 
@@ -76,7 +77,8 @@ class AddCustomerForm extends Component {
                     return res.data;
                 }
                 else{
-                    throw res.data.errorMessage;
+                    alert(res.data.errorMessage);
+                    //throw res.data.errorMessage;
                 }  
             }
         )
@@ -90,7 +92,7 @@ class AddCustomerForm extends Component {
             }
         )
         .catch(function(e) {
-            //console.log(e);
+            console.log(e);
             //alert(e);
         });
 
