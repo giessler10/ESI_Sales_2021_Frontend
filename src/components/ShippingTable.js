@@ -49,7 +49,7 @@ const dataShippingOrders = [
 
  useEffect(() => {
   // --> TODO  eurem REST Link einfügen
-  axios.get('https://1ygz8xt0rc.execute-api.eu-central-1.amazonaws.com/main/getplanningorders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
