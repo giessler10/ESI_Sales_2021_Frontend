@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { Button, FormControl, Grid, TextField, Select, MenuItem, InputLabel, FormLabel, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = theme => ({
     root: {
@@ -11,6 +12,12 @@ const useStyles = theme => ({
     },
     error: {
         color: "red"
+    },
+    errorAlert: {
+        width: '100%',
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
     }
 });
 
@@ -36,7 +43,13 @@ class AddCustomerForm extends Component {
             data: null,
             menuItemCountry: [],
             radioButtonCustomerType: [],
-            errors: {}
+            
+
+            //Error
+            errorMessage: null,
+            errorObject: null,
+            errors: {},
+
         };
 
         //Länder laden
@@ -44,13 +57,7 @@ class AddCustomerForm extends Component {
         .then(
             (res) => {
                 console.log(res.status);
-                if(res.status === 200){
-                    return res.data;
-                }
-                else{
-                    alert(res.data.errorMessage);
-                    //throw res.data.errorMessage;
-                }
+                return res.data;
             }
         )
         .then(
@@ -63,23 +70,22 @@ class AddCustomerForm extends Component {
             }
             
         )
-        .catch(function(e) {
-            console.log(e);
-            //alert(e);
+        .catch(
+            (error) => {
+            //console.log(e);
+            var errorObject = error.response.data;
+            var errorMessage = errorObject.errorMessage;
+            this.setState({ errorObject: errorObject });
+            this.setState({ errorMessage: errorMessage });
         });
+
 
         //CustomerTypes laden
         axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/types')
         .then(
             (res) => {
                 console.log(res.status);
-                if(res.status === 200){
-                    return res.data;
-                }
-                else{
-                    alert(res.data.errorMessage);
-                    //throw res.data.errorMessage;
-                }  
+                return res.data;
             }
         )
         .then(
@@ -91,11 +97,14 @@ class AddCustomerForm extends Component {
                 });
             }
         )
-        .catch(function(e) {
-            console.log(e);
-            //alert(e);
+        .catch(
+            (error) => {
+            //console.log(e);
+            var errorObject = error.response.data;
+            var errorMessage = errorObject.errorMessage;
+            this.setState({ errorObject: errorObject });
+            this.setState({ errorMessage: errorMessage });
         });
-
     }
   
     changeHandler = (e) => {
@@ -131,8 +140,13 @@ class AddCustomerForm extends Component {
                     console.log(response);
                 })
                 .then((response) => this.setState({ response }))
-                .catch((error) => {
-                    console.log(error);
+                .catch(
+                    (error) => {
+                    //console.log(e);
+                    var errorObject = error.response.data;
+                    var errorMessage = errorObject.errorMessage;
+                    this.setState({ errorObject: errorObject });
+                    this.setState({ errorMessage: errorMessage });
                 });
         }
     };
@@ -250,6 +264,7 @@ class AddCustomerForm extends Component {
             C_EMAIL,        //E-Mail
             C_COMPANY,      //Firma
             C_CT_ID,        //Kundentyp
+            errorMessage    //ErrorMessage
         } = this.state;
 
         let content = "";
@@ -258,6 +273,7 @@ class AddCustomerForm extends Component {
             <div className={classes.root}>
                 <form onSubmit={this.submitHandler}>
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
+                    {errorMessage && <div className={classes.errorAlert}><Alert severity="error">{errorMessage}</Alert></div>}
                         <FormControl>
                             <Grid container spacing={4}>
 
