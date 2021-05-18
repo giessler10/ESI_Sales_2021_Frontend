@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import { Button, FormControl, Grid, TextField, Select, MenuItem, InputLabel, FormLabel, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
+import { Button, FormControl, Grid, TextField, Select, MenuItem, InputLabel, FormLabel, RadioGroup, Radio, FormControlLabel, IconButton, Collapse} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import { GridCloseIcon } from '@material-ui/data-grid';
 
 const useStyles = theme => ({
     root: {
@@ -48,6 +49,7 @@ class AddCustomerForm extends Component {
             //Error
             errorMessage: null,
             errorObject: null,
+            errorMessageState: false,
             errors: {},
 
         };
@@ -75,6 +77,7 @@ class AddCustomerForm extends Component {
             //console.log(e);
             var errorObject = error.response.data;
             var errorMessage = errorObject.errorMessage;
+            this.setState({ errorMessageState: true});
             this.setState({ errorObject: errorObject });
             this.setState({ errorMessage: errorMessage });
         });
@@ -102,6 +105,7 @@ class AddCustomerForm extends Component {
             //console.log(e);
             var errorObject = error.response.data;
             var errorMessage = errorObject.errorMessage;
+            this.setState({ errorMessageState: true});
             this.setState({ errorObject: errorObject });
             this.setState({ errorMessage: errorMessage });
         });
@@ -145,6 +149,7 @@ class AddCustomerForm extends Component {
                     //console.log(e);
                     var errorObject = error.response.data;
                     var errorMessage = errorObject.errorMessage;
+                    this.setState({ errorMessageState: true});
                     this.setState({ errorObject: errorObject });
                     this.setState({ errorMessage: errorMessage });
                 });
@@ -264,7 +269,8 @@ class AddCustomerForm extends Component {
             C_EMAIL,        //E-Mail
             C_COMPANY,      //Firma
             C_CT_ID,        //Kundentyp
-            errorMessage    //ErrorMessage
+            errorMessage,    //ErrorMessage
+            errorMessageState //StatusErrorMessage
         } = this.state;
 
         let content = "";
@@ -273,7 +279,24 @@ class AddCustomerForm extends Component {
             <div className={classes.root}>
                 <form onSubmit={this.submitHandler}>
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
-                    {errorMessage && <div className={classes.errorAlert}><Alert severity="error">{errorMessage}</Alert></div>}
+                        <Collapse in={errorMessageState}>
+                            <Alert  severity="error"
+                                action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        this.setState({ errorMessageState: false});
+                                    }}
+                                >
+                                    <GridCloseIcon fontSize="inherit" />
+                                </IconButton>
+                                }
+                            >
+                            {errorMessage}
+                            </Alert>
+                        </Collapse>
                         <FormControl>
                             <Grid container spacing={4}>
 
