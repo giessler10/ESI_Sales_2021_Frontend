@@ -1,13 +1,10 @@
 import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import {Button} from '@material-ui/core';
-import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
-import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 
 
-export default function ShippingOrders(){
+export default function CustomerOrders(){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
@@ -37,7 +34,7 @@ export default function ShippingOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}
+  customToolbarSelect: () => {}
 };
 
 useEffect(() => {
@@ -100,118 +97,6 @@ useEffect(() => {
   console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
- }
-
- //Lieferschein Button Click 
- function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
- 
-      // Abfrage Orderitems
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/orderitems?O_NR=1')
-      .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
-
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
-
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
-
-      })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
-      })
-    
-  var tableData = Array.from(Array(selectedData.length), (item, index)=>({
-    num: String(selectedData[index]["O_NR"]),
-    desc: String(selectedData[index]["O_NR"]),
-    price: String(selectedData[index]["O_NR"]),
-    quantity: String(selectedData[index]["O_NR"]),
-    unit: String(selectedData[index]["O_NR"]),
-    total: String(selectedData[index]["O_NR"])
-}));
-
-console.log("TableData", tableData);
-
-  var props = {
-    outputType: OutputType.Save,
-    returnJsPDFDocObject: true,
-    fileName: "Lieferschein",
-    orientationLandscape: false,
-    logo: {
-        src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-        width: 53.33, //aspect ratio = width/height
-        height: 26.66,
-        margin: {
-            top: 0, //negative or positive num, from the current position
-            left: 0 //negative or positive num, from the current position
-        }
-    },
-    business: {
-        name: "YourShirt GmbH",
-        address: "Schutterlindenberg 66, (DE) 77933 Lahr",
-        phone: "(+49) 7821 66 66 66",
-        email: "info@yourshirt.com",
-        //email_1: "info@example.al",
-        website: "www.yourshirt.de",
-    },
-    contact: {
-        label: "Invoice issued for:",
-        name: "Client Name",
-        address: "Albania, Tirane, Astir",
-        phone: "(+355) 069 22 22 222",
-        email: "client@website.al",
-        otherInfo: "www.website.al",
-    },
-    invoice: {
-        label: "Invoice #: ",
-        invTotalLabel: "Total:",
-        num: 19,
-        invDate: "Payment Date: 01/01/2021 18:12",
-        invGenDate: "Invoice Date: 02/02/2021 10:17",
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Unit1"],
-        headerBorder: false,
-        tableBodyBorder: false,
-        table: tableData,
-        invTotal: "145,250.50",
-        invCurrency: "ALL",
-        row1: {
-            col1: 'VAT:',
-            col2: '20',
-            col3: '%',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
-        },
-        row2: {
-            col1: 'SubTotal:',
-            col2: '116,199.90',
-            col3: 'ALL',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
-        },
-        invDescLabel: "Invoice Note",
-        invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-    },
-    footer: {
-        text: "The invoice is created on a computer and is valid without the signature and stamp.",
-    },
-    pageEnable: true,
-    pageLabel: "Page ",
-};
-
- const pdfObject = jsPDFInvoiceTemplate(props);
-
  }
 
 const getMuiTheme = () => createMuiTheme({
