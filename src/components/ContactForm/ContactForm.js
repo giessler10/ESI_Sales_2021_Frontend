@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
 export default function ContactUs() {
   const classes = useStyles();
   const [submitted, setSubmitted] = useState(false);
+
+  const handleClose = () => {
+    setSubmitted(false);
+  };
   
   function sendEmail(e) {
     e.preventDefault();
@@ -68,7 +72,7 @@ export default function ContactUs() {
       </Grid>
       {submitted && <div style={{padding:"20px", fontSize:"18px", color:"#006064"}} class='success-message'>
       
-        <Alert onClose={() => {}}> Nachricht übermittelt! Vielen Dank :)</Alert>
+        <Alert onClose={handleClose}> Nachricht übermittelt! Vielen Dank :)</Alert>
 
         </div>}
     </form>
