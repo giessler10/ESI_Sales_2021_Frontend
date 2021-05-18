@@ -16,33 +16,26 @@ const [allData, setAllData] = useState([]); //alle Daten von DB.
 
 //Columns with properties --> TODO auf eure Spaltennamen anpassen
 const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
-{name: "OI_NR", label: "Bestellpos-Nr", options: {filter: true, sort: true, display: true }}, 
-{name: "PO_CODE", label: "PO_CODE", options: {filter: true,  sort: false,  display: false}}, 
-{name: "PO_COUNTER", label: "PO_COUNTER", options: {filter: true, sort: false, display: false}},  
-{name: "O_DATE", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
-{name: "CUSTOMER_TYPE", label: "Kundentyp", options: {filter: true, sort: true, display: true}}, 
-{name: "QUANTITY", label: "Menge", options: {filter: true, sort: true, display: true}}, 
-{name: "PROD_STATUS", label: "Status", options: {filter: true, sort: true, display: true}}, 
-{name: "MAT_NR", label: "Material-Nr", options: {filter: true, sort: true, display: true}}, 
-{name: "C", label: "C", options: {filter: true, sort: false, display: false}},
-{name: "M", label: "M",options: {filter: true,sort: false,display: false}},
-{name: "Y",label: "Y",options: {filter: true,sort: false, display: false}},
-{name: "K", label: "K", options: {filter: true,sort: false, display: false}},
-{name: "HEXCOLOR", label: "Hex-Wert", options: {filter: true,sort: true, display: true}},
-{name: "PROD_PRIO", label: "Priorität", options: {filter: true,sort: true, display: true}},
-{name: "IMAGE", label: "Image", options: {filter: true,sort: true, display: true}},
-{name: "END_DATE",label: "END_DATE",options: {filter: true,sort: false, display: false}},
-{name: "p_nr", label: "Produktionsnr", options: {filter: true, sort: true, display: true}}];
-
-
-/* //TesttabelleI Aufbau
-const columnsShippingOrders =  ["Order No.", "Customer No.", "Postcode", "Date", "Order State"];
-const dataShippingOrders = [
-    ["1", "37", "88739", "15/2/2020", "Ready"],
-    ["31", "232", "22131", "19/1/2020", "Ready"],
-    ["122", "2441", "33245", "1/8/2019", "Ready"],
-    ["123", "23", "77883", "18/2/2021", "Ready"],
-]; */
+{name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
+{name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
+{name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
+{name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+{name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
+{name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
+{name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
+{name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
+{name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
+{name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
+{name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
+{name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
+{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
+{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
+{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
+{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
+{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
+{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
+{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
+{name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
  customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}};
@@ -55,13 +48,13 @@ const dataShippingOrders = [
       
       if(IsDataBaseOffline(res)) return; //Check if db is available
 
-      if(res.data.body.length === 0) { //Check if data is available
+      if(res.data.length === 0) { //Check if data is available
         setAllData(undefined);
         return;
       }          
 
-      if (DataAreEqual(allData, res.data.body)) return; //Check if data has changed       
-      setAllData(res.data.body); //Set new table data
+      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+      setAllData(res.data); //Set new table data
 
       })
       .catch(err => {
@@ -112,21 +105,40 @@ const dataShippingOrders = [
  //Lieferschein Button Click 
  function CreateDelivOrder(){
 
-  /* if(selectedData.length > 1) {
+  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
+   if(selectedData.length > 1) {
     alert("Bitte nur ein Datensatz auswählen");
     return;
   }
- */
-  
+ 
+      // Abfrage Orderitems
+      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/orderitems?O_NR=1')
+      .then(res => {
+      console.log("RESPONSE:", res); //Data from Gateway
+      
+      if(IsDataBaseOffline(res)) return; //Check if db is available
+
+      if(res.data.length === 0) { //Check if data is available
+        setAllData(undefined);
+        return;
+      }          
+
+      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+      setAllData(res.data); //Set new table data
+
+      })
+      .catch(err => {
+          console.log(err.message); //Error-Handling
+      })
+    
   var tableData = Array.from(Array(selectedData.length), (item, index)=>({
     num: String(selectedData[index]["O_NR"]),
-    desc: String(selectedData[index]["OI_NR"]),
-    price: String(selectedData[index]["PO_CODE"]),
-    quantity: String(selectedData[index]["PO_COUNTER"]),
+    desc: String(selectedData[index]["O_NR"]),
+    price: String(selectedData[index]["O_NR"]),
+    quantity: String(selectedData[index]["O_NR"]),
     unit: String(selectedData[index]["O_NR"]),
     total: String(selectedData[index]["O_NR"])
 }));
-
 
 console.log("TableData", tableData);
 
@@ -145,12 +157,12 @@ console.log("TableData", tableData);
         }
     },
     business: {
-        name: "Business Name",
-        address: "Albania, Tirane ish-Dogana, Durres 2001",
-        phone: "(+355) 069 11 11 111",
-        email: "email@example.com",
-        email_1: "info@example.al",
-        website: "www.example.al",
+        name: "YourShirt GmbH",
+        address: "Schutterlindenberg 66, (DE) 77933 Lahr",
+        phone: "(+49) 7821 66 66 66",
+        email: "info@yourshirt.com",
+        //email_1: "info@example.al",
+        website: "www.yourshirt.de",
     },
     contact: {
         label: "Invoice issued for:",
