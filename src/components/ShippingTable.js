@@ -15,7 +15,7 @@ export default function ShippingOrders(){
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
   //Columns with properties --> TODO auf eure Spaltennamen anpassen
-  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}},
+  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
   {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
   {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
@@ -42,8 +42,7 @@ export default function ShippingOrders(){
 };
 
 useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders') //REST Link
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
@@ -147,13 +146,13 @@ useEffect(() => {
  var val = GetOrderItems();
  
   var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
-    num: String(res.data[index]["OI_NR"]),
-    desc: String(res.data[index]["OI_MATERIALDESC"]),
-    color: String(res.data[index]["OI_HEXCOLOR"]),
-    quantity: String(res.data[index]["OI_QTY"]),
-    price: String(res.data[index]["OI_PRICE"]),
-    vat: String(res.data[index]["OI_VAT"]),
-    total: String(res.data[index]["OI_PRICE"]*(1+res.data[index]["OI_VAT"]))
+    num: String(OrderitemsData[index]["OI_NR"]),
+    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
+    color: String(OrderitemsData[index]["OI_HEXCOLOR"]),
+    quantity: String(OrderitemsData[index]["OI_QTY"]),
+    price: String(OrderitemsData[index]["OI_PRICE"]),
+    vat: String(OrderitemsData[index]["OI_VAT"]),
+    total: String(OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"]))
 
 }));
 
