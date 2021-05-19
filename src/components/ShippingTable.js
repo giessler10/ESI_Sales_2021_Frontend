@@ -11,6 +11,7 @@ export default function ShippingOrders(){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
+  const [OrderitemsData, setOrderitemsData] =  useState([]); 
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
   //Columns with properties --> TODO auf eure Spaltennamen anpassen
@@ -41,8 +42,7 @@ export default function ShippingOrders(){
 };
 
 useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders') //REST Link
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
@@ -102,42 +102,58 @@ useEffect(() => {
   return;
  }
 
+
+ function GetOrderItems(){
+   
+    var _OrderitemsData = [];
+    
+    //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
+    if(selectedData.length > 1) {
+      alert("Bitte nur ein Datensatz auswählen");
+      return;
+    }
+
+    //Definieren der ausgewählten Ordernummer
+    const SelectedOrder = selectedData[0]["O_NR"]
+
+    // Abfrage Orderitems
+    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + SelectedOrder + '/orderitems')
+
+    .then(res => {
+    console.log("RESPONSE Orderitems:", res); //Data from Gateway
+    
+    if(IsDataBaseOffline(res)) return; //Check if db is available
+
+    if(res.data.length === 0) { //Check if data is available
+      setOrderitemsData(undefined);
+      return;
+    }          
+    
+    _OrderitemsData.push(res.data)
+
+  
+  setOrderitemsData(_OrderitemsData);
+  console.log("Orderitem Daten: ", OrderitemsData)
+
+    })
+    .catch(err => {
+        console.log(err.message); //Error-Handling
+    })
+  }
+
  //Lieferschein Button Click 
  function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
+ var val = GetOrderItems();
  
-      // Abfrage Orderitems
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/orderitems?O_NR=1')
-      .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
+  var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
+    num: String(OrderitemsData[index]["OI_NR"]),
+    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
+    color: String(OrderitemsData[index]["OI_HEXCOLOR"]),
+    quantity: String(OrderitemsData[index]["OI_QTY"]),
+    price: String(OrderitemsData[index]["OI_PRICE"]),
+    vat: String(OrderitemsData[index]["OI_VAT"]),
+    total: String(OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"]))
 
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
-
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
-
-      })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
-      })
-    
-  var tableData = Array.from(Array(selectedData.length), (item, index)=>({
-    num: String(selectedData[index]["O_NR"]),
-    desc: String(selectedData[index]["O_NR"]),
-    price: String(selectedData[index]["O_NR"]),
-    quantity: String(selectedData[index]["O_NR"]),
-    unit: String(selectedData[index]["O_NR"]),
-    total: String(selectedData[index]["O_NR"])
 }));
 
 console.log("TableData", tableData);
@@ -178,7 +194,7 @@ console.log("TableData", tableData);
         num: 19,
         invDate: "Payment Date: 01/01/2021 18:12",
         invGenDate: "Invoice Date: 02/02/2021 10:17",
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Unit1"],
+        header: ["#", "Description", "Color", "Quantity", "Price", "VAT", "Total"],
         headerBorder: false,
         tableBodyBorder: false,
         table: tableData,
