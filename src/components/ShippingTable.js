@@ -11,14 +11,11 @@ export default function ShippingOrders(){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
-<<<<<<< HEAD
   const [OrderitemsData, setOrderitemsData] =  useState([]); 
-=======
->>>>>>> f6efc9f0d9b8228b709ffc319707f9bd54ccbf90
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
   //Columns with properties --> TODO auf eure Spaltennamen anpassen
-  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
+  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}},
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
   {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
   {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
