@@ -16,7 +16,7 @@ const [selectedData, setSelectedData] =  useState([]);
 const [OrderitemsData, setOrderitemsData] =  useState([]); 
 const [allData, setAllData] = useState([]); //alle Daten von DB.
 
-//Columns with properties --> TODO auf eure Spaltennamen anpassen
+//Columns with properties
 const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
 {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
 {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
@@ -43,7 +43,7 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
  customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}};
 
  useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
+  //Orders aus MySQL ziehen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
       .then(res => {
       console.log("Response Orderlist:", res); //Data from Gateway

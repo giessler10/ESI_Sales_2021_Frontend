@@ -17,10 +17,10 @@ export default function Deposits() {
     <React.Fragment>
       <h2>Fehlerquote</h2>
       <Typography component="p" variant="h4">
-        95%
+        4%
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+        YTD 15 März, 2021
       </Typography>
       <div>
         <Link color="#006064" href="/Orders" /*onClick={preventDefault}*/>
