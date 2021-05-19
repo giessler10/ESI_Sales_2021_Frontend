@@ -5,42 +5,43 @@ import {Button} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
-import yourshirt from '../img/android-chrome-144x144.png';
 
 
 export default function ShippingOrders(){
 
-//Variables and constants  
-const [selectedData, setSelectedData] =  useState([]); 
-const [allData, setAllData] = useState([]); //alle Daten von DB.
+  //Variables and constants  
+  const [selectedData, setSelectedData] =  useState([]); 
+  const [OrderitemsData, setOrderitemsData] =  useState([]); 
+  const [allData, setAllData] = useState([]); //alle Daten von DB.
 
-//Columns with properties --> TODO auf eure Spaltennamen anpassen
-const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
-{name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
-{name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
-{name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
-{name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
-{name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
-{name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
-{name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
-{name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
-{name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
-{name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
-{name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
-{name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
-{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
-{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
-{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
-{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
-{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
-{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
-{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
-{name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
+  //Columns with properties --> TODO auf eure Spaltennamen anpassen
+  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
+  {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
+  {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
+  {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
+  {name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+  {name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
+  {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
+  {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
+  {name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
+  {name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
+  {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
+  {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
+  {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
+  {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
+  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
+  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
+  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
+  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
+  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
+  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
+  {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
- const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
- customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}};
+  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+  customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}
+};
 
- useEffect(() => {
+useEffect(() => {
   // --> TODO  eurem REST Link einfügen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
       .then(res => {
@@ -102,42 +103,58 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
   return;
  }
 
+
+ function GetOrderItems(){
+   
+    var _OrderitemsData = [];
+    
+    //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
+    if(selectedData.length > 1) {
+      alert("Bitte nur ein Datensatz auswählen");
+      return;
+    }
+
+    //Definieren der ausgewählten Ordernummer
+    const SelectedOrder = selectedData[0]["O_NR"]
+
+    // Abfrage Orderitems
+    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + SelectedOrder + '/orderitems')
+
+    .then(res => {
+    console.log("RESPONSE Orderitems:", res); //Data from Gateway
+    
+    if(IsDataBaseOffline(res)) return; //Check if db is available
+
+    if(res.data.length === 0) { //Check if data is available
+      setOrderitemsData(undefined);
+      return;
+    }          
+    
+    _OrderitemsData.push(res.data)
+
+  
+  setOrderitemsData(_OrderitemsData);
+  console.log("Orderitem Daten: ", OrderitemsData)
+
+    })
+    .catch(err => {
+        console.log(err.message); //Error-Handling
+    })
+  }
+
  //Lieferschein Button Click 
  function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
+ var val = GetOrderItems();
  
-      // Abfrage Orderitems
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/orderitems?O_NR=1')
-      .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
+  var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
+    num: String(res.data[index]["OI_NR"]),
+    desc: String(res.data[index]["OI_MATERIALDESC"]),
+    color: String(res.data[index]["OI_HEXCOLOR"]),
+    quantity: String(res.data[index]["OI_QTY"]),
+    price: String(res.data[index]["OI_PRICE"]),
+    vat: String(res.data[index]["OI_VAT"]),
+    total: String(res.data[index]["OI_PRICE"]*(1+res.data[index]["OI_VAT"]))
 
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
-
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
-
-      })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
-      })
-    
-  var tableData = Array.from(Array(selectedData.length), (item, index)=>({
-    num: String(selectedData[index]["O_NR"]),
-    desc: String(selectedData[index]["O_NR"]),
-    price: String(selectedData[index]["O_NR"]),
-    quantity: String(selectedData[index]["O_NR"]),
-    unit: String(selectedData[index]["O_NR"]),
-    total: String(selectedData[index]["O_NR"])
 }));
 
 console.log("TableData", tableData);
@@ -178,7 +195,7 @@ console.log("TableData", tableData);
         num: 19,
         invDate: "Payment Date: 01/01/2021 18:12",
         invGenDate: "Invoice Date: 02/02/2021 10:17",
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Unit1"],
+        header: ["#", "Description", "Color", "Quantity", "Price", "VAT", "Total"],
         headerBorder: false,
         tableBodyBorder: false,
         table: tableData,
