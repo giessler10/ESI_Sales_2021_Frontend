@@ -12,12 +12,14 @@ import NotificationImportantIcon from '@material-ui/icons/NotificationImportant'
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import AddIcon from '@material-ui/icons/Add';
 
 //importierte Seiten
 import OrdersWithProblems from '../components/ordersWithProblemsTable';
 import OrdersInProgress from '../components/ordersInProgressTable';
 import OrdersOpen from '../components/openOrdersTable';
-import OrderTable from '../components/OrderTable'
+import OrderTable from '../components/OrderTable';
+import newCustomerOrder from '../components/newOrder';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +95,7 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Offene Aufträge" icon={<AssignmentIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
+          <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 
@@ -130,6 +133,15 @@ export default function ScrollableTabsButtonForce() {
         </Grid>
         </div>
       <OrdersWithProblems />
+
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+        <h2> Neuer Auftrag erfassen </h2> 
+        </Grid>
+        </div>
+        <newCustomerOrder/>
 
       </TabPanel>
         

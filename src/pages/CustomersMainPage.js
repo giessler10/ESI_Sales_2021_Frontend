@@ -6,14 +6,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
-import HelpIcon from '@material-ui/icons/Help';
 import Box from '@material-ui/core/Box';
 import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 
 //Seitenimport
-//import AddCustomerForm from './pageContent/AddCustomerForm';
 import AddCustomerForm from '../components/AddCustomerForm';
-import RecentOrdersTable from '../components/recentOrderTable';
 import CustomerTable from '../components/CustomerTable';
 
 
@@ -87,7 +84,6 @@ export default function ScrollableTabsButtonForce() {
         >
           <Tab label="Alle Kunden" icon={<PersonPinIcon />} {...a11yProps(1)} />
           <Tab label="Neuen Kunden anlegen" icon={<AddToPhotosIcon />} {...a11yProps(2)} />
-          <Tab label="Letzte Kundenaufträge" icon={<HelpIcon />} {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       
@@ -108,16 +104,6 @@ export default function ScrollableTabsButtonForce() {
         </div>
         <AddCustomerForm></AddCustomerForm>
       </TabPanel>
-
-      <TabPanel value={value} index={2}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2> Letzte Kundenaufträge </h2>
-            <RecentOrdersTable></RecentOrdersTable>
-          </Grid>
-        </div>
-      </TabPanel>
-
     </div>
   )
 }

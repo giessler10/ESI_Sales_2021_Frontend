@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
-import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
-import { useState, useEffect} from "react";
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
 
-export default function CustomerTable(){
+
+export default function CustomerOrders(){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
-
   //Columns with properties --> TODO auf eure Spaltennamen anpassen
-  const columns = [
+  const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
+  {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
+  {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
+  {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
+  {name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+  {name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
+  {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
   {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
   {name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
   {name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
   {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
   {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
+  {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
   {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
+  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
+  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
+  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
+  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
+  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
+  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+  customToolbarSelect: () => {}
 };
 
 useEffect(() => {
@@ -87,11 +98,6 @@ useEffect(() => {
   setSelectedData(_selectedData);
   return;
  }
-
- //Lieferschein Button Click 
- function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
- };
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {

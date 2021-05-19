@@ -8,8 +8,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import CustomerDetailsTable from './CustomerDetailsTable';
+import AddFilledCustomerForm from './AddFilledCustomerForm';
+import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
+import DescriptionIcon from '@material-ui/icons/Description';
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -20,8 +23,21 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
-  
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+  },
+  root: {
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+
+  },  
 }));
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,7 +57,7 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" onClick={handleClickOpen}> <DescriptionIcon/>
         Detailanzeige
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -60,10 +76,16 @@ export default function FullScreenDialog() {
         </AppBar>
         <div className={classes.root}>
           <Grid item xs={12}>
-            <h2 >Einsicht in Kundendetails</h2>
+            <h2 >Kundendetails</h2>
           </Grid>
         </div>
-        <CustomerDetailsTable/>           
+        <AddFilledCustomerForm></AddFilledCustomerForm>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Einsicht in Kundenbestellungen</h2>
+          </Grid>
+        </div>
+        <CustomerOrders></CustomerOrders>
       </Dialog>
     </div>
   );
