@@ -19,8 +19,7 @@ import OrdersWithProblems from '../components/ordersWithProblemsTable';
 import OrdersInProgress from '../components/ordersInProgressTable';
 import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
-import newCustomerOrder from '../components/newOrder';
-
+import NewOrder from '../components/newOrder';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -141,8 +140,7 @@ export default function ScrollableTabsButtonForce() {
         <h2> Neuer Auftrag erfassen </h2> 
         </Grid>
         </div>
-        <newCustomerOrder/>
-
+          <NewOrder/>
       </TabPanel>
         
     </div>

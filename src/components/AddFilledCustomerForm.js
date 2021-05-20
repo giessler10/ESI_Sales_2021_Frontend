@@ -350,6 +350,7 @@ class AddCustomerForm extends Component {
                                             name="CO_ID"
                                             value={CO_ID}
                                             onChange={this.changeHandler}
+                                            style={{width:"200px"}}
                                         >
                                         {this.state.menuItemCountry}
                                         </Select>

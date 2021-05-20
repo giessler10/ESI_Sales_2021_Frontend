@@ -11,7 +11,7 @@ import Slide from '@material-ui/core/Slide';
 import AddFilledCustomerForm from './AddFilledCustomerForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
-import DescriptionIcon from '@material-ui/icons/Description';
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,8 +57,8 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}> <DescriptionIcon/>
-        Detailanzeige
+      <Button variant="contained" onClick={handleClickOpen}> <CreateIcon/>
+        Kunde bearbeiten
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>

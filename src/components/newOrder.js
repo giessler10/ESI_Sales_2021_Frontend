@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
+
 const useStyles = theme => ({
     root: {
         padding: theme.spacing(2),
@@ -52,7 +53,14 @@ class newCustomerOrder extends Component {
             errorMessageState: false,
             errors: {},
 
+            //Add/Remove Form
+            values: [],
+
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+
+
 
         //Länder laden
         axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/countries')
@@ -253,6 +261,53 @@ class newCustomerOrder extends Component {
         return formIsValid;
     };
 
+//zeug für das add/remove button ding
+addClick(){
+    this.setState(prevState => ({ values: [...prevState.values, '']}))
+  }
+ handleChange(i, event) {
+    let values = [...this.state.values];
+    values[i] = event.target.value;
+    this.setState({ values });
+ }
+  removeClick(i){
+     let values = [...this.state.values];
+     values.splice(i,1);
+     this.setState({ values });
+  }
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.values.join(', '));
+    event.preventDefault();
+  }
+createUI(){
+    return this.state.values.map((el, i) => 
+        <div key={i}>
+<Grid item sm={12} xs={12}>         
+    <TextField
+        label="Position*"
+        type="text"
+        /*name="C_HOUSENR"
+        value={C_HOUSENR}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Position" />
+    <TextField
+        label="Menge*"
+        type="text"
+        /*name="C_HOUSENR"
+        value={C_HOUSENR}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Menge" /> 
+        <Button style={{color: "#FFFFFF",
+          backgroundColor: "#006064", margion:"5px"}}  value='remove' onClick={this.removeClick.bind(this, i)} >
+              remove
+          </Button> 
+    </Grid>
+    </div>
+    )
+ }
+
     render() {
         //const options = {filterType: 'checkbox'};
         const { classes } = this.props;
@@ -373,6 +428,7 @@ class newCustomerOrder extends Component {
                                             name="CO_ID"
                                             value={CO_ID}
                                             onChange={this.changeHandler}
+                                            style={{width:"200px"}}
                                         >
                                         {this.state.menuItemCountry}
                                         </Select>
@@ -412,6 +468,31 @@ class newCustomerOrder extends Component {
                                         title="Firmenname, falls vorhanden"/>
                                     <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
                                 </Grid> 
+
+                                <Grid item sm={12} xs={12} onSubmit={this.handleSubmit}>
+                                    <TextField
+                                        label="Position*"
+                                        type="text"
+                                        /*name="C_HOUSENR"
+                                        value={C_HOUSENR}
+                                        value={el||''} */
+                                        title="Position" />
+                                    <TextField
+                                        label="Menge*"
+                                        type="text"
+                                        /*name="C_HOUSENR"
+                                        value={C_HOUSENR}
+                                        value={el||''} */
+                                        title="Menge" /> 
+                                        <Button > 
+                                        </Button>
+                                        <br></br>
+                                            {this.createUI()}      
+                                            <Button style={{color: "#FFFFFF",
+                                        backgroundColor: "#006064", padding:"5px", margin:"5px"}}  value='weitere Position' onClick={this.addClick.bind(this)} >
+                                            weitere Position
+                                        </Button>   
+                             </Grid>
 
                                 <Grid item sm={6} xs={12}>
                                     <FormControl component="fieldset">
