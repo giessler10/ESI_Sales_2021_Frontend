@@ -237,22 +237,18 @@ const pdfObject = jsPDFInvoiceTemplate(props);
           setOrderitemsData(undefined);
           return;
         }          
-        var _OrderitemsData = [];
-
-       // _OrderitemsData.push(res.data)
-      console.log("RESPOSNEDATE", res.data);
+        
+        console.log("RESPOSNEDATE", res.data);
         setOrderitemsData(res.data);
       
+        console.log("Orderitem Daten: ", OrderitemsData)
+        sleep(2000).then(() => { PdfCreate();}); 
       
         })
         .catch(err => {
             console.log(err.message); //Error-Handling
         })
         
-        console.log("Orderitem Daten: ", OrderitemsData)
-        sleep(2000).then(() => { PdfCreate();}); 
-
-    
  }
 
 const getMuiTheme = () => createMuiTheme({

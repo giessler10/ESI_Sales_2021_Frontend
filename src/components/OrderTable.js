@@ -1,16 +1,111 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
+import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
+import { useState, useEffect} from "react";
+import axios from "axios";
 
-//TesttabelleI Aufbau
-const columnsOrders =  ["Order No.", "Customer No.", "Order Type", "Order State", "Date"];
-const dataOrders = [
-    ["1", "37", "B", "In Production", "15/2/2020"],
-    ["31", "232", "P", "Customer", "19/1/2020"],
-    ["122", "2441", "B", "Shipping", "1/8/2019"],
-    ["123", "23", "P", "In Production", "18/2/2021"],
-];
-//TesttabelleI Aufbau Ende
+export default function CustomerTable(){
+
+  //Variables and constants  
+  const [selectedData, setSelectedData] =  useState([]); 
+  const [allData, setAllData] = useState([]); //alle Daten von DB.
+
+
+  //Columns with properties --> TODO auf eure Spaltennamen anpassen
+  const columns = [
+  { name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
+  {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
+  {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
+  {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
+  {name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+  {name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
+  {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
+  {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false}}, 
+  {name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
+  {name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
+  {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
+  {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
+  {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
+  {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: false}},
+  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: false}},
+  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: false}},
+  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: false}},
+  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: false}},
+  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: false}},
+  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
+  {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
+
+  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+};
+
+useEffect(() => {
+  // Get Customerdata
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+      .then(res => {
+      console.log("RESPONSE:", res); //Data from Gateway
+      
+      if(IsDataBaseOffline(res)) return; //Check if db is available
+
+      if(res.data.length === 0) { //Check if data is available
+        setAllData(undefined);
+        return;
+      }          
+
+      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+      setAllData(res.data); //Set new table data
+
+      })
+      .catch(err => {
+          console.log(err.message); //Error-Handling
+      })
+});
+
+  //Check if database is offline (AWS)
+  function IsDataBaseOffline(res){
+    if(res.data.errorMessage == null) return false; 
+    if(res.data.errorMessage === 'undefined') return false;
+    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
+        alert("Database is offline (AWS).");
+        return true;
+    }     
+    return false;
+  }
+
+    //Check if old data = new data
+    function DataAreEqual(data, sortedOrders){
+      if(data.sort().join(',') === sortedOrders.sort().join(',')){
+        return true;
+        }
+        else return false;
+      }
+
+//Get selected rows
+ function rowSelectEvent(curRowSelected, allRowsSelected){  
+
+  var _selectedData = [];
+
+  //No selection
+  if(allRowsSelected.length === 0) { 
+    setSelectedData(undefined);
+    return;
+  }
+
+  //Loop over all entries 
+  allRowsSelected.forEach(element => {
+    _selectedData.push(allData[element.dataIndex])
+  });
+ 
+  console.log("Selektierte Daten: ", _selectedData)
+  setSelectedData(_selectedData);
+  return;
+ }
+
+ //Lieferschein Button Click 
+ function OpenMore(){
+  <div><FullScreenDialogCustomerDetails/></div>
+ };
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {
@@ -22,14 +117,17 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
-const AllOrders = () => {
   return (
-    <MuiThemeProvider theme={getMuiTheme()}> 
-    <MUIDataTable
-      data={dataOrders}
-      columns={columnsOrders}/>
+    <div>
+    <MuiThemeProvider theme={getMuiTheme()} > 
+      <MUIDataTable
+        data={allData}
+        columns={columns}
+        options={options}/>
+        <br></br>
     </MuiThemeProvider>
-  )
+
+   </div>
+
+  );            
 }
-            
-export default AllOrders

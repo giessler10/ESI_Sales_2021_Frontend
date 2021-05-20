@@ -27,8 +27,8 @@ export default function CustomerTable(){
 };
 
 useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  // Get Customerdata
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
