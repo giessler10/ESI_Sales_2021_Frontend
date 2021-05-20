@@ -53,7 +53,6 @@ class AddCustomerForm extends Component {
             errorMessageVisible: false,
             errorObject: null,
             errors: {},
-
         };
 
         //Länder laden
