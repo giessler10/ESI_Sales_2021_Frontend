@@ -1,142 +1,109 @@
 import React from 'react';
-import { Typography, Button, FormControl, Grid, TextField } from '@material-ui/core';
+import { Typography, Grid} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+import Box from '@material-ui/core/Box';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 
-const Customers = () => {
-    return (
-        <div>
-          <form>
-            <div style={{ padding: "20px" }}>
-              <h2>Neuen Kunden anlegen</h2>
-            </div>
+//Seitenimport
+import AddCustomerForm from '../components/AddCustomerForm';
+import CustomerTable from '../components/CustomerTable';
 
-            <div style={{ width: "800px", padding: "20px" }}>
-              <FormControl>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="flex-start"
-                >
-                  <Grid container spacing={3}>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Vorname*"
-                        type="text"
-                        name="firstName"
-                        value=""
-                        title= "Vorname des Kunden"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Nachname*"
-                        type="text"
-                        name="surName"
-                        value=""
-                        title="Nachname des Kunden"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Straße*"
-                        type="text"
-                        name="street"
-                        value=""
-                        title="Straße und Hausnummer"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Postleitzahl*"
-                        type="number"
-                        name="PostCode"
-                        value=""
-                        title="Postleitzahl der Stadt"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Stadt*"
-                        type="text"
-                        name="city"
-                        value=""
-                        title="Name der Stadt"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Land*"
-                        type="text"
-                        name="country"
-                        value=""
-                        title="Kürzel des Landes, z.B. Deutschland = DE"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Telefon*"
-                        type="number"
-                        name="phone"
-                        value=""
-                        title="Telefonnummer mit Länder- und Ortsvorwahl"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Mail*"
-                        type="text"
-                        name="mail"
-                        value=""
-                        title="E-Mail-Adresse des Kunden"
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <div>
-                        {" "}
-                        Geschäftskunde <br />
-                        <input
-                          type="radio"
-                          value={true}
-                          name="business"
-                          //defaultChecked
-                        /> Ja <br />
-                        <input
-                          type="radio"
-                          value={false}
-                          name="business"
-                        />{" "}
-                        Nein
-                      </div>
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        label="Firma"
-                        type="text"
-                        name="company"
-                        value=""
-                        title="Firmenname, falls vorhanden"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Button
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      title="Kunde zur Kundendatenbank hinzufügen"
-                    >
-                      Kunden speichern
-                    </Button>
-                  </Grid>
-                </Grid>
-                <div>
-                  <h3>Bestätigung: </h3>
-                </div>
-              </FormControl>
-            </div>
-          </form>
-        </div>
-    )
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+  },
+  root: {
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+
+  },  
+}));
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-force-tabpanel-${index}`}
+      aria-labelledby={`scrollable-force-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
 }
 
-export default Customers
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-force-tab-${index}`,
+    'aria-controls': `scrollable-force-tabpanel-${index}`,
+  };
+}
+
+export default function ScrollableTabsButtonForce() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" color="default">
+        <Tabs
+          TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="scrollable force tabs example"
+        >
+          <Tab label="Alle Kunden" icon={<PersonPinIcon />} {...a11yProps(1)} />
+          <Tab label="Neuen Kunden anlegen" icon={<AddToPhotosIcon />} {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      
+      <TabPanel value={value} index={0}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Liste aller Kunden</h2>
+          </Grid>
+        </div>
+        <CustomerTable></CustomerTable>
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2> Kunde hinzufügen </h2> 
+          </Grid>
+        </div>
+        <AddCustomerForm></AddCustomerForm>
+      </TabPanel>
+    </div>
+  )
+}
