@@ -20,6 +20,9 @@ import OrdersInProgress from '../components/ordersInProgressTable';
 import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
 import NewOrder from '../components/newOrder';
+import RetoureTable from '../components/RetoureTable'
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -95,6 +98,7 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
           <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
+          <Tab label="Retouren" icon={<AutorenewIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 
@@ -141,6 +145,13 @@ export default function ScrollableTabsButtonForce() {
         </Grid>
         </div>
           <NewOrder/>
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+        </Grid>
+        </div>
+        <RetoureTable/>    
       </TabPanel>
         
     </div>

@@ -34,7 +34,6 @@ import OrdersMainPage from './pages/OrdersMainPage';
 import ShippingMainPage from './pages/ShippingMainPage';
 import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
-import RetoureMainPage from './pages/RetoureMainPage';
 import Footer from './footer'
 import OrderDetails from './components/specOrderDetails';
 
@@ -203,13 +202,7 @@ return (
               <ListItemText primary="Versand" />
             </ListItem>
 
-            <ListItem button component={Link} to="/Retoure"  key="retoure">
-              <ListItemIcon>
-                <RestoreIcon />
-              </ListItemIcon>
-              <ListItemText primary="Retoure" />
-            </ListItem>
-            <Divider/>
+            <Divider />
 
             <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
               <ListItemIcon>
@@ -261,9 +254,6 @@ return (
           </Route>
           <Route exact path="/Shipping">
             <ShippingMainPage/>
-          </Route>
-          <Route exact path="/Retoure">
-            <RetoureMainPage />
           </Route>
           <Route exact path="/Hilfebereich">
             <HilfebereichPage />
