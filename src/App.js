@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   active:{
     backgroundColor: "#006064",
   },
+
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -73,6 +74,22 @@ const useStyles = makeStyles((theme) => ({
   hide: {
     display: 'none',
   },
+
+  activeTab:{
+    "&$selected": {
+      backgroundColor: "#006064",
+      color: "white"
+    },
+    "&:hover": {
+      backgroundColor: "#006064",
+      color: "white"
+    },
+    "&$selected:hover": {
+      backgroundColor: "#006064",
+      color: "black"
+    } 
+},
+
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -108,21 +125,32 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+
+  selected: {}
+
 }));
+
 
 
 function App() {
   const classes = useStyles();
   const theme = useTheme();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index)};
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
 
   
 return (
@@ -174,44 +202,51 @@ return (
           </div>
           <Divider/>
           <List>
-            <ListItem button component={Link} to="/" key="dashboard"  classes={{ selected: classes.active }}>
+            <ListItem button component={Link} to="/" key="dashboard" className={classes.activeTab} selected={selectedIndex === 0}
+          onClick={event => handleListItemClick(event, 0)}
+        >
               <ListItemIcon>
                 <Dashboard />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItem>
 
-            <ListItem button component={Link} to="/Customers" key="customers">
+            <ListItem button component={Link} to="/Customers" key="customers"className={classes.activeTab} selected={selectedIndex === 1}
+          onClick={event => handleListItemClick(event, 1)}>
               <ListItemIcon>
                 <Group />
               </ListItemIcon>
               <ListItemText primary="Kunden" />
             </ListItem>
 
-            <ListItem button component={Link} to="/Orders" key="orders">
+            <ListItem button component={Link} to="/Orders" key="orders" className={classes.activeTab} selected={selectedIndex === 2}
+          onClick={event => handleListItemClick(event, 2)}>
               <ListItemIcon>
                 <ShoppingCart />
               </ListItemIcon>
               <ListItemText primary="Aufträge" />
             </ListItem>
 
-            <ListItem button component={Link} to="/Shipping" key="shipping">
+            <ListItem button component={Link} to="/Shipping" key="shipping" className={classes.activeTab} selected={selectedIndex === 3}
+          onClick={event => handleListItemClick(event, 3)}>
               <ListItemIcon>
                 <LocalShippingIcon/>
               </ListItemIcon>
               <ListItemText primary="Versand" />
             </ListItem>
 
-            <Divider />
+          <Divider />
 
-            <ListItem button component={Link} to="/Einstellungen"  key="einstellungen">
+            <ListItem button component={Link} to="/Einstellungen"  key="einstellungen" className={classes.activeTab} selected={selectedIndex === 4}
+          onClick={event => handleListItemClick(event, 4)}>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Einstellungen" />
             </ListItem>
 
-            <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich">
+            <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich" className={classes.activeTab} selected={selectedIndex === 5}
+          onClick={event => handleListItemClick(event, 5)}>
               <ListItemIcon>
                 <HelpIcon />
               </ListItemIcon>
