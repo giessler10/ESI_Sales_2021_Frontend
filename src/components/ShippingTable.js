@@ -6,14 +6,14 @@ import {Button} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
-import yourshirt from '../img/android-chrome-144x144.png';
 
 
 export default function ShippingOrders(){
 
-//Variables and constants  
+//Variables and constants 
+var logoBase64 = require('../img/logoBase64.js');
+
 const [selectedData, setSelectedData] =  useState([]); 
-const [OrderitemsData, setOrderitemsData] =  useState([]); 
 const [allData, setAllData] = useState([]); //alle Daten von DB.
 
 //Columns with properties
@@ -117,7 +117,7 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function PdfCreate(){
+function PdfCreate(OrderitemsData,logoBase64){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -157,7 +157,8 @@ var props = {
   fileName: "Lieferschein",
   orientationLandscape: false,
   logo: {
-      src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+      //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+      src: logoBase64,
       width: 53.33, //aspect ratio = width/height
       height: 26.66,
       margin: {
@@ -243,15 +244,15 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         if(IsDataBaseOffline(res)) return; //Check if db is available
     
         if(res.data.length === 0) { //Check if data is available
-          setOrderitemsData(undefined);
+          //setOrderitemsData(undefined);
           return;
         }          
         
-        console.log("RESPOSNEDATE", res.data);
-        setOrderitemsData(res.data);
+        //console.log("RESPOSNEDATE", res.data);
+        //setOrderitemsData(res.data);
       
-        console.log("Orderitem Daten: ", OrderitemsData)
-        sleep(2000).then(() => { PdfCreate();}); 
+        //console.log("Orderitem Daten: ", OrderitemsData)
+        PdfCreate(res.data,logoBase64.src);
       
         })
         .catch(err => {
