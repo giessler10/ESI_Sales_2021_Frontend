@@ -14,11 +14,12 @@ const useStyles = theme => ({
     error: {
         color: "red"
     },
-    errorAlert: {
+    alert: {
         width: '100%',
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
+        paddingBottom: "30px"
     }
 });
 
@@ -41,17 +42,17 @@ class AddCustomerForm extends Component {
 
             //Response
             response: [],
-            data: null,
+            responseMessage: null,
+            responseMessageVisible: false,
             menuItemCountry: [],
             radioButtonCustomerType: [],
             
 
             //Error
             errorMessage: null,
+            errorMessageVisible: false,
             errorObject: null,
-            errorMessageState: false,
             errors: {},
-
         };
 
         //Länder laden
@@ -74,13 +75,19 @@ class AddCustomerForm extends Component {
         )
         .catch(
             (error) => {
-            //console.log(e);
-            var errorObject = error.response.data;
-            var errorMessage = errorObject.errorMessage;
-            this.setState({ errorMessageState: true});
-            this.setState({ errorObject: errorObject });
-            this.setState({ errorMessage: errorMessage });
-        });
+                //console.log(e);
+                var errorObject = error.response.data;
+                var errorMessage = errorObject.errorMessage;
+                this.setState({ errorObject: errorObject });
+                this.setState({ errorMessage: errorMessage });
+                this.setState({ errorMessageVisible: true},()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({errorMessageVisible: false})
+                        },5000);
+                    }
+                )
+            }
+        );
 
 
         //CustomerTypes laden
@@ -102,13 +109,19 @@ class AddCustomerForm extends Component {
         )
         .catch(
             (error) => {
-            //console.log(e);
-            var errorObject = error.response.data;
-            var errorMessage = errorObject.errorMessage;
-            this.setState({ errorMessageState: true});
-            this.setState({ errorObject: errorObject });
-            this.setState({ errorMessage: errorMessage });
-        });
+                //console.log(e);
+                var errorObject = error.response.data;
+                var errorMessage = errorObject.errorMessage;
+                this.setState({ errorObject: errorObject });
+                this.setState({ errorMessage: errorMessage });
+                this.setState({ errorMessageVisible: true},()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({errorMessageVisible: false})
+                        },5000);
+                    }
+                )
+            }
+        );
     }
   
     changeHandler = (e) => {
@@ -137,8 +150,13 @@ class AddCustomerForm extends Component {
                     return data;
                 })
                 .then((data) => {
-                    console.log("data: " + data);
-                    this.setState({ data: data });
+                    console.log("responseMessage: " + data);
+                    this.setState({ responseMessage: data });
+                    this.setState({ responseMessageVisible: true },()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({responseMessageVisible: false})
+                        },5000);
+                    });
                 })
                 .then((response) => {
                     console.log(response);
@@ -146,13 +164,19 @@ class AddCustomerForm extends Component {
                 .then((response) => this.setState({ response }))
                 .catch(
                     (error) => {
-                    //console.log(e);
-                    var errorObject = error.response.data;
-                    var errorMessage = errorObject.errorMessage;
-                    this.setState({ errorMessageState: true});
-                    this.setState({ errorObject: errorObject });
-                    this.setState({ errorMessage: errorMessage });
-                });
+                        //console.log(e);
+                        var errorObject = error.response.data;
+                        var errorMessage = errorObject.errorMessage;
+                        this.setState({ errorObject: errorObject });
+                        this.setState({ errorMessage: errorMessage });
+                        this.setState({ errorMessageVisible: true},()=>{ 
+                                window.setTimeout(()=>{
+                                    this.setState({errorMessageVisible: false})
+                                },5000);
+                            }
+                        )
+                    }
+                );
         }
     };
 
@@ -269,8 +293,10 @@ class AddCustomerForm extends Component {
             C_EMAIL,        //E-Mail
             C_COMPANY,      //Firma
             C_CT_ID,        //Kundentyp
-            errorMessage,    //ErrorMessage
-            errorMessageState //StatusErrorMessage
+            errorMessage,           //ErrorMessage
+            errorMessageVisible,    //StatusErrorMessage
+            responseMessage,        //ResponseMessage
+            responseMessageVisible  //ReponseMessageStatus
         } = this.state;
 
         let content = "";
@@ -279,15 +305,15 @@ class AddCustomerForm extends Component {
             <div className={classes.root}>
                 <form onSubmit={this.submitHandler}>
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
-                        <Collapse in={errorMessageState}>
-                            <Alert  severity="error"
+                        <Collapse className={classes.alert} in={errorMessageVisible}>
+                            <Alert severity="error"
                                 action={
                                 <IconButton
                                     aria-label="close"
                                     color="inherit"
                                     size="small"
                                     onClick={() => {
-                                        this.setState({ errorMessageState: false});
+                                        this.setState({ errorMessageVisible: false});
                                     }}
                                 >
                                     <GridCloseIcon fontSize="inherit" />
@@ -295,6 +321,24 @@ class AddCustomerForm extends Component {
                                 }
                             >
                             {errorMessage}
+                            </Alert>
+                        </Collapse>
+                        <Collapse className={classes.alert} in={responseMessageVisible}>
+                            <Alert severity="success"
+                                action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        this.setState({ responseMessageVisible: false});
+                                    }}
+                                >
+                                    <GridCloseIcon fontSize="inherit" />
+                                </IconButton>
+                                }
+                            >
+                            {responseMessage}
                             </Alert>
                         </Collapse>
                         <FormControl>
@@ -372,7 +416,9 @@ class AddCustomerForm extends Component {
                                         <Select
                                             name="CO_ID"
                                             value={CO_ID}
-                                            onChange={this.changeHandler}
+                                            onChange={this.changeHandler
+                                            }
+                                            style={{width:"200px"}}
                                         >
                                         {this.state.menuItemCountry}
                                         </Select>
@@ -438,9 +484,6 @@ class AddCustomerForm extends Component {
                                 </Grid> 
 
                             </Grid>
-                            <div>
-                                <h3>Bestätigung: {(content = this.state.data)}</h3>
-                            </div>
                         </FormControl>
                     </div>
                 </form>

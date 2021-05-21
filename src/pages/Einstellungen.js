@@ -26,8 +26,7 @@ const Einstellungen = () => {
     return (
         <div >
             <Paper className={classes.paper}>
-            <h2> Keine Problemlösung gefunden? Kontaktieren Sie uns! </h2>   
-            <Form/> 
+            <h2> Einstellungen </h2>
             </Paper>
         </div>
     )
