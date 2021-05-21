@@ -38,7 +38,7 @@ export default function ShippingOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <Button variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}
+  customToolbarSelect: () => {return  <Button disabled={MoreThan2Rows()} variant="contained" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>;}
 };
 
 useEffect(() => {
@@ -102,6 +102,14 @@ useEffect(() => {
   return;
  }
 
+ 
+ function MoreThan2Rows(){
+  if(selectedData.length > 1) 
+  {    
+    return true;
+   }
+   return false;
+};
 
  function GetOrderItems(){
    
