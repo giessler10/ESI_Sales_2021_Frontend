@@ -5,6 +5,9 @@ import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
 
+import Button from '@material-ui/core/Button';
+import ReplayIcon from '@material-ui/icons/Replay';
+
 
 //importierte Seiten
 import OrderDetails from './specOrderDetails';
@@ -16,7 +19,11 @@ export default function ProgressOrders(){
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
   const [allData, setAllData] = useState([]); //alle Daten von DB.
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   //Columns with properties --> TODO auf eure Spaltennamen anpassen
   const columns = [
@@ -43,8 +50,9 @@ export default function ProgressOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
-};
+  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/> 
+    <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/> Auftrag in Produktion geben </Button> </div>;
+  }};
 
 useEffect(() => {
   // Get Customerdata

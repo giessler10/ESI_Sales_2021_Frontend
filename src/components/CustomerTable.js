@@ -24,6 +24,9 @@ export default function CustomerTable(){
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+
+
+
 };
 
 useEffect(() => {

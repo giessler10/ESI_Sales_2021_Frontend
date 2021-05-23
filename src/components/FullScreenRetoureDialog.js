@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import RetoureContent from './retoureContent';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,7 +44,7 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/>
        Retoure / Reklamation erfassen
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>

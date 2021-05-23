@@ -28,6 +28,7 @@ class newCustomerOrder extends Component {
         super(props);
 
         this.state = {
+            O_C_NR: "",         //Kundennummer
             C_FIRSTNAME: "",    //Vorname
             C_LASTNAME: "",     //Nachname
             C_STREET: "",       //Straße
@@ -180,25 +181,7 @@ class newCustomerOrder extends Component {
             errors["C_LASTNAME"] = "Nachname angeben";
         }
 
-        //Straße prüfen
-        if(this.state.C_STREET === ""){
-            formIsValid = false;
-            errors["C_STREET"] = "Straße angeben";
-        }
-        if(this.state.C_STREET != ""){
-            if(!this.state.C_STREET.match(/^[a-zA-Z,ß]+$/)){
-                console.log(this.state.C_STREET.match(/^[a-zA-Z]+$/));
-                formIsValid = false;
-                errors["C_STREET"] = "Nur Buchstaben erlaubt";
-            }
-        }
-
-        //Hausnummer prüfen
-        if(this.state.C_HOUSENR === ""){
-            formIsValid = false;
-            errors["C_HOUSENR"] = "Hausnummer angeben";
-        }
-
+       
         //Postleitzahl prüfen
         if(this.state.C_CI_PC === ""){
             formIsValid = false;
@@ -211,51 +194,6 @@ class newCustomerOrder extends Component {
             }
         }
 
-        //Stadt prüfen
-        if(this.state.CI_DESC === ""){
-            formIsValid = false;
-            errors["CI_DESC"] = "Stadt angeben";
-        }
-
-        //Land prüfen
-        if(this.state.CO_ID === ""){
-            formIsValid = false;
-            errors["CO_ID"] = "Land angeben";
-        }
-
-        //Telefon prüfen
-        if(this.state.C_TEL === ""){
-            formIsValid = false;
-            errors["C_TEL"] = "Telefonnummer angeben";
-        }
-
-        //Email
-        if(this.state.C_EMAIL === ""){
-            formIsValid = false;
-            errors["C_EMAIL"] = "E-Mail Adresse angeben";
-        }
-        if(this.state.C_EMAIL != ""){
-            //Zeichen prüfen
-            let lastAtPos = this.state.C_EMAIL.lastIndexOf('@');
-            let lastDotPos = this.state.C_EMAIL.lastIndexOf('.');
-    
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.C_EMAIL.indexOf('@@') == -1 && lastDotPos > 2 && (this.state.C_EMAIL.length - lastDotPos) > 2)) {
-                formIsValid = false;
-                errors["C_EMAIL"] = "E-Mail Adresse ungültig";
-            }
-        }
-
-        //Kundentyp prüfen
-        if(this.state.C_CT_ID === ""){
-            formIsValid = false;
-            errors["C_CT_ID"] = "Kundentyp angeben";
-        }
-
-        //Firma prüfen
-        if(this.state.C_COMPANY === "" && this.state.C_CT_ID === "B2B"){
-            formIsValid = false;
-            errors["C_COMPANY"] = "Firma angeben";
-        }
 
         this.setState({errors: errors});
         return formIsValid;
@@ -313,16 +251,10 @@ createUI(){
         const { classes } = this.props;
 
         const {
+            O_C_NR,         //Kundennummer
             C_FIRSTNAME,    //Vorname
             C_LASTNAME,     //Nachname
-            C_STREET,       //Straße
-            C_HOUSENR,      //Hausnummer
             C_CI_PC,        //Postleitzahl
-            CI_DESC,        //Stadt
-            CO_ID,          //Länderkennung
-            C_TEL,          //Telefon
-            C_EMAIL,        //E-Mail
-            C_COMPANY,      //Firma
             C_CT_ID,        //Kundentyp
             errorMessage,    //ErrorMessage
             errorMessageState //StatusErrorMessage
@@ -355,6 +287,17 @@ createUI(){
                         <FormControl>
                             <Grid container spacing={4}>
 
+                            <Grid item sm={6} xs={12}>
+                                    <TextField
+                                        label="Kundennummer*"
+                                        type="number"
+                                        name="O_C_NR"
+                                        value={O_C_NR}
+                                        onChange={this.changeHandler}
+                                        title= "Kundennummer"/>
+                                    <span className={classes.error}>{this.state.errors["O_C_NR"]}</span>
+                                </Grid>
+
                                 <Grid item sm={6} xs={12}>
                                     <TextField
                                         label="Vorname*"
@@ -377,27 +320,6 @@ createUI(){
                                         <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
                                 </Grid>
                 
-                                <Grid item sm={6} xs={12}>
-                                    <TextField
-                                        label="Straße*"
-                                        type="text"
-                                        name="C_STREET"
-                                        value={C_STREET}
-                                        onChange={this.changeHandler}
-                                        title="Straße" />
-                                    <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
-                                </Grid>
-
-                                <Grid item sm={6} xs={12}>         
-                                    <TextField
-                                        label="Hausnummer*"
-                                        type="text"
-                                        name="C_HOUSENR"
-                                        value={C_HOUSENR}
-                                        onChange={this.changeHandler}
-                                        title="Hausnummer" />
-                                    <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
-                                </Grid>
 
                                 <Grid item sm={6} xs={12}>
                                     <TextField
@@ -410,64 +332,6 @@ createUI(){
                                     <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>                                    
-                                    <TextField
-                                        label="Stadt*"
-                                        type="text"
-                                        name="CI_DESC"
-                                        value={CI_DESC}
-                                        onChange={this.changeHandler}
-                                        title="Stadt"/>
-                                    <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>                                   
-                                </Grid>
-
-                                <Grid item sm={6} xs={12}>
-                                    <FormControl>
-                                        <InputLabel id="country">Land*</InputLabel>
-                                        <Select
-                                            name="CO_ID"
-                                            value={CO_ID}
-                                            onChange={this.changeHandler}
-                                            style={{width:"200px"}}
-                                        >
-                                        {this.state.menuItemCountry}
-                                        </Select>
-                                        <span className={classes.error}>{this.state.errors["CO_ID"]}</span>
-                                    </FormControl>
-                                </Grid>    
-        
-                                <Grid item sm={6} xs={12}>                                    
-                                    <TextField
-                                        label="Telefon*"
-                                        type="text"
-                                        name="C_TEL"
-                                        value={C_TEL}
-                                        onChange={this.changeHandler}
-                                        title="Telefonnummer mit Länder- und Ortsvorwahl"/>
-                                    <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
-                                </Grid>       
-        
-                                <Grid item sm={6} xs={12}>                                    
-                                    <TextField
-                                        label="E-Mail*"
-                                        type="text"
-                                        name="C_EMAIL"
-                                        value={C_EMAIL}
-                                        onChange={this.changeHandler}
-                                        title="E-Mail-Adresse des Kunden"/>
-                                    <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>                                    
-                                </Grid>
-
-                                <Grid item sm={6} xs={12}>                                    
-                                    <TextField
-                                        label="Firma"
-                                        type="text"
-                                        name="C_COMPANY"
-                                        value={C_COMPANY}
-                                        onChange={this.changeHandler}
-                                        title="Firmenname, falls vorhanden"/>
-                                    <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
-                                </Grid> 
 
                                 <Grid item sm={12} xs={12} onSubmit={this.handleSubmit}>
                                     <TextField
@@ -487,25 +351,12 @@ createUI(){
                                         <Button > 
                                         </Button>
                                         <br></br>
-                                            {this.createUI()}      
-                                            <Button style={{color: "#FFFFFF",
-                                        backgroundColor: "#006064", padding:"5px", margin:"5px"}}  value='weitere Position' onClick={this.addClick.bind(this)} >
-                                            weitere Position
-                                        </Button>   
-                             </Grid>
-
-                                <Grid item sm={6} xs={12}>
-                                    <FormControl component="fieldset">
-                                        <FormLabel>Kundentyp</FormLabel>
-        
-                                        <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
-                                            {this.state.radioButtonCustomerType}
-                                        </RadioGroup>
-                                        <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
-
-                                    </FormControl>
+                                        {this.createUI()}      
+                                    <Button style={{color: "#FFFFFF",
+                                    backgroundColor: "#006064", padding:"5px", margin:"5px"}}  value='weitere Position' onClick={this.addClick.bind(this)} >
+                                        weitere Position
+                                    </Button>   
                                 </Grid>
-
  
 
                                 <Grid item xs={12}>                                    
@@ -513,8 +364,8 @@ createUI(){
                                         style={{ background: "#006064", color: "#ffffff"}}
                                         type="submit"
                                         variant="contained"
-                                        title="Kunde anlegen">
-                                        Kunde anlegen
+                                        title="Bestellung anlegen">
+                                        Bestellung anlegen
                                     </Button>                                    
                                 </Grid> 
 

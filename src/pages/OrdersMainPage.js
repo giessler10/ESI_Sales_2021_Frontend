@@ -13,6 +13,7 @@ import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import AddIcon from '@material-ui/icons/Add';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 //importierte Seiten
 import OrdersWithProblems from '../components/ordersWithProblemsTable';
@@ -21,7 +22,6 @@ import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
 import NewOrder from '../components/newOrder';
 import RetoureTable from '../components/RetoureTable'
-import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +98,7 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
           <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
-          <Tab label="Retouren" icon={<AutorenewIcon />} {...a11yProps(2)} />
+          <Tab label="Geschlossene Aufträge" icon={<AssignmentTurnedInIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 
@@ -146,6 +146,7 @@ export default function ScrollableTabsButtonForce() {
         </div>
           <NewOrder/>
       </TabPanel>
+
       <TabPanel value={value} index={5}>
         <div className={classes.root}>
           <Grid item xs={12}>
