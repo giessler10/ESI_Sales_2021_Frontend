@@ -97,8 +97,8 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Offene Aufträge" icon={<AssignmentIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
-          <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
           <Tab label="Geschlossene Aufträge" icon={<AssignmentTurnedInIcon />} {...a11yProps(2)} />
+          <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 
@@ -127,8 +127,8 @@ export default function ScrollableTabsButtonForce() {
         </Grid>
         </div>
         <OrdersInProgress />
-
       </TabPanel>
+
       <TabPanel value={value} index={3}>
         <div className={classes.root}>
           <Grid item xs={12}>
@@ -136,23 +136,24 @@ export default function ScrollableTabsButtonForce() {
         </Grid>
         </div>
       <OrdersWithProblems />
-
       </TabPanel>
+
       <TabPanel value={value} index={4}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
+        <h2> Geschlossene Aufträge </h2> 
+        </Grid>
+        </div>
+        <RetoureTable/>    
+      </TabPanel>
+
+      <TabPanel value={value} index={5}>
         <div className={classes.root}>
           <Grid item xs={12}>
         <h2> Neuer Auftrag erfassen </h2> 
         </Grid>
         </div>
           <NewOrder/>
-      </TabPanel>
-
-      <TabPanel value={value} index={5}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-        </Grid>
-        </div>
-        <RetoureTable/>    
       </TabPanel>
         
     </div>

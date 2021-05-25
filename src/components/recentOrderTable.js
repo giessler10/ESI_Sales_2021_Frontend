@@ -45,8 +45,17 @@ useEffect(() => {
       }          
 
       if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+      
       setAllData(res.data); //Set new table data
+      
+                //var last7Days=new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000)).toISOString(); // Set on the last 7 days // <- That one here is starting "useEffect" every second again - If not it would work properly -> Maybe kill useEffect() if possible
+      
+                //Set filters for 'recently' inserted Orders
+                //var filtereddata= res.data.filter(function(obj) { return obj.O_TIMESTAMP >= last7Days;});    
+      
+                //setAllData(filtereddata); //Set new table data      
 
+                
       })
       .catch(err => {
           console.log(err.message); //Error-Handling

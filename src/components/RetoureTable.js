@@ -46,7 +46,7 @@ export default function OrderTable(){
 
 useEffect(() => {
   // Get Customerdata
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=3')
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
