@@ -3,7 +3,6 @@ import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
 
-
 export default function CustomerOrders(){
 
   //Variables and constants  
@@ -38,10 +37,15 @@ export default function CustomerOrders(){
 };
 
 useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  
+  //Muss noch irgendwie angepasst werden, dass über den Aufruf vom Buttonevent die "SelectedData" von "Customertable" mitgegeben wird!!! -> Selbe Problematik bei "AddFilledCustomerForm"
+  var C_NR = 46;
+  //Siehe Kommentar darüber!!
+
+  // --> AufrufREST Link
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?customerId=' + C_NR)
       .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
+        console.log("RESPONSE customerOrdersTable:", res); //Data from Gateway
       
       if(IsDataBaseOffline(res)) return; //Check if db is available
 
@@ -123,3 +127,4 @@ const getMuiTheme = () => createMuiTheme({
 
   );            
 }
+
