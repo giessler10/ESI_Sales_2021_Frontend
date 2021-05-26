@@ -7,6 +7,7 @@ export default function RecentOrders(){
 
 //Define Constants
 const [allData, setAllData] = useState([]); //alle Daten von DB.
+const [filteredData, setfilteredData] = useState([]); //alle Daten von DB.
 
 const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
 {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
@@ -48,12 +49,12 @@ useEffect(() => {
       
       setAllData(res.data); //Set new table data
       
-                //var last7Days=new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000)).toISOString(); // Set on the last 7 days // <- That one here is starting "useEffect" every second again - If not it would work properly -> Maybe kill useEffect() if possible
-      
+                var last7Days=new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000)).toISOString(); // Set on the last 7 days // <- That one here is starting "useEffect" every second again - If not it would work properly -> Maybe kill useEffect() if possible
+                //var last7Days = "2021-05-26T00:00:00.000Z"
                 //Set filters for 'recently' inserted Orders
-                //var filtereddata= res.data.filter(function(obj) { return obj.O_TIMESTAMP >= last7Days;});    
+                var filtereddata= res.data.filter(function(obj) { return obj.O_TIMESTAMP >= last7Days;});    
       
-                //setAllData(filtereddata); //Set new table data      
+                setfilteredData(filtereddata); //Set new table data      
 
                 
       })
@@ -97,7 +98,7 @@ useEffect(() => {
         <div>
         <MuiThemeProvider theme={getMuiTheme()} > 
           <MUIDataTable
-            data={allData}
+            data={filteredData}
             columns={columns}/>
             <br></br>
         </MuiThemeProvider>
