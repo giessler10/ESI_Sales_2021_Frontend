@@ -13,7 +13,6 @@ import AlarmOnTwoToneIcon from '@material-ui/icons/AlarmOnTwoTone';
 //importierte Seiten
 import ShippingTable from '../components/ShippingTable';
 import ShippingButton from '../components/ShippingButton'
-import QSButton from '../components/QSButton'
 import FullScreenQSDialog from '../components/FullScreenQSDialog';
 
 const useStyles = makeStyles((theme) => ({
