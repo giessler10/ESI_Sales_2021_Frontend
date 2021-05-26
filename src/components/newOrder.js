@@ -320,7 +320,6 @@ createUI(){
                                         <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
                                 </Grid>
                 
-
                                 <Grid item sm={6} xs={12}>
                                     <TextField
                                         label="Postleitzahl*"
@@ -371,7 +370,7 @@ createUI(){
 
                             </Grid>
                             <div>
-                                <h3>Bestätigung: {(content = this.state.data)}</h3>
+                                <h3>Bestätigung {(content = this.state.data)}</h3>
                             </div>
                         </FormControl>
                     </div>
