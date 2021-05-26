@@ -84,10 +84,9 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
       }
 
 //Get selected rows
- function rowSelectEvent(curRowSelected, allRowsSelected){  
-
+function rowSelectEvent(curRowSelected, allRowsSelected){  
   var _selectedData = [];
-
+  
   //No selection
   if(allRowsSelected.length === 0) { 
     setSelectedData(undefined);
@@ -102,18 +101,16 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
   console.log("Selektierte Daten: ", _selectedData);
   setSelectedData(_selectedData);
   return;
- }
+}
 
 
- function MoreThan2Rows(){
+function MoreThan2Rows(){
   if(selectedData.length > 1) 
-  {    
-    return true;
-   }
-   return false;
+    {return true;}
+    return false;
 };
 
- function sleep(ms) {
+function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 

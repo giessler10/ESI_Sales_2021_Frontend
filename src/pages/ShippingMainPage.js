@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import {Button, FormControl, Grid} from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +14,7 @@ import AlarmOnTwoToneIcon from '@material-ui/icons/AlarmOnTwoTone';
 import ShippingTable from '../components/ShippingTable';
 import ShippingButton from '../components/ShippingButton'
 import QSButton from '../components/QSButton'
+import FullScreenQSDialog from '../components/FullScreenQSDialog';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -99,9 +100,9 @@ export default function ScrollableTabsButtonForce() {
                 <div className={classes.root}>
                     <Grid item xs={12}>
                         <h2 >QS Problem der ausgewählten Ware melden</h2>
-                        <QSButton></QSButton>
                     </Grid>
                 </div>
+                <div><FullScreenQSDialog/></div>
 
                 <div className={classes.root}>
                     <Grid item xs={12}>
@@ -113,5 +114,4 @@ export default function ScrollableTabsButtonForce() {
             </TabPanel>   
         </div>
     )
-}
-
+};

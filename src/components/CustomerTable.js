@@ -4,6 +4,8 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
+import {Button} from '@material-ui/core';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 export default function CustomerTable(){
 
@@ -23,11 +25,10 @@ export default function CustomerTable(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+  //customToolbarSelect: () => {return  <Button disabled={MoreThan2Rows()} variant="contained" onClick={OpenMore}> <DescriptionIcon/>Detailanzeige</Button>;}};
   customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
-
-
-
 };
+
 
 useEffect(() => {
   // --> TODO  eurem REST Link einfügen
@@ -71,7 +72,7 @@ useEffect(() => {
       }
 
 //Get selected rows
- function rowSelectEvent(curRowSelected, allRowsSelected){  
+function rowSelectEvent(curRowSelected, allRowsSelected){  
 
   var _selectedData = [];
 
@@ -86,14 +87,24 @@ useEffect(() => {
     _selectedData.push(allData[element.dataIndex])
   });
  
+
+
   console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
  }
 
- //Lieferschein Button Click 
+ function MoreThan2Rows(){
+  if(selectedData.length > 1) 
+  {    
+    return true;
+   }
+   return false;
+};
+
+ //Detailanzeige Button Click 
  function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
+  <FullScreenDialogCustomerDetails/>
  };
 
 const getMuiTheme = () => createMuiTheme({

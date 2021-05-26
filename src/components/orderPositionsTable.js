@@ -5,29 +5,11 @@ import { Button, FormControl, Grid, TextField, Select, MenuItem, InputLabel, For
 
 
 //TesttabelleI Aufbau
-const columnsAuftraege = ["Position", "Product", "Quantity", " "];
+const columnsAuftraege = ["Position", "Produkt", "Menge", "Grund der Retoure / QS"];
 const dataAuftraege = [
-  ["1", "T-Shirt", "7",  <Button
-  style={{ background: "#006064", color: "#ffffff"}}
-  type="submit"
-  variant="contained"
-  title="Kunde anlegen">
-  Retouren anzeigen
-</Button>],
-  ["2", "Socken", "10", <Button
-  style={{ background: "#006064", color: "#ffffff"}}
-  type="submit"
-  variant="contained"
-  title="Kunde anlegen">
-  Retouren anzeigen
-</Button>],
-  ["3", "Shirt mit Logo", "15",<Button
-  style={{ background: "#006064", color: "#ffffff"}}
-  type="submit"
-  variant="contained"
-  title="Kunde anlegen">
-  Retouren anzeigen
-</Button>],
+  ["1", "T-Shirt", "7"],
+  ["2", "Socken", "10"],
+  ["3", "Shirt mit Logo", "15"],
 ];
 
 

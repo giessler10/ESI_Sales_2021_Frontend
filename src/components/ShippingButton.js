@@ -13,7 +13,7 @@ const ShippingButton = () => {
                 type="submit"
                 variant="contained"
                 title="Kundendetails abfragen">
-                weg damit
+                Ware dem Versanddienstleister übergeben
               </Button>
             </Grid>
           </FormControl>
