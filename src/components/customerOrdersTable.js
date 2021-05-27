@@ -3,6 +3,7 @@ import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
 import QualityCell from './QualityCell.js';
+import FullScreenDialogOrderDetails from "./FullScreenDialogOrderDetails.js";
 
 export default function CustomerOrders(props){
 
@@ -35,7 +36,10 @@ export default function CustomerOrders(props){
 ];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {}
+  customToolbarSelect: (selectedRows, data) => {
+    var OI_O_NR = data[selectedRows.data[0].index].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/></div>;
+  }
 };
 
 useEffect(() => {
@@ -45,42 +49,30 @@ useEffect(() => {
   // --> AufrufREST Link
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?customerId=' + C_NR)
       .then(res => {
-        console.log("RESPONSE customerOrdersTable:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
+        if(res.data.length === 0) { //Check if data is available
+          setAllData(undefined);
+          return;
+        }          
 
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
-
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
+        if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+        setAllData(res.data); //Set new table data
 
       })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
+      .catch( error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
       })
 });
 
-  //Check if database is offline (AWS)
-  function IsDataBaseOffline(res){
-    if(res.data.errorMessage == null) return false; 
-    if(res.data.errorMessage === 'undefined') return false;
-    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
-        alert("Database is offline (AWS).");
-        return true;
-    }     
-    return false;
-  }
 
-    //Check if old data = new data
-    function DataAreEqual(data, sortedOrders){
-      if(data.sort().join(',') === sortedOrders.sort().join(',')){
-        return true;
-        }
-        else return false;
-      }
+//Check if old data = new data
+function DataAreEqual(data, sortedOrders){
+  if(data.sort().join(',') === sortedOrders.sort().join(',')){
+    return true;
+    }
+    else return false;
+  }
 
 //Get selected rows
  function rowSelectEvent(curRowSelected, allRowsSelected){  
