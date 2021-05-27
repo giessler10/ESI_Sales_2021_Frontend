@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import QSContent from './QSContent';
-import ReplayIcon from '@material-ui/icons/Replay';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -44,8 +44,8 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}  style={{ background: "#006064", color: "#ffffff"}}> 
-       QS erfassen
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ErrorIcon/>
+       QS Problem erfassen
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -56,9 +56,6 @@ export default function FullScreenDialog() {
             <Typography variant="h6" className={classes.title}>
               Retoure
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <QSContent/>
