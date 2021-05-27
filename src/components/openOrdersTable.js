@@ -1,7 +1,7 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
-import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
+import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
 
@@ -123,7 +123,7 @@ useEffect(() => {
 
  //Lieferschein Button Click 
  function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
+  <div><FullScreenDialogOrderDetails/></div>
  };
 
 
