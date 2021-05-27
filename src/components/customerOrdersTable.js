@@ -4,7 +4,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
 import QualityCell from './QualityCell.js';
 
-export default function CustomerOrders(){
+export default function CustomerOrders(props){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
@@ -39,10 +39,8 @@ export default function CustomerOrders(){
 };
 
 useEffect(() => {
-  
-  //Muss noch irgendwie angepasst werden, dass über den Aufruf vom Buttonevent die "SelectedData" von "Customertable" mitgegeben wird!!! -> Selbe Problematik bei "AddFilledCustomerForm"
-  var C_NR = 46;
-  //Siehe Kommentar darüber!!
+  var C_NR = props.C_NR;
+  //console.log(props.C_NR);
 
   // --> AufrufREST Link
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?customerId=' + C_NR)

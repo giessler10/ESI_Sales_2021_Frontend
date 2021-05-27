@@ -23,7 +23,7 @@ const useStyles = theme => ({
     }
 });
 
-class AddCustomerForm extends Component {
+class UpdateCustomerForm extends Component {
     constructor(props) {
         super(props);
 
@@ -39,6 +39,7 @@ class AddCustomerForm extends Component {
             C_EMAIL: "",        //E-Mail
             C_COMPANY: "",      //Firma
             C_CT_ID: "",        //Kundentyp
+            C_NR: props.C_NR,   //Kundennummer    
 
             //Response
             response: [],
@@ -91,6 +92,40 @@ class AddCustomerForm extends Component {
             }
         );
 
+        //CustomerTypes laden
+        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/types')
+        .then(
+            (res) => {
+                console.log(res.status);
+                return res.data;
+            }
+        )
+        .then(
+            (res) => {
+                this.setState({
+                    radioButtonCustomerType: res.map((v, key) => (
+                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                    ))
+                });
+            }
+        )
+        .catch(
+            (error) => {
+                //console.log(e);
+                var errorObject = error.response.data;
+                var errorMessage = errorObject.errorMessage;
+                this.setState({ 
+                    errorObject: errorObject,
+                    errorMessage: errorMessage 
+                });
+                this.setState({ errorMessageVisible: true},()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({errorMessageVisible: false})
+                        },5000);
+                    }
+                )
+            }
+        );
 
         //CustomerTypes laden
         axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/types')
@@ -126,6 +161,65 @@ class AddCustomerForm extends Component {
                 )
             }
         );
+
+        //Customer laden
+        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/' + this.state.C_NR)
+        .then(
+            (res) => {
+                console.log(res.status);
+                return res.data[0];
+            }
+        )
+        .then(
+            (res) => {
+                if(res.C_COMPANY == "null"){
+                    this.setState({
+                        C_FIRSTNAME: res.C_FIRSTNAME, 
+                        C_LASTNAME: res.C_LASTNAME,
+                        C_STREET: res.C_STREET,
+                        C_HOUSENR: res.C_HOUSENR,
+                        C_CI_PC: res.C_CI_PC,
+                        CI_DESC: res.CI_DESC,
+                        CO_ID: res.C_CO_ID,
+                        C_TEL: res.C_TEL,
+                        C_EMAIL: res.C_EMAIL,
+                        C_CT_ID: res.C_CT_ID
+                    });
+                }
+                else{
+                    this.setState({
+                        C_FIRSTNAME: res.C_FIRSTNAME, 
+                        C_LASTNAME: res.C_LASTNAME,
+                        C_STREET: res.C_STREET,
+                        C_HOUSENR: res.C_HOUSENR,
+                        C_CI_PC: res.C_CI_PC,
+                        CI_DESC: res.CI_DESC,
+                        CO_ID: res.C_CO_ID,
+                        C_TEL: res.C_TEL,
+                        C_EMAIL: res.C_EMAIL,
+                        C_COMPANY: res.C_COMPANY,
+                        C_CT_ID: res.C_CT_ID
+                    });
+                }
+            }
+        )
+        .catch(
+            (error) => {
+                //console.log(e);
+                var errorObject = error.response.data;
+                var errorMessage = errorObject.errorMessage;
+                this.setState({ 
+                    errorObject: errorObject,
+                    errorMessage: errorMessage 
+                });
+                this.setState({ errorMessageVisible: true},()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({errorMessageVisible: false})
+                        },5000);
+                    }
+                )
+            }
+        );
     }
   
     changeHandler = (e) => {
@@ -140,8 +234,8 @@ class AddCustomerForm extends Component {
         if(this.handleValidation()){
             console.log(this.state);
             axios
-                .post(
-                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers",
+                .put(
+                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers/"+ this.state.C_NR,
                     this.state
                 )
                 .then(console.log(this.state))
@@ -310,7 +404,7 @@ class AddCustomerForm extends Component {
         return (
             <div className={classes.root}>
                 <form onSubmit={this.submitHandler}>
-                    <div style={{alignContent:"center", fontSize: 12}}>
+                    <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
                         <Collapse className={classes.alert} in={errorMessageVisible}>
                             <Alert severity="error"
                                 action={
@@ -358,9 +452,7 @@ class AddCustomerForm extends Component {
                                         value={C_FIRSTNAME}
                                         onChange={this.changeHandler}
                                         title= "Vorname des Kunden"/>
-                                        <div>
-                                            <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
-                                        </div>
+                                    <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
                                 </Grid>
 
                                     <Grid item sm={6} xs={12}>                
@@ -371,9 +463,7 @@ class AddCustomerForm extends Component {
                                             value={C_LASTNAME}
                                             onChange={this.changeHandler}
                                             title="Nachname des Kunden"/>
-                                        <div>
-                                            <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
-                                        </div>
+                                        <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
                                 </Grid>
                 
                                 <Grid item sm={6} xs={12}>
@@ -384,9 +474,7 @@ class AddCustomerForm extends Component {
                                         value={C_STREET}
                                         onChange={this.changeHandler}
                                         title="Straße" />
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
-                                    </div>
+                                    <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>         
@@ -397,9 +485,7 @@ class AddCustomerForm extends Component {
                                         value={C_HOUSENR}
                                         onChange={this.changeHandler}
                                         title="Hausnummer" />
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
-                                    </div>
+                                    <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
@@ -410,9 +496,7 @@ class AddCustomerForm extends Component {
                                         value={C_CI_PC}
                                         onChange={this.changeHandler}
                                         title="Postleitzahl" />
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
-                                    </div>                                  
+                                    <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>                                    
@@ -423,9 +507,7 @@ class AddCustomerForm extends Component {
                                         value={CI_DESC}
                                         onChange={this.changeHandler}
                                         title="Stadt"/>
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>
-                                    </div>                                                                       
+                                    <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>                                   
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
@@ -440,9 +522,7 @@ class AddCustomerForm extends Component {
                                         >
                                         {this.state.menuItemCountry}
                                         </Select>
-                                    <div>
                                         <span className={classes.error}>{this.state.errors["CO_ID"]}</span>
-                                    </div>                                       
                                     </FormControl>
                                 </Grid>    
         
@@ -454,9 +534,7 @@ class AddCustomerForm extends Component {
                                         value={C_TEL}
                                         onChange={this.changeHandler}
                                         title="Telefonnummer mit Länder- und Ortsvorwahl"/>
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
-                                    </div>                                   
+                                    <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
                                 </Grid>       
         
                                 <Grid item sm={6} xs={12}>                                    
@@ -467,9 +545,7 @@ class AddCustomerForm extends Component {
                                         value={C_EMAIL}
                                         onChange={this.changeHandler}
                                         title="E-Mail-Adresse des Kunden"/>
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>    
-                                    </div>                                                                   
+                                    <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>                                    
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>                                    
@@ -480,9 +556,7 @@ class AddCustomerForm extends Component {
                                         value={C_COMPANY}
                                         onChange={this.changeHandler}
                                         title="Firmenname, falls vorhanden"/>
-                                    <div>
-                                        <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span> 
-                                    </div>                                                                     
+                                    <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
                                 </Grid> 
 
                                 <Grid item sm={6} xs={12}>
@@ -493,18 +567,22 @@ class AddCustomerForm extends Component {
                                             {this.state.radioButtonCustomerType}
                                         </RadioGroup>
                                         <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
+
                                     </FormControl>
                                 </Grid>
+
+ 
 
                                 <Grid item xs={12}>                                    
                                     <Button
                                         style={{ background: "#006064", color: "#ffffff"}}
                                         type="submit"
                                         variant="contained"
-                                        title="Kunde anlegen">
-                                        Kunde anlegen
+                                        title="Änderungen speichern">
+                                        Änderungen speichern
                                     </Button>                                    
                                 </Grid> 
+
                             </Grid>
                         </FormControl>
                     </div>
@@ -514,4 +592,4 @@ class AddCustomerForm extends Component {
     }
 }
   
-export default withStyles(useStyles)(AddCustomerForm);
+export default withStyles(useStyles)(UpdateCustomerForm);

@@ -23,8 +23,11 @@ export default function CustomerTable(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  //customToolbarSelect: () => {return  <Button disabled={MoreThan2Rows()} variant="contained" onClick={OpenMore}> <DescriptionIcon/>Detailanzeige</Button>;}};
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+  customToolbarSelect: (selectedRows, data) => {
+    //console.log(data[selectedRows.data[0].dataIndex].data[0]);
+    var C_NR = data[selectedRows.data[0].dataIndex].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
+  }
 };
 
 
@@ -32,9 +35,7 @@ useEffect(() => {
   // --> TODO  eurem REST Link einfügen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
+      //console.log("RESPONSE:", res); //Data from Gateway
 
       if(res.data.length === 0) { //Check if data is available
         setAllData(undefined);
@@ -45,29 +46,20 @@ useEffect(() => {
       setAllData(res.data); //Set new table data
 
       })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
+      .catch( error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
       })
 });
 
-  //Check if database is offline (AWS)
-  function IsDataBaseOffline(res){
-    if(res.data.errorMessage == null) return false; 
-    if(res.data.errorMessage === 'undefined') return false;
-    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
-        alert("Database is offline (AWS).");
-        return true;
-    }     
-    return false;
+//Check if old data = new data
+function DataAreEqual(data, sortedOrders){
+  if(data.sort().join(',') === sortedOrders.sort().join(',')){
+    return true;
+    }
+    else return false;
   }
-
-    //Check if old data = new data
-    function DataAreEqual(data, sortedOrders){
-      if(data.sort().join(',') === sortedOrders.sort().join(',')){
-        return true;
-        }
-        else return false;
-      }
 
 //Get selected rows
 function rowSelectEvent(curRowSelected, allRowsSelected){  
@@ -85,25 +77,18 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
     _selectedData.push(allData[element.dataIndex])
   });
  
-
-
-  console.log("Selektierte Daten: ", _selectedData)
+  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
- }
+}
 
- function MoreThan2Rows(){
+function MoreThan2Rows(){
   if(selectedData.length > 1) 
   {    
     return true;
    }
    return false;
 };
-
- //Detailanzeige Button Click 
- function OpenMore(){
-  <FullScreenDialogCustomerDetails/>
- };
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {
@@ -124,8 +109,6 @@ const getMuiTheme = () => createMuiTheme({
         options={options}/>
         <br></br>
     </MuiThemeProvider>
-
    </div>
-
   );            
 }
