@@ -23,10 +23,11 @@ export default function CustomerTable(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
-
-
-
+  customToolbarSelect: (selectedRows, data) => {
+    //console.log(data[selectedRows.data[0].dataIndex].data[0]);
+    var C_NR = data[selectedRows.data[0].dataIndex].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
+  }
 };
 
 useEffect(() => {

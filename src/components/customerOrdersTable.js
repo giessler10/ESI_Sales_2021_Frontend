@@ -3,7 +3,7 @@ import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
 
-export default function CustomerOrders(){
+export default function CustomerOrders(props){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
@@ -39,7 +39,8 @@ export default function CustomerOrders(){
 useEffect(() => {
   
   //Muss noch irgendwie angepasst werden, dass über den Aufruf vom Buttonevent die "SelectedData" von "Customertable" mitgegeben wird!!! -> Selbe Problematik bei "AddFilledCustomerForm"
-  var C_NR = 46;
+  var C_NR = props.C_NR;
+  console.log(props.C_NR);
   //Siehe Kommentar darüber!!
 
   // --> AufrufREST Link

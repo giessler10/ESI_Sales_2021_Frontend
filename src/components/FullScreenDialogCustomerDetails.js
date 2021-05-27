@@ -43,9 +43,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog() {
+export default function FullScreenDialog(props) {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+
+  var C_NR = props.C_NR;
+  var selectedRows = props.selectedRows;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,7 +89,7 @@ export default function FullScreenDialog() {
             <h2 >Einsicht in Kundenbestellungen</h2>
           </Grid>
         </div>
-        <CustomerOrders></CustomerOrders>
+        <CustomerOrders C_NR={C_NR}></CustomerOrders>
       </Dialog>
     </div>
   );
