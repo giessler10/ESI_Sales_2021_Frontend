@@ -194,6 +194,12 @@ class newCustomerOrder extends Component {
             }
         }
 
+        //Kundentyp prüfen
+        if(this.state.C_CT_ID === ""){
+            formIsValid = false;
+            errors["C_CT_ID"] = "Kundentyp angeben";
+        }
+
 
         this.setState({errors: errors});
         return formIsValid;
@@ -381,6 +387,18 @@ createUI(){
                                         onChange={this.changeHandler}
                                         title="Postleitzahl" />
                                     <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
+                                </Grid>
+
+
+                                <Grid item sm={6} xs={12}>
+                                    <FormControl component="fieldset">
+                                        <FormLabel>Auftragsart: Kunde / Vorbestellung</FormLabel>
+        
+                                        <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
+                                            {this.state.radioButtonCustomerType}
+                                        </RadioGroup>
+                                        <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
+                                    </FormControl>
                                 </Grid>
 
 

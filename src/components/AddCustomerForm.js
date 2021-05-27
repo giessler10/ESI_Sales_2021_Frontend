@@ -352,7 +352,9 @@ class AddCustomerForm extends Component {
                                         value={C_FIRSTNAME}
                                         onChange={this.changeHandler}
                                         title= "Vorname des Kunden"/>
-                                    <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
+                                        <div>
+                                            <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
+                                        </div>
                                 </Grid>
 
                                     <Grid item sm={6} xs={12}>                
@@ -363,7 +365,9 @@ class AddCustomerForm extends Component {
                                             value={C_LASTNAME}
                                             onChange={this.changeHandler}
                                             title="Nachname des Kunden"/>
-                                        <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
+                                        <div>
+                                            <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
+                                        </div>
                                 </Grid>
                 
                                 <Grid item sm={6} xs={12}>
@@ -374,7 +378,9 @@ class AddCustomerForm extends Component {
                                         value={C_STREET}
                                         onChange={this.changeHandler}
                                         title="Straße" />
-                                    <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
+                                    </div>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>         
@@ -385,7 +391,9 @@ class AddCustomerForm extends Component {
                                         value={C_HOUSENR}
                                         onChange={this.changeHandler}
                                         title="Hausnummer" />
-                                    <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
+                                    </div>
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
@@ -396,7 +404,9 @@ class AddCustomerForm extends Component {
                                         value={C_CI_PC}
                                         onChange={this.changeHandler}
                                         title="Postleitzahl" />
-                                    <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
+                                    </div>                                  
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>                                    
@@ -407,7 +417,9 @@ class AddCustomerForm extends Component {
                                         value={CI_DESC}
                                         onChange={this.changeHandler}
                                         title="Stadt"/>
-                                    <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>                                   
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>
+                                    </div>                                                                       
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>
@@ -422,7 +434,9 @@ class AddCustomerForm extends Component {
                                         >
                                         {this.state.menuItemCountry}
                                         </Select>
+                                    <div>
                                         <span className={classes.error}>{this.state.errors["CO_ID"]}</span>
+                                    </div>                                       
                                     </FormControl>
                                 </Grid>    
         
@@ -434,7 +448,9 @@ class AddCustomerForm extends Component {
                                         value={C_TEL}
                                         onChange={this.changeHandler}
                                         title="Telefonnummer mit Länder- und Ortsvorwahl"/>
-                                    <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
+                                    </div>                                   
                                 </Grid>       
         
                                 <Grid item sm={6} xs={12}>                                    
@@ -445,7 +461,9 @@ class AddCustomerForm extends Component {
                                         value={C_EMAIL}
                                         onChange={this.changeHandler}
                                         title="E-Mail-Adresse des Kunden"/>
-                                    <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>                                    
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>    
+                                    </div>                                                                   
                                 </Grid>
 
                                 <Grid item sm={6} xs={12}>                                    
@@ -456,7 +474,9 @@ class AddCustomerForm extends Component {
                                         value={C_COMPANY}
                                         onChange={this.changeHandler}
                                         title="Firmenname, falls vorhanden"/>
-                                    <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
+                                    <div>
+                                        <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span> 
+                                    </div>                                                                     
                                 </Grid> 
 
                                 <Grid item sm={6} xs={12}>
@@ -467,11 +487,8 @@ class AddCustomerForm extends Component {
                                             {this.state.radioButtonCustomerType}
                                         </RadioGroup>
                                         <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
-
                                     </FormControl>
                                 </Grid>
-
- 
 
                                 <Grid item xs={12}>                                    
                                     <Button
@@ -482,7 +499,6 @@ class AddCustomerForm extends Component {
                                         Kunde anlegen
                                     </Button>                                    
                                 </Grid> 
-
                             </Grid>
                         </FormControl>
                     </div>

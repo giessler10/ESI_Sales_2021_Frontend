@@ -51,9 +51,6 @@ export default function FullScreenDialog() {
             <Typography variant="h6" className={classes.title}>
               Auftrag bearbeiten
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
             <EditOrders/>

@@ -4,8 +4,6 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
-import {Button} from '@material-ui/core';
-import DescriptionIcon from '@material-ui/icons/Description';
 
 export default function CustomerTable(){
 

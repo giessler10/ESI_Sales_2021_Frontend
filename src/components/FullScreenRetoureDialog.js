@@ -56,9 +56,6 @@ export default function FullScreenDialog() {
             <Typography variant="h6" className={classes.title}>
               Retoure
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <RetoureContent></RetoureContent>

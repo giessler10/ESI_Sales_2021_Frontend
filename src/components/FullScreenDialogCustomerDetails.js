@@ -8,10 +8,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import AddFilledCustomerForm from './AddFilledCustomerForm';
+import CustomerDetailsForm from './CustomerDetailsForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +58,7 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <CreateIcon/>
         Bearbeiten
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
@@ -69,9 +70,6 @@ export default function FullScreenDialog() {
             <Typography variant="h6" className={classes.title}>
               Kundendetail
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <div className={classes.root}>
@@ -79,7 +77,7 @@ export default function FullScreenDialog() {
             <h2 >Kundendetails</h2>
           </Grid>
         </div>
-        <AddFilledCustomerForm></AddFilledCustomerForm>
+        <CustomerDetailsForm/>
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Einsicht in Kundenbestellungen</h2>

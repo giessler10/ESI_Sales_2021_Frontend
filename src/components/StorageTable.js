@@ -3,14 +3,11 @@ import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {Button} from '@material-ui/core';
-import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
-import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
-import FullScreenQSDialog from '../components/FullScreenQSDialog';
-import ShippingButton from '../components/ShippingButton'
+import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 
-export default function ShippingOrders(){
+export default function StorageOrders(){
 
 //Variables and constants 
 var logoBase64 = require('../img/logoBase64.js');
@@ -42,8 +39,7 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
- customToolbarSelect: () =>{return <div> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>
-<FullScreenQSDialog/> <ShippingButton/></div>;
+ customToolbarSelect: () =>{return <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <AllInboxIcon/>vom Lager bereitstellen</Button>;
 }};
 
 
@@ -119,114 +115,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function PdfCreate(OrderitemsData,logoBase64){
 
-  console.log("Orderitemdata Länge:", OrderitemsData.length);
-
-  var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
-
-    num: String(OrderitemsData[index]["OI_NR"]),
-    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
-    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)),
-    quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(OrderitemsData[index]["OI_PRICE"]),
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))
-}));
-
-console.log("TableData", tableData);
-
-                //Getting invoicedate
-                var invoicedate = new Date();
-                var dd = String(invoicedate.getDate()).padStart(2, '0');
-                var mm = String(invoicedate.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = invoicedate.getFullYear();
-
-                invoicedate = dd + '.' + mm + '.' + yyyy;
-
-                //Getting paymentdate
-                var paymentdate = new Date();
-                paymentdate.setDate(paymentdate.getDate() + 14);
-
-                var dd = String(paymentdate.getDate()).padStart(2, '0');
-                var mm = String(paymentdate.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = paymentdate.getFullYear();
-
-                paymentdate = dd + '.' + mm + '.' + yyyy;
-
-var props = {
-  outputType: OutputType.Save,
-  returnJsPDFDocObject: true,
-  fileName: "Lieferschein",
-  orientationLandscape: false,
-  logo: {
-      //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-      src: logoBase64,
-      width: 53.33, //aspect ratio = width/height
-      height: 26.66,
-      margin: {
-          top: 0, //negative or positive num, from the current position
-          left: 0 //negative or positive num, from the current position
-      }
-  },
-  business: {
-      name: "YourShirt GmbH",
-      address: "Schutterlindenberg 66, (DE) 77933 Lahr",
-      phone: "(+49) 7821 66 66 66",
-      email: "info@yourshirt.com",
-      //email_1: "info@example.al",
-      website: "www.yourshirt.de",
-  },
-  contact: {
-      label: "Invoice issued for:",
-      name: "Client Name",
-      address: "Albania, Tirane, Astir",
-      phone: "(+355) 069 22 22 222",
-      email: "client@website.al",
-      otherInfo: "www.website.al",
-  },
-  invoice: {
-      label: "Invoice #: ",
-      invTotalLabel: "Total:",
-      num: 19,
-      invDate: "Payment Date: " + invoicedate,
-      invGenDate: "Invoice Date: " + paymentdate,
-      header: ["#", "Description", "Price per Piece", "Quantity", "Price net","Price gross"],
-      headerBorder: false,
-      tableBodyBorder: false,
-      table: tableData,
-      invTotal: "145,250.50",
-      invCurrency: "EUR",
-      row1: {
-          col1: 'VAT:',
-          col2: '19',
-          col3: '%',
-          style: {
-              fontSize: 10 //optional, default 12
-          }
-      },
-      row2: {
-          col1: 'SubTotal:',
-          col2: '116,199.90',
-          col3: 'EUR',
-          style: {
-              fontSize: 10 //optional, default 12
-          }
-      },
-      invDescLabel: "Invoice Note",
-      invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-  },
-  footer: {
-      text: "The invoice is created on a computer and is valid without the signature and stamp.",
-  },
-  pageEnable: true,
-  pageLabel: "Page ",
-};
-
-const pdfObject = jsPDFInvoiceTemplate(props);
-
-}
-
- //Lieferschein Button Click 
+ //Aus Lager Button Click 
  function CreateDelivOrder(){
 
   //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
@@ -254,7 +144,7 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         //setOrderitemsData(res.data);
       
         //console.log("Orderitem Daten: ", OrderitemsData)
-        PdfCreate(res.data,logoBase64.src);
+        //PdfCreate(res.data,logoBase64.src);
       
         })
         .catch(err => {
