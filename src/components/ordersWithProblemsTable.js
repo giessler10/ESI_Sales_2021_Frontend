@@ -7,8 +7,7 @@ import axios from "axios";
 
 
 //importierte Seiten
-import OrderDetails from './specOrderDetails';
-import FullScreenDialog from'./FullScreenDialog';
+import FullScreenDialogOrderDetails from './FullScreenDialogOrderDetails';
 
 
 export default function ProgressOrders(){
@@ -43,49 +42,40 @@ export default function ProgressOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+  customToolbarSelect: (selectedRows, data) => {
+    var OI_O_NR = data[selectedRows.data[0].index].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/></div>;
+  }
 };
 
 useEffect(() => {
   // Get Customerdata
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=5,6')
       .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
 
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
+        if(res.data.length === 0) { //Check if data is available
+          setAllData(undefined);
+          return;
+        }          
 
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
+        if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+        setAllData(res.data); //Set new table data
 
       })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
+      .catch( error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
       })
 });
 
-  //Check if database is offline (AWS)
-  function IsDataBaseOffline(res){
-    if(res.data.errorMessage == null) return false; 
-    if(res.data.errorMessage === 'undefined') return false;
-    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
-        alert("Database is offline (AWS).");
-        return true;
-    }     
-    return false;
+//Check if old data = new data
+function DataAreEqual(data, sortedOrders){
+  if(data.sort().join(',') === sortedOrders.sort().join(',')){
+    return true;
+    }
+    else return false;
   }
-
-    //Check if old data = new data
-    function DataAreEqual(data, sortedOrders){
-      if(data.sort().join(',') === sortedOrders.sort().join(',')){
-        return true;
-        }
-        else return false;
-      }
 
 //Get selected rows
  function rowSelectEvent(curRowSelected, allRowsSelected){  
@@ -130,9 +120,7 @@ const getMuiTheme = () => createMuiTheme({
     <MUIDataTable
       data={allData} 
       columns={columns}
-      options={options}/> 
-      
-      
+      options={options}/>      
     </MuiThemeProvider>
   );        
 }

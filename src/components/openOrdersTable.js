@@ -15,6 +15,7 @@ import ProductionButton from '../components/ProductionButton'
 //importierte Seiten
 import OrderDetails from './specOrderDetails';
 import FullScreenDialog from'./FullScreenDialog';
+import FullScreenDialogOrderDetails from './FullScreenDialogOrderDetails';
 
 
 export default function ProgressOrders(){
@@ -53,8 +54,9 @@ export default function ProgressOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/> 
-    <ProductionButton/> </div>;
+  customToolbarSelect: (selectedRows, data) => {
+    var OI_O_NR = data[selectedRows.data[0].index].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/><ProductionButton/></div>;
   }};
 
 useEffect(() => {
