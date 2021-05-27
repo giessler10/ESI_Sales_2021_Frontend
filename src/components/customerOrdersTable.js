@@ -39,11 +39,8 @@ export default function CustomerOrders(props){
 };
 
 useEffect(() => {
-  
-  //Muss noch irgendwie angepasst werden, dass über den Aufruf vom Buttonevent die "SelectedData" von "Customertable" mitgegeben wird!!! -> Selbe Problematik bei "AddFilledCustomerForm"
   var C_NR = props.C_NR;
-  console.log(props.C_NR);
-  //Siehe Kommentar darüber!!
+  //console.log(props.C_NR);
 
   // --> AufrufREST Link
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?customerId=' + C_NR)

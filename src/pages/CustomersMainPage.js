@@ -88,20 +88,10 @@ export default function ScrollableTabsButtonForce() {
       </AppBar>
       
       <TabPanel value={value} index={0}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2 >Liste aller Kunden</h2>
-          </Grid>
-        </div>
         <CustomerTable></CustomerTable>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2> Kunde hinzufügen </h2> 
-          </Grid>
-        </div>
         <AddCustomerForm></AddCustomerForm>
       </TabPanel>
     </div>
