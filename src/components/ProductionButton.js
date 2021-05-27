@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 
 export default function AlertDialog() {
   const [open, setOpen] = React.useState(false);
@@ -20,12 +21,13 @@ export default function AlertDialog() {
   return (
     <div>
       <Button
-        style={{ background: "#006064", color: "#ffffff"}}
+        color ="primary"
         type="submit"
-        variant="contained"
+        variant="outlined"
         onClick={handleClickOpen}
-        title="Kundendetails abfragen">
-        QS melden
+        title="Produktionsauftrag">
+          <PlayCircleFilledWhiteIcon />
+        Auftrag an Produktion geben
       </Button>
       <Dialog
         open={open}
@@ -33,15 +35,15 @@ export default function AlertDialog() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Die Ware als fehlerhaft einstufen?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Auftrag an die Produktion geben?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Melden Sie QS-Probleme und stufen die Ware als fehlerhaft ein, so wird der Posten aus den versandbereiten Aufträgen entfernt und erneut in Produktion gegeben.
+            Sie sind sich sicher, dass der Auftrag vollständig ist und der Produktion weitergereicht werden kann?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Ware umbuchen
+            Auftrag absenden
           </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
             Abbrechen

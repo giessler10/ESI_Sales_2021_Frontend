@@ -143,14 +143,14 @@ const RetoureContent = () => {
 
                 <Grid item xs={12}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel  htmlFor="age-native-simple" >Grund der Retoure</InputLabel>
+                    <InputLabel >Grund der QS</InputLabel>
                     <Select
                       native
                       value={state.age}
                       onChange={handleChange}
                       inputProps={{
-                        name: 'Retouregrund',
-                        id: 'retouregrund',
+                        name: 'QSGrund',
+                        id: 'qsgrund',
                       }}
                     >
                       <option aria-label="None" value="" />
@@ -158,29 +158,10 @@ const RetoureContent = () => {
                       <option value={2}>zu groß</option>
                       <option value={3}>defekt - beschädigt</option>
                       <option value={4}>falsche Farbe</option>
-                      <option value={5}>Fehler meinerseits</option>
-                      <option value={6}>Fehler von YourShirt</option>
-                      <option value={7}>zu spät geliefert</option>
-                      <option value={8}>enttäuscht</option>
                       </Select>
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12}>
-                <h2>Art der Beanstandung: </h2>
-                <RadioGroup defaultValue="a" aria-label="retourenArt" name="customized-radios">
-                  <Grid item xs={12}>
-                    <FormControlLabel                 
-                      value="a"
-                      control={<GreenRadio />}
-                      label="Reklamation"/>
-                    <FormControlLabel
-                      value="k"
-                      control={<GreenRadio />}
-                      label="Retoure"/>
-                  </Grid>
-                </RadioGroup> 
-              </Grid>
             </Grid> 
             <Grid item xs={12}/>  
             <Grid item sm={12} xs={12}>
@@ -188,8 +169,8 @@ const RetoureContent = () => {
                     style={{ background: "#006064", color: "#ffffff"}}
                     type="submit"
                     variant="contained"
-                    title="Beanstandung anlegen">
-                    Beanstandung anlegen
+                    title="QS anlegen">
+                    QS anlegen
                   </Button>
                 </Grid>         
           </FormControl>
@@ -201,7 +182,7 @@ const RetoureContent = () => {
       <Paper elevation={3} style={{padding: "60px"}} className={classes.paper}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={12}>            
-            <h1>Auftragspositionen der Retoure wählen</h1>    
+            <h1>Auftragspositionen der QS wählen</h1>    
           </Grid>
           <Grid item xs={12} md={12} lg={12}>            
             <OrderPositions />        

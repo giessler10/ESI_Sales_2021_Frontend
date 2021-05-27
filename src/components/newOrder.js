@@ -214,31 +214,83 @@ addClick(){
      this.setState({ values });
   }
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.values.join(', '));
+    alert('Eine Position wurde hinzugefügt:  ' + this.state.values.join(', '));
     event.preventDefault();
   }
 createUI(){
     return this.state.values.map((el, i) => 
         <div key={i}>
-<Grid item sm={12} xs={12}>         
-    <TextField
-        label="Position*"
-        type="text"
-        /*name="C_HOUSENR"
-        value={C_HOUSENR}
-        value={el||''} */
-        onChange={this.handleChange.bind(this, i)}
-        title="Position" />
-    <TextField
-        label="Menge*"
-        type="text"
-        /*name="C_HOUSENR"
-        value={C_HOUSENR}
+<Grid item sm={12} xs={12} style={{padding: "20px", margin: "10px"}}>         
+<TextField
+      label="Position*"
+      type="text"
+      /*name="C_HOUSENR"
+      value={C_HOUSENR}
+      value={el||''} */
+      onChange={this.handleChange.bind(this, i)}
+      title="Position" />
+ <TextField
+      label="Menge*"
+      type="text"
+      /*name="OI_QTY"
+        value={OI_QTY}
         value={el||''} */
         onChange={this.handleChange.bind(this, i)}
         title="Menge" /> 
+    <TextField
+        label="Materialbeschreibung*"
+        type="text"
+        /*name="OI_MATERIALDESC"
+        value={OI_MATERIALDESC}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Menge" /> 
+
+    <TextField
+        label="Farbe (Hex)*"
+        type="text"
+        /*name="OI_HEXCOLOR"
+        value={OI_HEXCOLOR}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Menge" /> 
+    <TextField
+        label="Order Item number*"
+        type="text"
+        /*name="OI_NR"
+        value={OI_NR}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Menge" /> 
+    <TextField
+        label="Preis*"
+        type="text"
+        /*name="OI_PRICE"
+        value={OI_PRICE}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Menge" /> 
+                                    
+    <TextField
+        label="Bildpfad*"
+        type="text"
+        /*name="IM_FILE"
+        value={IM_FILE}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Bildpfad" /> 
+
+    <TextField
+        label="Bildposition*"
+        type="text"
+        /*name="IM_POSITION"
+        value={IM_POSITION}
+        value={el||''} */
+        onChange={this.handleChange.bind(this, i)}
+        title="Bildposition" /> 
+                                             
         <Button style={{color: "#FFFFFF",
-          backgroundColor: "#006064", margion:"5px"}}  value='remove' onClick={this.removeClick.bind(this, i)} >
+          backgroundColor: "#006064", margin:"5px", padding:"5px"}}  value='remove' onClick={this.removeClick.bind(this, i)} >
               remove
           </Button> 
     </Grid>
@@ -320,7 +372,6 @@ createUI(){
                                         <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
                                 </Grid>
                 
-
                                 <Grid item sm={6} xs={12}>
                                     <TextField
                                         label="Postleitzahl*"
@@ -333,7 +384,7 @@ createUI(){
                                 </Grid>
 
 
-                                <Grid item sm={12} xs={12} onSubmit={this.handleSubmit}>
+                                <Grid item sm={12} xs={12} onSubmit={this.handleSubmit} width="">
                                     <TextField
                                         label="Position*"
                                         type="text"
@@ -344,10 +395,53 @@ createUI(){
                                     <TextField
                                         label="Menge*"
                                         type="text"
-                                        /*name="C_HOUSENR"
-                                        value={C_HOUSENR}
+                                        /*name="OI_QTY"
+                                        value={OI_QTY}
                                         value={el||''} */
                                         title="Menge" /> 
+                                     <TextField
+                                        label="Materialbeschreibung*"
+                                        type="text"
+                                        /*name="OI_MATERIALDESC"
+                                        value={OI_MATERIALDESC}
+                                        value={el||''} */
+                                        title="Menge" /> 
+
+                                    <TextField
+                                        label="Farbe (Hex)*"
+                                        type="text"
+                                        /*name="OI_HEXCOLOR"
+                                        value={OI_HEXCOLOR}
+                                        value={el||''} */
+                                        title="Menge" /> 
+                                    <TextField
+                                        label="Order Item number*"
+                                        type="text"
+                                        /*name="OI_NR"
+                                        value={OI_NR}
+                                        value={el||''} */
+                                        title="Menge" /> 
+                                     <TextField
+                                        label="Preis*"
+                                        type="text"
+                                        /*name="OI_PRICE"
+                                        value={OI_PRICE}
+                                        value={el||''} */
+                                        title="Menge" /> 
+                                     <TextField
+                                        label="Bild*"
+                                        type="text"
+                                        /*name="IM_FILE"
+                                        value={IM_FILE}
+                                        value={el||''} */
+                                        title="Bild" /> 
+                                     <TextField
+                                        label="Bildposition*"
+                                        type="text"
+                                        /*name="IM_POSITION"
+                                        value={IM_POSITION}
+                                        value={el||''} */
+                                        title="Bildposition" /> 
                                         <Button > 
                                         </Button>
                                         <br></br>
@@ -371,7 +465,7 @@ createUI(){
 
                             </Grid>
                             <div>
-                                <h3>Bestätigung: {(content = this.state.data)}</h3>
+                                <h3>Bestätigung {(content = this.state.data)}</h3>
                             </div>
                         </FormControl>
                     </div>

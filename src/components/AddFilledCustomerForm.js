@@ -403,8 +403,7 @@ class AddCustomerForm extends Component {
                                     </FormControl>
                                 </Grid>
 
- 
-
+                                <Grid item xs={12}/>
                                 <Grid item xs={12}>                                    
                                     <Button
                                         style={{ background: "#006064", color: "#ffffff"}}
@@ -417,7 +416,7 @@ class AddCustomerForm extends Component {
 
                             </Grid>
                             <div>
-                                <h3>Bestätigung: {(content = this.state.data)}</h3>
+                                <h3>Bestätigung {(content = this.state.data)}</h3>
                             </div>
                         </FormControl>
                     </div>

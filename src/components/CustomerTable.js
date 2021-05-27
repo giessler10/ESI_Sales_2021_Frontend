@@ -4,6 +4,8 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
+import {Button} from '@material-ui/core';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 export default function CustomerTable(){
 
@@ -30,9 +32,10 @@ export default function CustomerTable(){
   }
 };
 
+
 useEffect(() => {
   // --> TODO  eurem REST Link einfügen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
       console.log("RESPONSE:", res); //Data from Gateway
       
@@ -72,7 +75,7 @@ useEffect(() => {
       }
 
 //Get selected rows
- function rowSelectEvent(curRowSelected, allRowsSelected){  
+function rowSelectEvent(curRowSelected, allRowsSelected){  
 
   var _selectedData = [];
 
@@ -87,14 +90,24 @@ useEffect(() => {
     _selectedData.push(allData[element.dataIndex])
   });
  
+
+
   console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
  }
 
- //Lieferschein Button Click 
+ function MoreThan2Rows(){
+  if(selectedData.length > 1) 
+  {    
+    return true;
+   }
+   return false;
+};
+
+ //Detailanzeige Button Click 
  function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
+  <FullScreenDialogCustomerDetails/>
  };
 
 const getMuiTheme = () => createMuiTheme({

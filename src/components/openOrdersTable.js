@@ -7,6 +7,9 @@ import axios from "axios";
 
 import Button from '@material-ui/core/Button';
 import ReplayIcon from '@material-ui/icons/Replay';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import ProductionButton from '../components/ProductionButton'
+
 
 
 //importierte Seiten
@@ -51,7 +54,7 @@ export default function ProgressOrders(){
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/> 
-    <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/> Auftrag in Produktion geben </Button> </div>;
+    <ProductionButton/> </div>;
   }};
 
 useEffect(() => {

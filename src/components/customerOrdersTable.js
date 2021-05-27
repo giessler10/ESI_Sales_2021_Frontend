@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
+import QualityCell from './QualityCell.js';
 
 export default function CustomerOrders(props){
 
@@ -22,15 +23,16 @@ export default function CustomerOrders(props){
   {name: "C_COMPANY", label: "Firma", options: {filter: true, sort: false, display: true}},
   {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
   {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
-  {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
-  {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
-  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
-  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
-  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
-  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
-  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
-  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
-  {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
+  {name: "HEXCOLOR", label: "Farbe", options: {filter: true,sort: true, display: true,
+    customBodyRender: (value, tableMeta, updateValue) => {
+    return (
+      <QualityCell
+        value={value}
+        index={tableMeta.columnIndex}
+        change={event => updateValue(event)}
+      />
+    );} }},
+];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: () => {}
