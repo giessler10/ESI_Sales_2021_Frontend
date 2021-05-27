@@ -1,7 +1,7 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
-import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
+import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
 
@@ -53,9 +53,13 @@ export default function ProgressOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/> 
-    <ProductionButton/> </div>;
-  }};
+  customToolbarSelect: (selectedRows, data) => {
+    //console.log(data[selectedRows.data[0].dataIndex].data[0]);
+    var C_NR = data[selectedRows.data[0].dataIndex].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} C_NR={C_NR}/> <ProductionButton/> </div>;
+  }
+};
+
 
 useEffect(() => {
   // Get Customerdata
@@ -121,7 +125,7 @@ useEffect(() => {
 
  //Lieferschein Button Click 
  function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
+  <div><FullScreenDialogOrderDetails/></div>
  };
 
 
