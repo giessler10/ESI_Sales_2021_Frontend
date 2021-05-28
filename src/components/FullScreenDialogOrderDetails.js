@@ -12,7 +12,7 @@ import UpdateCustomerForm from './UpdateCustomerForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
-import OrderPositionsTable from './OrderPositionsTable';
+import OrderPositionsTable from './OrderPositionsTable.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -65,9 +70,12 @@ export default function FullScreenDialogOrderDetails(props) {
     setOpen(false);
   };
 
+
+  
+
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
         Bestelldetails
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
