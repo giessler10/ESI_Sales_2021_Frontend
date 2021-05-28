@@ -6,10 +6,6 @@ import { useState, useEffect} from "react";
 import axios from "axios";
 
 
-//importierte Seiten
-import FullScreenDialogOrderDetails from './FullScreenDialogOrderDetails';
-
-
 export default function ProgressOrders(){
 
   //Variables and constants  

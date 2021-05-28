@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 //Seiteninhalte
-import OrderPositions from './orderPositionsTable';
+import OrderPositions from './OrderPositionsTable';
 import RetoureReasons from './retoureReasons';
 
 

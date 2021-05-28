@@ -17,7 +17,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 
 
 //Seiteninhalte
-import OrderPositions from './orderPositionsTable';
+import OrderPositions from './OrderPositionsTable';
 import RetoureReasons from './retoureReasons';
 import RetoureTest from './retoureContent copy';
 

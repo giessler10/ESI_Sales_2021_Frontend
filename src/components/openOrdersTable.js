@@ -10,14 +10,6 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import ProductionButton from '../components/ProductionButton'
 
-
-
-//importierte Seiten
-import OrderDetails from './specOrderDetails';
-import FullScreenDialog from'./FullScreenDialog';
-import FullScreenDialogOrderDetails from './FullScreenDialogOrderDetails';
-
-
 export default function ProgressOrders(){
 
   //Variables and constants  
