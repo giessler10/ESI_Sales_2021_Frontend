@@ -45,7 +45,7 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 
  useEffect(() => {
   //Orders aus MySQL ziehen
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=7')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=8')
       .then(res => {
       console.log("Response Orderlist:", res); //Data from Gateway
       
