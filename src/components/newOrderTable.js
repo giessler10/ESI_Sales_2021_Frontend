@@ -233,6 +233,13 @@ const tableIcons = {
                 backgroundColor: "#006064",
                 color: "#FFFF",
               },
+            textLabels: {
+              body: {
+                noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                toolTip: "Sort",
+                columnHeaderTooltip: column => `Sort for ${column.label}`
+              }
+            }
             }}
             icons={tableIcons}
             editable={{

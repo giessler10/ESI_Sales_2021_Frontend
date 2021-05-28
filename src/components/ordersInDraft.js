@@ -41,8 +41,16 @@ export default function DraftOrders(){
   customToolbarSelect: (selectedRows, data) => {
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
     return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/></div>;
+  },
+  textLabels: {
+    body: {
+      noMatch: "Es wurden keine passenden Aufträge gefunden.",
+      toolTip: "Sort",
+      columnHeaderTooltip: column => `Sort for ${column.label}`
+    }
   }
 };
+
 
 useEffect(() => {
   // Get Customerdata
