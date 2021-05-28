@@ -54,6 +54,7 @@ export default function FullScreenDialogOrderDetails(props) {
   const [open, setOpen] = React.useState(false);
 
   var OI_O_NR = props.OI_O_NR;
+  var order = props.order;
   var selectedRows = props.selectedRows;
 
   const handleClickOpen = () => {
@@ -85,7 +86,11 @@ export default function FullScreenDialogOrderDetails(props) {
             <h2 >Bestellnummer {OI_O_NR}</h2>
           </Grid>
         </div>
-        Hier muss noch der Order Header ergänzt werden
+        <div className={classes.root}>
+          <Grid item xs={12}>
+            <h2 >Kundename {order[10]} {order[1]}</h2>
+          </Grid>
+        </div>
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2>Positionen</h2>
