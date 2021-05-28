@@ -14,16 +14,17 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import BrushIcon from '@material-ui/icons/Brush'; // Oder anstatt Brush -> Build
 
 //importierte Seiten
 import OrdersWithProblems from '../components/ordersWithProblemsTable';
 import OrdersInProgress from '../components/ordersInProgressTable';
+import OrdersInDraft from '../components/ordersInDraft';
 import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
-import NewOrder from '../components/newOrder';
 import RetoureTable from '../components/RetoureTable'
 import ProductionButton from '../components/ProductionButton'
-
+import NewOrderTable from '../components/newOrderTable';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -95,6 +96,7 @@ export default function ScrollableTabsButtonForce() {
           aria-label="scrollable force tabs example"
         >
           <Tab label="Alle Aufträge" icon={<AllInclusiveIcon />} {...a11yProps(2)} />
+          <Tab label="Aufträge im Entwurf" icon={<BrushIcon />} {...a11yProps(2)} />
           <Tab label="Offene Aufträge" icon={<AssignmentIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
@@ -115,13 +117,22 @@ export default function ScrollableTabsButtonForce() {
       <TabPanel value={value} index={1}>
         <div className={classes.root}>
           <Grid item xs={12}>
+            <h2> Aufträge im Entwurf </h2> 
+          </Grid>
+        </div>
+        <OrdersInDraft/>
+      </TabPanel>
+
+      <TabPanel value={value} index={2}>
+        <div className={classes.root}>
+          <Grid item xs={12}>
             <h2> Offene Aufträge </h2> 
           </Grid>
         </div>
         <OrdersOpen />
       </TabPanel>
 
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={3}>
         <div className={classes.root}>
           <Grid item xs={12}>
         <h2> Aufträge in Bearbeitung </h2> 
@@ -130,7 +141,7 @@ export default function ScrollableTabsButtonForce() {
         <OrdersInProgress />
       </TabPanel>
 
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={4}>
         <div className={classes.root}>
           <Grid item xs={12}>
         <h2> Aufträge mit Problemen </h2> 
@@ -139,7 +150,7 @@ export default function ScrollableTabsButtonForce() {
       <OrdersWithProblems />
       </TabPanel>
 
-      <TabPanel value={value} index={4}>
+      <TabPanel value={value} index={5}>
         <div className={classes.root}>
           <Grid item xs={12}>
         <h2> Geschlossene Aufträge </h2> 
@@ -148,13 +159,8 @@ export default function ScrollableTabsButtonForce() {
         <RetoureTable/>    
       </TabPanel>
 
-      <TabPanel value={value} index={5}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-        <h2> Neuer Auftrag erfassen </h2> 
-        </Grid>
-        </div>
-          <NewOrder/>
+      <TabPanel value={value} index={6}>
+          <NewOrderTable/>
       </TabPanel>
         
     </div>
