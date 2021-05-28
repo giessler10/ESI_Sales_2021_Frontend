@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -66,7 +71,7 @@ export default function FullScreenDialog(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
         Kundendetails
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>

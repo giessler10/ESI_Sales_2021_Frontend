@@ -30,6 +30,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
+
 export default function FullScreenRetoure(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -46,9 +52,11 @@ export default function FullScreenRetoure(props) {
     setOpen(false);
   };
 
+
+
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/>
        Retoure / Reklamation erfassen
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>

@@ -42,8 +42,8 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
- customToolbarSelect: () =>{return <div> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>
-<FullScreenQSDialog/> <ShippingButton/></div>;
+ customToolbarSelect: (selectedRows) => {return <div> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>
+<FullScreenQSDialog selectedRows={selectedRows.data}/> <ShippingButton/></div>;
 }};
 
 

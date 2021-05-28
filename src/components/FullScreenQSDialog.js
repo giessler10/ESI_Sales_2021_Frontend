@@ -30,7 +30,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog() {
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
+
+export default function FullScreenDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -41,10 +47,13 @@ export default function FullScreenDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  var OI_O_NR = props.OI_O_NR;
+  var selectedRows = props.selectedRows;
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}> <ErrorIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <ErrorIcon/>
        QS Problem erfassen
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
