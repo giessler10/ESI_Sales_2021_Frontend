@@ -43,6 +43,15 @@ import {DataGrid} from '@material-ui/data-grid';
     },
   ];
 
+  const options= { 
+    textLabels: {
+    body: {
+      noMatch: "Es wurden keine passenden Aufträge gefunden.",
+      toolTip: "Sort",
+      columnHeaderTooltip: column => `Sort for ${column.label}`
+    }
+  }};
+
 
 export default function EditRowModelControlGrid() {
   const [editRowsModel, setEditRowsModel] = React.useState({});
@@ -60,6 +69,7 @@ export default function EditRowModelControlGrid() {
           columns={columns}
           editRowsModel={editRowsModel}
           onEditRowModelChange={handleEditRowModelChange}
+          options={options}
         />
       </div>
     </div>

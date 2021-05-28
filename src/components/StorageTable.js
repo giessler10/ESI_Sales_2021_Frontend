@@ -40,6 +40,14 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
  customToolbarSelect: () =>{return <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <AllInboxIcon/>vom Lager bereitstellen</Button>;
+
+},
+textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
 }};
 
 

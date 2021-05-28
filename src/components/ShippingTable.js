@@ -2,7 +2,7 @@
 import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import {Button} from '@material-ui/core';
+import {Button, Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
@@ -42,9 +42,23 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
- customToolbarSelect: (selectedRows) => {return <div> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button>
-<FullScreenQSDialog selectedRows={selectedRows.data}/> <ShippingButton/></div>;
-}};
+ customToolbarSelect: (selectedRows) => {return <div> <React.Fragment>
+  <Grid item xs={4}> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> </Grid>
+        <Grid item xs={4}>
+<FullScreenQSDialog selectedRows={selectedRows.data}/> <ShippingButton/></Grid><Grid item xs={4}></Grid></React.Fragment></div>; 
+ },
+textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
+}
+};
+
+
+
+
 
 
  useEffect(() => {

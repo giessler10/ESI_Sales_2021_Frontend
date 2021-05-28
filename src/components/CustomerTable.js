@@ -26,6 +26,13 @@ export default function CustomerTable(){
   customToolbarSelect: (selectedRows, data) => {
     var C_NR = data[selectedRows.data[0].index].data[0];
     return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
+  },
+  textLabels: {
+    body: {
+      noMatch: "Es wurden keine passenden Aufträge gefunden.",
+      toolTip: "Sort",
+      columnHeaderTooltip: column => `Sort for ${column.label}`
+    }
   }
 };
 
@@ -51,6 +58,8 @@ useEffect(() => {
         console.log(errorMessage); //Error-Handling
       })
 });
+
+document.getElementsByClassName("MUIDataTableBody-emptyTitle-175").innerHTML = "testest";
 
 //Check if old data = new data
 function DataAreEqual(data, sortedOrders){

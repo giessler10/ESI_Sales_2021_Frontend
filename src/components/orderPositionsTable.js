@@ -23,7 +23,14 @@ export default function OrderPositionsTable(props){
   ];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {}
+  customToolbarSelect: () => {},
+textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
+}
 };
 
 useEffect(() => {

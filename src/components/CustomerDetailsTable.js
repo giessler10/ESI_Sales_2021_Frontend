@@ -20,12 +20,22 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
+const options= { 
+  textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
+}};
+
 const CustomerDetails = () => {
   return (
     <MuiThemeProvider theme={getMuiTheme()}> 
     <MUIDataTable
       data={dataCustomersDetails}
       columns={columnsCustomersDetails}/>
+      options={options}
     </MuiThemeProvider>
   )
 }

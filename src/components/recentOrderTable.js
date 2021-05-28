@@ -63,6 +63,17 @@ useEffect(() => {
       })
 });
 
+
+const options ={
+textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
+}
+};
+
     //Check if old data = new data
     function DataAreEqual(data, sortedOrders){
       if(data.sort().join(',') === sortedOrders.sort().join(',')){
@@ -99,12 +110,12 @@ useEffect(() => {
         <MuiThemeProvider theme={getMuiTheme()} > 
           <MUIDataTable
             data={filteredData}
-            columns={columns}/>
+            columns={columns}
+            options={options}/>
             <br></br>
         </MuiThemeProvider>
     
        </div>
-    
-      );            
-    }
+   );            
+  }
     
