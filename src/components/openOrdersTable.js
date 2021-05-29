@@ -8,7 +8,7 @@ import axios from "axios";
 import Button from '@material-ui/core/Button';
 import ReplayIcon from '@material-ui/icons/Replay';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
-import ProductionButton from '../components/ProductionButton'
+
 
 export default function ProgressOrders(){
 
@@ -47,8 +47,9 @@ export default function ProgressOrders(){
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: (selectedRows, data) => {
+    var order = data[selectedRows.data[0].index].data;
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/><ProductionButton/></div>;
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/></div>;
   },
   textLabels: {
     body: {
