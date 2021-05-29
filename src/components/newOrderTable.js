@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import shadows from "@material-ui/core/styles/shadows";
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 //const { dropdown } = require('./dropdown.js')
 
@@ -50,6 +53,16 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
+
+  const useStyles = theme => ({
+    root: {
+        //padding: theme.spacing(2),
+        color: theme.palette.text.secondary,
+        float: "left",
+        alignItems: "left",
+    },
+    
+});
 
 
   function Editable() {
@@ -172,60 +185,71 @@ const tableIcons = {
     }
 
     let content = "";
+
+  
     return (
       <>
-        <div style={{ maxWidth: "100%" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              paddingTop: "10px",
-              margin: "20px",
-            }}
-          >
+        <div style={{ maxWidth: "100%", display: "flex",
+        paddingTop: "10px",
+        margin: "20px"}} >
+<Grid container spacing={3} align="left">
+<Grid item xs></Grid>
+        <Grid item xs style={{alignContent:"left"}}>
             <div
-              style={{ paddingLeft: "20px", float: "left" }}
-              onChange={(e) => setOderType(e.target.value)}
-            >
-              Bestelltyp<br />
+              style={{ paddingLeft: "20px"}}
+              onChange={(e) => setOderType(e.target.value)}>
+              <b style={{color: "#006064"}}>Auftragstyp *</b><br />
               <input
+              style={{color: "black"}}
                 type="radio"
                 value={1}
                 name="O_OT_NR"/> Vorproduktion <br/>
               <input 
+              defaultChecked
                 type="radio" 
                 value={2} 
                 name="O_OT_NR" /> Normal <br />
             </div>
-            <form noValidate autoComplete="off">
+            </Grid>
+            <Grid item xs>
+
+
+<div
+  style={{ paddingLeft: "20px"}}
+  onChange={(e) => setasDraft(e.target.value)}>
+<b style={{color: "#006064"}}>Als Entwurf speichern? *</b>  <br />
+  <input
+    defaultChecked
+    type="radio"
+    value={true}
+    name="asDraft"/> Ja <br/>
+  <input 
+    type="radio" 
+    value={false} 
+    name="asDraft" /> Nein <br />
+</div>
+</Grid>
+
+<Grid item xs>
+<form noValidate autoComplete="off">
               <TextField
+                color="#ffffff"
                 id="outlined-basic"
                 label="Kundennummer"
                 value={C_NR}
                 onChange={(e) => setCustomerId(e.target.value)}
                 title="Die Angabe einer Kundennummer ist nur für Bestellungen notwendig, die nicht auf Lager produziert werden."
               />
-            </form>{" "}
+               </form>{" "}
             <br />
-            <div
-              style={{ paddingLeft: "20px", float: "left" }}
-              onChange={(e) => setasDraft(e.target.value)}
-            >
-              Als Entwurf speichern? <br />
-              <input
-                type="radio"
-                value={true}
-                name="asDraft"/> Ja <br/>
-              <input 
-                type="radio" 
-                value={false} 
-                name="asDraft" /> Nein <br />
-            </div>
-          </div>
-  
+</Grid>
+<Grid item xs></Grid>
+
+            <Grid item xs={12}>
+
           <MaterialTable
             style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
-            title="Bestellung anlegen"
+            title="Auftrag anlegen"
             columns={columns}
             data={data}
             options={{
@@ -277,7 +301,9 @@ const tableIcons = {
                 }),
             }}
           />
-        </div>
+          </Grid>
+          <Grid item xs={12}>
+        
         <Button
           onClick={createOrderitems}
           style={{ float: "right", margin: "20px" }}
@@ -287,7 +313,8 @@ const tableIcons = {
         >
           Bestellung speichern
         </Button>
-  
+        </Grid>
+        <Grid item xs={12}>
         <div style={{
               display: "flex",
               alignItems: "center",
@@ -296,9 +323,14 @@ const tableIcons = {
             }}>
           <h3>Bestätigung: {backendResponse}</h3>
         </div>
-      </>
+       </Grid>
+       </Grid>
+       </div>
+       
+   
+</>
     );
   }
   
 
-export default Editable;
+export default withStyles(useStyles)(Editable);
