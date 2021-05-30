@@ -84,17 +84,15 @@ export default function ScrollableTabsButtonForce() {
                 textColor="primary"
                 aria-label="scrollable force tabs example"
                 >
-                <Tab label="Auf Lager liegende Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
-                <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
+                <Tab label="Auslagerfähige Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
+                <Tab label="Versandbereite Aufträge" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}> 
-              <h2> Auslagerfähige Aufträge </h2> 
               <StorageTable/>
             </TabPanel>
 
             <TabPanel value={value} index={1}>   
-              <h2> Versandbereite Aufträge </h2> 
               <ShippingTable/>
             </TabPanel>   
         </div>
