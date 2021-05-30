@@ -12,7 +12,7 @@ import UpdateCustomerForm from './UpdateCustomerForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
-import OrderPositionsTable from './OrderPositionsTable.js';
+import OrderPositionsTable from './orderPositionsTable.js';
 
 
 const useStyles = makeStyles((theme) => ({
