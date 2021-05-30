@@ -15,7 +15,7 @@ const ShippingButton = () => {
                 variant="outlined"
                 title="Kundendetails abfragen">
                  <LocalShippingIcon/>
-                Ware dem Versanddienstleister übergeben
+                Versand
               </Button>
             </Grid>
           </FormControl>

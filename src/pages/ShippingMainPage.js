@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
       flexGrow: 1,
-      width: '1300px',
+      width: '2000px',
       backgroundColor: theme.palette.background.paper,
       textColor: "green",
       textAlign: 'center',
@@ -88,23 +88,13 @@ export default function ScrollableTabsButtonForce() {
                 <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
-
-
-            <TabPanel value={value} index={0}>
-              <div className={classes.root}>
-                  <Grid item xs={12}>
-                      <h2> Auslagerfähige Aufträge </h2> 
-                  </Grid>
-              </div>
+            <TabPanel value={value} index={0}> 
+              <h2> Auslagerfähige Aufträge </h2> 
               <StorageTable/>
             </TabPanel>
 
-            <TabPanel value={value} index={1}>
-              <div className={classes.root}>
-                  <Grid item xs={12}>
-                      <h2> Versandbereite Aufträge </h2> 
-                  </Grid>
-              </div>
+            <TabPanel value={value} index={1}>   
+              <h2> Versandbereite Aufträge </h2> 
               <ShippingTable/>
             </TabPanel>   
         </div>
