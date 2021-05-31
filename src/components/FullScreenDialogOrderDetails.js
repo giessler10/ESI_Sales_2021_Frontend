@@ -12,7 +12,8 @@ import UpdateCustomerForm from './UpdateCustomerForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
-import OrderPositionsTable from './OrderPositionsTable.js';
+import OrderPositionsTable from './orderPositionsTable.js';
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     textColor: "green",
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },  
   table: {
     paddingLeft: '5%',
@@ -71,8 +72,6 @@ export default function FullScreenDialogOrderDetails(props) {
   };
 
 
-  
-
   return (
     <div>
       <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
@@ -90,24 +89,54 @@ export default function FullScreenDialogOrderDetails(props) {
           </Toolbar>
         </AppBar>
         <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2 >Bestellnummer {OI_O_NR}</h2>
-          </Grid>
-        </div>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2 >Kundename {order[10]} {order[1]}</h2>
-          </Grid>
-        </div>
-        <div className={classes.root}>
-          <Grid item xs={12}>
+          <br/>
+          <Grid xs={4}>
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Bestellnummer"
+            defaultValue={order[0]}
+            variant="filled"/>
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Kundennummer"
+            defaultValue={order[1]}
+            variant="filled"/>
+          <br/>
+            <TextField
+            disabled
+            id="filled-disabled"
+            label="Vorname"
+            defaultValue={order[10]}
+            variant="filled"/>
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="Nachname"
+            defaultValue={order[11]}
+            variant="filled"/>
+          <br/>
+            <TextField
+            disabled
+            id="filled-disabled"
+            label="Auftragsstatus"
+            defaultValue={order[6]}
+            variant="filled"/>
+          <TextField
+            disabled
+            id="filled-disabled"
+            label="PLZ"
+            defaultValue={order[13]}
+            variant="filled"/>
+        </Grid>
+          <div className={classes.table}>
             <h2>Positionen</h2>
-          </Grid>
-        </div>
-        <div className={classes.table}>
-          <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
+            <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
+          </div>
         </div>
       </Dialog>
+
     </div>
   );
 }

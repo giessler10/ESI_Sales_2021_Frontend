@@ -62,7 +62,7 @@ export default function AlertDialog(props) {
         onClick={handleClickOpen}
         title="Produktionsauftrag">
           <PlayCircleFilledWhiteIcon />
-        Auftrag an Produktion geben
+        In Produktion
       </Button>
       <Dialog
         open={open}

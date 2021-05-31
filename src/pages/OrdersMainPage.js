@@ -106,56 +106,26 @@ export default function ScrollableTabsButtonForce() {
       </AppBar>
 
       <TabPanel value={value} index={0}>
-      <div className={classes.root}>
-        <Grid item xs={12}>
-          <h2> Alle Aufträge </h2> 
-        </Grid>
-      </div>
-      <OrderTable></OrderTable>
+        <OrderTable></OrderTable>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2> Aufträge im Entwurf </h2> 
-          </Grid>
-        </div>
         <OrdersInDraft/>
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-            <h2> Offene Aufträge </h2> 
-          </Grid>
-        </div>
         <OrdersOpen />
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-        <h2> Aufträge in Bearbeitung </h2> 
-        </Grid>
-        </div>
         <OrdersInProgress />
       </TabPanel>
 
       <TabPanel value={value} index={4}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-        <h2> Aufträge mit Problemen </h2> 
-        </Grid>
-        </div>
-      <OrdersWithProblems />
+        <OrdersWithProblems />
       </TabPanel>
 
       <TabPanel value={value} index={5}>
-        <div className={classes.root}>
-          <Grid item xs={12}>
-        <h2> Geschlossene Aufträge </h2> 
-        </Grid>
-        </div>
         <RetoureTable/>    
       </TabPanel>
 
