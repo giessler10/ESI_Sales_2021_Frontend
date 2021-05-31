@@ -7,16 +7,12 @@ function createData(time, amount) {
   return { time, amount };
 }
 
-
 const data = [
-  createData('1. April', 0),
-  createData('5. April', 300),
-  createData('10. April', 600),
-  createData('15. April', 800),
-  createData('20. April', 1500),
-  createData('25. April', 2000),
-  createData('1. Mai', 2400),
-  createData('05. Mai', undefined),
+  createData('1. Mai', 0),
+  createData('7. Mai', 300),
+  createData('14. Mai', 600),
+  createData('21. Mai', 800),
+  createData('30. Mai', 1200),
 ];
 export default function Chart() {
   const theme = useTheme();
@@ -41,7 +37,7 @@ export default function Chart() {
               position="left"
               style={{ textAnchor: 'middle', stroke: green}}
             >
-              Menge (Stück)
+              Anzahl Aufträge
             </Label>
           </YAxis>
           <Line type="monotone" dataKey="amount" stroke="#006064" dot={false} />
