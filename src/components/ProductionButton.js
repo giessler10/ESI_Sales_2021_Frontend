@@ -10,6 +10,7 @@ import axios from "axios";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
+  console.log(props.O_NR);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,7 +20,7 @@ export default function AlertDialog(props) {
     setOpen(false);
 
     //Auftrag an Produktion übergeben
-    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR + '?status=1')
+    axios.put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR + '?status=1')
     .then(
         (res) => {
             console.log(res.status);
