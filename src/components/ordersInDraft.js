@@ -5,7 +5,10 @@ import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
 import ProductionButton from '../components/ProductionButton'
+import DeleteOrderButton from '../components/DeleteOrderButton'
 import { Grid } from '@material-ui/core';
+
+import FullScreenUpdateDialogOrderDetails from'./FullScreenDialogUpdateOrderDetails';
 
 export default function DraftOrders(){
 
@@ -44,7 +47,8 @@ export default function DraftOrders(){
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
     return  <div style={{ paddingRight: "10px"}}>
       <Grid container direction="row" justify="flex-end" alignItems="center">
-        <FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        <FullScreenUpdateDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        <DeleteOrderButton O_NR={OI_O_NR}/>
         <ProductionButton O_NR={OI_O_NR}/>
       </Grid>
     </div>;},
@@ -108,12 +112,6 @@ function DataAreEqual(data, sortedOrders){
   setSelectedData(_selectedData);
   return;
  }
-
- //Lieferschein Button Click 
- function OpenMore(){
-  <div><FullScreenDialogOrderDetails/></div>
- };
-
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {
