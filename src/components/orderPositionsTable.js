@@ -64,7 +64,7 @@ function DataAreEqual(data, sortedOrders){
     return true;
     }
     else return false;
-  }
+}
 
 //Get selected rows
  function rowSelectEvent(curRowSelected, allRowsSelected){  

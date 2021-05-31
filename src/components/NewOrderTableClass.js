@@ -326,7 +326,7 @@ class NewOrderTableClass extends Component {
                                 title="Editable Preview"
                                 columns={columns}
                                 data={data}
-                                title="Aufträge"
+                                title="Auftragspositionen"
                                 icons={tableIcons}
                                 options={{
                                     headerStyle: {
@@ -384,7 +384,7 @@ class NewOrderTableClass extends Component {
                                 color="primary"
                                 title="Bestellung speichern"
                             >
-                                Bestellung speichern
+                                Auftrag anlegen
                             </Button>
                         </Grid>
                     </Grid>
