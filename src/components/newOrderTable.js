@@ -51,7 +51,6 @@ const tableIcons = {
   const useStyles = theme => ({
     root: {
         //padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
         float: "left",
         alignItems: "left",
     },
