@@ -75,7 +75,7 @@ export default function FullScreenDialogOrderDetails(props) {
   return (
     <div>
       <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
-        Bestelldetails
+        Auftragdetails
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -84,7 +84,7 @@ export default function FullScreenDialogOrderDetails(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-            Bestelldetails
+              Auftragdetails
             </Typography>
           </Toolbar>
         </AppBar>
@@ -93,40 +93,40 @@ export default function FullScreenDialogOrderDetails(props) {
           <Grid xs={4}>
           <TextField
             disabled
-            id="filled-disabled"
+            id="Bestellnummer"
             label="Bestellnummer"
             color="secondary"
             defaultValue={order[0]}
             variant="filled"/>
           <TextField
             disabled
-            id="filled-disabled"
+            id="Kundennummer"
             label="Kundennummer"
             defaultValue={order[1]}
             variant="filled"/>
           <br/>
             <TextField
             disabled
-            id="filled-disabled"
+            id="Vorname"
             label="Vorname"
             defaultValue={order[10]}
             variant="filled"/>
           <TextField
             disabled
-            id="filled-disabled"
+            id="Nachname"
             label="Nachname"
             defaultValue={order[11]}
             variant="filled"/>
           <br/>
             <TextField
             disabled
-            id="filled-disabled"
+            id="Auftragsstatus"
             label="Auftragsstatus"
             defaultValue={order[6]}
             variant="filled"/>
           <TextField
             disabled
-            id="filled-disabled"
+            id="PLZ"
             label="PLZ"
             defaultValue={order[13]}
             variant="filled"/>
