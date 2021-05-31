@@ -144,7 +144,8 @@ function PdfCreate(OrderitemsData,logoBase64){
     price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)),
     quantity: String(OrderitemsData[index]["OI_QTY"]),
     unit: String(OrderitemsData[index]["OI_PRICE"]),
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))
+    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2))),
+    order_num: String(OrderitemsData[index]["O_NR"]),
 }));
 
 console.log("TableData", tableData);
@@ -154,6 +155,7 @@ console.log("TableData", tableData);
                 var dd = String(invoicedate.getDate()).padStart(2, '0');
                 var mm = String(invoicedate.getMonth() + 1).padStart(2, '0'); //January is 0!
                 var yyyy = invoicedate.getFullYear();
+                var orderNumber = "Lieferschein",order_num;
 
                 invoicedate = dd + '.' + mm + '.' + yyyy;
 
@@ -170,7 +172,7 @@ console.log("TableData", tableData);
 var props = {
   outputType: OutputType.Save,
   returnJsPDFDocObject: true,
-  fileName: "Lieferschein",
+  fileName: orderNumber,
   orientationLandscape: false,
   logo: {
       //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
