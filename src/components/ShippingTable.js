@@ -42,11 +42,17 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
- customToolbarSelect: (selectedRows) => {return <div> <React.Fragment>
-  <Grid item xs={4}> <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> </Grid>
-        <Grid item xs={4}>
-<FullScreenQSDialog selectedRows={selectedRows.data}/> <ShippingButton/></Grid><Grid item xs={4}></Grid></React.Fragment></div>; 
- },
+ customToolbarSelect: (selectedRows) => {return <div> 
+    <React.Fragment>
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+        <FullScreenQSDialog selectedRows={selectedRows.data}/> 
+        <ShippingButton/>
+      </Grid>
+    </React.Fragment>
+  </div>;},
+
+
 textLabels: {
   body: {
     noMatch: "Es wurden keine passenden Aufträge gefunden.",

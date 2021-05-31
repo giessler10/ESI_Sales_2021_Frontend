@@ -4,7 +4,8 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
-
+import ProductionButton from '../components/ProductionButton'
+import { Grid } from '@material-ui/core';
 
 export default function DraftOrders(){
 
@@ -39,9 +40,15 @@ export default function DraftOrders(){
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: (selectedRows, data) => {
+    var order = data[selectedRows.data[0].index].data;
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/></div>;
-  },
+    return  <div style={{ paddingRight: "10px"}}>
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+        <FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        <ProductionButton O_NR={OI_O_NR}/>
+      </Grid>
+    </div>;},
+      
   textLabels: {
     body: {
       noMatch: "Es wurden keine passenden Aufträge gefunden.",

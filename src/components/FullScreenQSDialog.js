@@ -54,7 +54,7 @@ export default function FullScreenDialog(props) {
   return (
     <div>
       <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <ErrorIcon/>
-       QS Problem erfassen
+       QS
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>

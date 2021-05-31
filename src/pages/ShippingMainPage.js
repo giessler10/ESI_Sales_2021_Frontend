@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
       flexGrow: 1,
-      width: '1300px',
+      width: '2000px',
       backgroundColor: theme.palette.background.paper,
       textColor: "green",
       textAlign: 'center',
@@ -84,27 +84,15 @@ export default function ScrollableTabsButtonForce() {
                 textColor="primary"
                 aria-label="scrollable force tabs example"
                 >
-                <Tab label="Auf Lager liegende Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
-                <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
+                <Tab label="Auslagerfähige Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
+                <Tab label="Versandbereite Aufträge" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
-
-
-            <TabPanel value={value} index={0}>
-              <div className={classes.root}>
-                  <Grid item xs={12}>
-                      <h2> Auslagerfähige Aufträge </h2> 
-                  </Grid>
-              </div>
+            <TabPanel value={value} index={0}> 
               <StorageTable/>
             </TabPanel>
 
-            <TabPanel value={value} index={1}>
-              <div className={classes.root}>
-                  <Grid item xs={12}>
-                      <h2> Versandbereite Aufträge </h2> 
-                  </Grid>
-              </div>
+            <TabPanel value={value} index={1}>   
               <ShippingTable/>
             </TabPanel>   
         </div>
