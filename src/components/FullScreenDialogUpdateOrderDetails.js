@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
 
 import axios from "axios";
 import { forwardRef } from 'react';
+import OrderHeader from './OrderHeader';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -245,140 +246,95 @@ export default function FullScreenDialogOrderDetails(props) {
             </Button>
             <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
                 <AppBar className={classes.appBar}>
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                        <CloseIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Auftragdetails
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <div className={classes.root}>
-                <br/>
-                <Grid xs={4}>
-                <TextField
-                    disabled
-                    id="Bestellnummer"
-                    label="Bestellnummer"
-                    defaultValue={OI_O_NR}
-                    variant="filled"/>
-                <TextField
-                    disabled
-                    id="Kundennummer"
-                    label="Kundennummer"
-                    defaultValue={order[1]}
-                    variant="filled"/>
-                <br/>
-                <TextField
-                    disabled
-                    id="Vorname"
-                    label="Vorname"
-                    defaultValue={order[10]}
-                    variant="filled"/>
-                <TextField
-                    disabled
-                    id="Nachname"
-                    label="Nachname"
-                    defaultValue={order[11]}
-                    variant="filled"/>
-                <br/>
-                <TextField
-                    disabled
-                    id="Auftragsstatus"
-                    label="Auftragsstatus"
-                    defaultValue={order[6]}
-                    variant="filled"/>
-                <TextField
-                    disabled
-                    id="PLZ"
-                    label="PLZ"
-                    defaultValue={order[13]}
-                    variant="filled"/>
-                </Grid>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                            <CloseIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            Auftragdetails
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
                 <div className={classes.table}>
                     <h2>Positionen</h2>
-
-                <MaterialTable
-                    style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
-                    title="Auftrag bearbeiten"
-                    columns={columns}
-                    data={data}
-                    options={{
-                    headerStyle: {
-                        backgroundColor: "#006064",
-                        color: "#FFFF",
-                    },
-                    textLabels: {
-                    body: {
-                        noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                        toolTip: "Sort",
-                        columnHeaderTooltip: column => `Sort for ${column.label}`
-                    }
-                    }
-                    }}
-                    icons={tableIcons}
-                    editable={{
-                    onRowAdd: (newData) =>
-                        new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            setData([...data, newData]);
-                            //console.log(count, newData);
-        
-                            resolve();
-                        }, 1000);
-                        }),
-                    onRowUpdate: (newData, oldData) =>
-                        new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            const dataUpdate = [...data];
-                            const index = oldData.tableData.id;
-                            dataUpdate[index] = newData;
-                            setData([...dataUpdate]);
-        
-                            resolve();
-                        }, 1000);
-                        }),
-                    onRowDelete: (oldData) =>
-                        new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            const dataDelete = [...data];
-                            const index = oldData.tableData.id;
-                            dataDelete.splice(index, 1);
-                            setData([...dataDelete]);
-        
-                            resolve();
-                        }, 1000);
-                        }),
-                    }}
-                />
-                <Grid item xs={12}>
+                    <MaterialTable
+                        style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
+                        title="Auftrag bearbeiten"
+                        columns={columns}
+                        data={data}
+                        options={{
+                        headerStyle: {
+                            backgroundColor: "#006064",
+                            color: "#FFFF",
+                        },
+                        textLabels: {
+                        body: {
+                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                            toolTip: "Sort",
+                            columnHeaderTooltip: column => `Sort for ${column.label}`
+                        }
+                        }
+                        }}
+                        icons={tableIcons}
+                        editable={{
+                        onRowAdd: (newData) =>
+                            new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                setData([...data, newData]);
+                                //console.log(count, newData);
             
-                    <Button
-                    onClick={createOrderitems}
-                    style={{ float: "right", margin: "20px" }}
-                    variant="outlined"
-                    color="primary"
-                    title="Bestellung speichern"
-                    >
-                        Änderungen speichern
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        paddingTop: "10px",
-                        margin: "20px",
-                        }}>
-                    <h3>Bestätigung: {backendResponse}</h3>
-                    </div>
-                </Grid>
-        
+                                resolve();
+                            }, 1000);
+                            }),
+                        onRowUpdate: (newData, oldData) =>
+                            new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                const dataUpdate = [...data];
+                                const index = oldData.tableData.id;
+                                dataUpdate[index] = newData;
+                                setData([...dataUpdate]);
+            
+                                resolve();
+                            }, 1000);
+                            }),
+                        onRowDelete: (oldData) =>
+                            new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                const dataDelete = [...data];
+                                const index = oldData.tableData.id;
+                                dataDelete.splice(index, 1);
+                                setData([...dataDelete]);
+            
+                                resolve();
+                            }, 1000);
+                            }),
+                        }}
+                    />
+                    <Grid item xs={12}>
+                
+                        <Button
+                        onClick={createOrderitems}
+                        style={{ float: "right", margin: "20px" }}
+                        variant="outlined"
+                        color="primary"
+                        title="Bestellung speichern"
+                        >
+                            Änderungen speichern
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            paddingTop: "10px",
+                            margin: "20px",
+                            }}>
+                        <h3>Bestätigung: {backendResponse}</h3>
+                        </div>
+                    </Grid>
                 </div>
-            </div>
-        </Dialog>
-
+            </Dialog>
         </div>
     );
 }
