@@ -24,6 +24,7 @@ import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
 import RetoureTable from '../components/RetoureTable'
 import NewOrderTable from '../components/newOrderTable';
+import NewOrderTableClass from '../components/NewOrderTableClass';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -159,7 +160,7 @@ export default function ScrollableTabsButtonForce() {
       </TabPanel>
 
       <TabPanel value={value} index={6}>
-          <NewOrderTable/>
+          <NewOrderTableClass/>
       </TabPanel>
         
     </div>

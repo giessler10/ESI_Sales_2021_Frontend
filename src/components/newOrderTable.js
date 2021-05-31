@@ -3,15 +3,9 @@ import MaterialTable from "material-table";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
-import shadows from "@material-ui/core/styles/shadows";
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 
-//const { dropdown } = require('./dropdown.js')
-
-
-//console.log(dropdown)
 
 import { forwardRef } from 'react';
 
@@ -65,7 +59,7 @@ const tableIcons = {
 });
 
 
-  function Editable() {
+export default function Editable() {
     const { useState } = React;
     const [count, incrementCount] = useState(1);
     const [C_NR, setCustomerId] = useState("");
@@ -184,7 +178,7 @@ const tableIcons = {
         }
     }
 
-    let content = "";
+    //let content = "";
 
   
     return (
@@ -192,58 +186,56 @@ const tableIcons = {
         <div style={{ maxWidth: "100%", display: "flex",
         paddingTop: "10px",
         margin: "20px"}} >
-<Grid container spacing={3} align="left">
-<Grid item xs></Grid>
-        <Grid item xs style={{alignContent:"left"}}>
+        <Grid container spacing={3} align="left">
+          <Grid item xs></Grid>
+            <Grid item xs style={{alignContent:"left"}}>
+              <div
+                style={{ paddingLeft: "20px"}}
+                onChange={(e) => setOderType(e.target.value)}>
+                <b style={{color: "#006064"}}>Auftragstyp *</b><br />
+                <input
+                style={{color: "black"}}
+                  type="radio"
+                  value={1}
+                  name="O_OT_NR"/> Vorproduktion <br/>
+                <input 
+                defaultChecked
+                  type="radio" 
+                  value={2} 
+                  name="O_OT_NR" /> Normal <br />
+              </div>
+            </Grid>
+          <Grid item xs>
             <div
               style={{ paddingLeft: "20px"}}
-              onChange={(e) => setOderType(e.target.value)}>
-              <b style={{color: "#006064"}}>Auftragstyp *</b><br />
+              onChange={(e) => setasDraft(e.target.value)}>
+            <b style={{color: "#006064"}}>Als Entwurf speichern? *</b>  <br />
               <input
-              style={{color: "black"}}
+                defaultChecked
                 type="radio"
-                value={1}
-                name="O_OT_NR"/> Vorproduktion <br/>
+                value={true}
+                name="asDraft"/> Ja <br/>
               <input 
-              defaultChecked
                 type="radio" 
-                value={2} 
-                name="O_OT_NR" /> Normal <br />
+                value={false} 
+                name="asDraft" /> Nein <br />
             </div>
+          </Grid>
+
+          <Grid item xs>
+            <form noValidate autoComplete="off">
+                          <TextField
+                            color="#ffffff"
+                            id="outlined-basic"
+                            label="Kundennummer"
+                            value={C_NR}
+                            onChange={(e) => setCustomerId(e.target.value)}
+                            title="Die Angabe einer Kundennummer ist nur für Bestellungen notwendig, die nicht auf Lager produziert werden."
+                          />
+                          </form>{" "}
+                        <br />
             </Grid>
-            <Grid item xs>
-
-
-<div
-  style={{ paddingLeft: "20px"}}
-  onChange={(e) => setasDraft(e.target.value)}>
-<b style={{color: "#006064"}}>Als Entwurf speichern? *</b>  <br />
-  <input
-    defaultChecked
-    type="radio"
-    value={true}
-    name="asDraft"/> Ja <br/>
-  <input 
-    type="radio" 
-    value={false} 
-    name="asDraft" /> Nein <br />
-</div>
-</Grid>
-
-<Grid item xs>
-<form noValidate autoComplete="off">
-              <TextField
-                color="#ffffff"
-                id="outlined-basic"
-                label="Kundennummer"
-                value={C_NR}
-                onChange={(e) => setCustomerId(e.target.value)}
-                title="Die Angabe einer Kundennummer ist nur für Bestellungen notwendig, die nicht auf Lager produziert werden."
-              />
-               </form>{" "}
-            <br />
-</Grid>
-<Grid item xs></Grid>
+          <Grid item xs></Grid>
 
             <Grid item xs={12}>
 
@@ -326,11 +318,7 @@ const tableIcons = {
        </Grid>
        </Grid>
        </div>
-       
-   
+         
 </>
     );
   }
-  
-
-export default withStyles(useStyles)(Editable);
