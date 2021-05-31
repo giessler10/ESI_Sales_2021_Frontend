@@ -19,7 +19,7 @@ export default function AlertDialog(props) {
   const handleClose = () => {
     setOpen(false);
 
-    //Auftrag an Produktion übergeben
+    //Auftrag löschen
     axios.delete('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR)
     .then(
         (res) => {
