@@ -8,18 +8,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import UpdateCustomerForm from './UpdateCustomerForm';
-import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
-import DescriptionIcon from '@material-ui/icons/Description';
-import OrderPositionsTable from './orderPositionsTable.js';
-import TextField from '@material-ui/core/TextField';
 
 import axios from "axios";
 import { forwardRef } from 'react';
 import OrderHeader from './OrderHeader';
 
-import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -27,6 +21,7 @@ import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 import Edit from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
@@ -177,21 +172,8 @@ export default function FullScreenDialogOrderDetails(props) {
             };
         });
 
-        var body = {
-            orderitems: orderitems
-        }
-
-        body = JSON.stringify(body);
-        console.log(body);
-
-        setBackendResponse("Änderungen wurden gespeichert.");
-
-        /*
         axios
-            .put(
-                //"https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders", body
-            )
-            .then(console.log(body))
+            .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/38/orderitems', orderitems)
             .then((response) => {
                 setBackendResponse(response.data.message);
             })
@@ -199,7 +181,6 @@ export default function FullScreenDialogOrderDetails(props) {
             console.log(error);
                 setBackendResponse(error.message);
             })
-        */
     }
 
     useEffect(() => {
@@ -241,7 +222,7 @@ export default function FullScreenDialogOrderDetails(props) {
 
     return (
         <div>
-            <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+            <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <EditIcon/>
                 Auftrag bearbeiten
             </Button>
             <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>

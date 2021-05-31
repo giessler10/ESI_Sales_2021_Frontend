@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from "axios";
 
 export default function AlertDialog(props) {
@@ -62,7 +62,7 @@ export default function AlertDialog(props) {
         variant="outlined"
         onClick={handleClickOpen}
         title="Produktionsauftrag">
-          <PlayCircleFilledWhiteIcon />
+          <DeleteIcon />
         Löschen
       </Button>
       <Dialog
