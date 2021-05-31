@@ -63,10 +63,6 @@ textLabels: {
 };
 
 
-
-
-
-
  useEffect(() => {
   //Orders aus MySQL ziehen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=7')
@@ -130,16 +126,25 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
 
 
 function MoreThan2Rows(){
-  if(selectedData.length > 1) 
-    {return true;}
+  if(typeof selectedData != "undefined") {
+
+    if(selectedData.length > 1) 
+      {return true;}
+    if(selectedData == "undefined")
+    {
+      return true;
+    }
+  }
+  else{
     return false;
+  }
 };
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function PdfCreate(OrderitemsData,logoBase64){
+function PdfCreate(OrderitemsData, orderNumber, customer_Number, logoBase64){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -147,10 +152,11 @@ function PdfCreate(OrderitemsData,logoBase64){
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
-    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)),
+    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(OrderitemsData[index]["OI_PRICE"]),
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))
+    unit: String(OrderitemsData[index]["OI_PRICE"]) + " €",
+    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
+    
 }));
 
 console.log("TableData", tableData);
@@ -160,6 +166,7 @@ console.log("TableData", tableData);
                 var dd = String(invoicedate.getDate()).padStart(2, '0');
                 var mm = String(invoicedate.getMonth() + 1).padStart(2, '0'); //January is 0!
                 var yyyy = invoicedate.getFullYear();
+                
 
                 invoicedate = dd + '.' + mm + '.' + yyyy;
 
@@ -173,10 +180,20 @@ console.log("TableData", tableData);
 
                 paymentdate = dd + '.' + mm + '.' + yyyy;
 
+
+              //Name für Lieferschein stückeln
+              var invoiceName = orderNumber+"_"+dd+""+mm+""+yyyy;
+
+              //Rechnungsnummer = Bestellnummer
+              var invoiceNumber = orderNumber;
+
+              //Kundennummer
+               var customerNumber = customer_Number;
+
 var props = {
   outputType: OutputType.Save,
   returnJsPDFDocObject: true,
-  fileName: "Lieferschein",
+  fileName: "Lieferschein_"+invoiceName,
   orientationLandscape: false,
   logo: {
       //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
@@ -197,7 +214,7 @@ var props = {
       website: "www.yourshirt.de",
   },
   contact: {
-      label: "Invoice issued for:",
+      label: "Kundennummer: "+customerNumber,
       name: "Client Name",
       address: "Albania, Tirane, Astir",
       phone: "(+355) 069 22 22 222",
@@ -205,7 +222,7 @@ var props = {
       otherInfo: "www.website.al",
   },
   invoice: {
-      label: "Invoice #: ",
+      label: "Invoice #: "+invoiceNumber,
       invTotalLabel: "Total:",
       num: 19,
       invDate: "Payment Date: " + invoicedate,
@@ -270,11 +287,17 @@ const pdfObject = jsPDFInvoiceTemplate(props);
           return;
         }          
         
+        var orderNumb = selectedData[0]["O_NR"];
+        console.log("Test 1: "+orderNumb)
+        var customerNumb = selectedData[0]["O_NR"];
+        console.log("Test 2: "+customerNumb)
+        //var orderNumb = selectedData[0]["O_NR"];
+
         //console.log("RESPOSNEDATE", res.data);
         //setOrderitemsData(res.data);
       
         //console.log("Orderitem Daten: ", OrderitemsData)
-        PdfCreate(res.data,logoBase64.src);
+        PdfCreate(res.data, orderNumb, customerNumb, logoBase64.src);
       
         })
         .catch(err => {

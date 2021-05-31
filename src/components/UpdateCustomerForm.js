@@ -9,7 +9,6 @@ const useStyles = theme => ({
     root: {
         padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
     },
     error: {
         color: "red"
@@ -104,7 +103,7 @@ class UpdateCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio style={{color:"green"}}/>} label={v.CT_DESC} />
                     ))
                 });
             }
@@ -139,7 +138,7 @@ class UpdateCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                        <FormControlLabel  key={key} value={v.CT_ID} control={<Radio/>} label={v.CT_DESC} />
                     ))
                 });
             }
@@ -561,7 +560,7 @@ class UpdateCustomerForm extends Component {
 
                                 <Grid item sm={6} xs={12}>
                                     <FormControl component="fieldset">
-                                        <FormLabel>Kundentyp</FormLabel>
+                                        <FormLabel> <b>Kundentyp</b></FormLabel>
         
                                         <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
                                             {this.state.radioButtonCustomerType}
