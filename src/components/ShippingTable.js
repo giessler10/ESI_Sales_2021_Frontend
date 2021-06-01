@@ -519,6 +519,7 @@ var props = {
           style: {
               fontSize: 10 //optional, default 12
           }
+          
       },
       row2: {
           col1: 'SubTotal:',
