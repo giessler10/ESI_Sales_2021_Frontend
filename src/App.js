@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import React from 'react';
+import React, {useEffect} from "react";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -133,6 +133,36 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
+
+  useEffect(() => {
+
+    if(window.location.href.endsWith("/")){
+      setSelectedIndex(0);
+    } 
+
+    if(window.location.href.endsWith("Customers")){
+       setSelectedIndex(1);
+     } 
+
+     else if (window.location.href.endsWith("Orders")){
+      setSelectedIndex(2);
+     }
+
+     else if (window.location.href.endsWith("Shipping")){
+      setSelectedIndex(3);
+     }
+
+     else if (window.location.href.endsWith("Einstellungen")){
+      setSelectedIndex(4);
+     }
+
+     else if (window.location.href.endsWith("Hilfebereich")){
+      setSelectedIndex(5);
+     }
+      },[]);
+
+
+
   const classes = useStyles();
   const theme = useTheme();
   const [selectedIndex, setSelectedIndex] = React.useState(0);

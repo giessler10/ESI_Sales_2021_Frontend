@@ -85,6 +85,16 @@ export default function Editable() {
                 };
             },
         },
+        {
+          title: "Farbe",
+          field: "OI_HEXCOLOR",
+          tooltip: "HEX-Code: #282C34",
+          cellStyle: (input, rowData) => {
+              return {
+                  backgroundColor: rowData?.colorCode || input
+              };
+          },
+      },
         { 
             title: "Bild", 
             field: "IM_FILE", 
@@ -118,7 +128,7 @@ export default function Editable() {
         secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
       },
     });
-    
+
     function createOrderitems() {
         console.log(
             data.map((element) => {
