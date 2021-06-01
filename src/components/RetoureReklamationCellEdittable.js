@@ -176,7 +176,8 @@ export default function RetoureReklamationFormCellEdittable(props) {
         var errorMessage = "";
 
         data.forEach( (currentObject, index) => {
-            if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_QTY != 'Keine'){
+            console.log(currentObject);
+            if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0"){
                 if(currentObject.IR_QTY > currentObject.OI_QTY){
                     errorMessage = "Gemeldete Menge bei Position " + (index+1) + " darf nicht größer der Auftragsmenge sein!";
                     return;
@@ -186,28 +187,28 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 }
             }
             else{
-                if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_QTY != 'Keine'){
+                if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0"){
                     errorMessage = "Bitte bei Position " + (index+1) + "  einen Grund angeben!";
                     return;
                 }
-                if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_QTY != 'Keine'){
+                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0"){
                     errorMessage = "Bitte bei Position " + (index+1) + "  einen Grund und eine Menge angeben!";
                     return;
                 }
-                if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_QTY == 'Keine'){
+                else if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR == "0"){
                     errorMessage = "Bitte bei Position " + (index+1) + "  eine Art und eine Grund angeben!";
                     return;
                 }
-                if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_QTY != 'Keine'){
+                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0"){
                     errorMessage = "Bitte bei Position " + (index+1) + "  eine Art und eine Menge angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_QTY != 'Keine'){
+                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0"){
                     errorMessage = "Bitte bei Position " + (index+1) + " eine Menge angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_QTY == 'Keine'){
-                    errorMessage = "Bitte bei Position " + (index+1) + " eine Art der Beschwerde angeben!";
+                else if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0"){
+                    errorMessage = "Bitte bei Position " + (index+1) + " eine Art angeben!";
                     return;
                 }
             }
@@ -276,7 +277,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
                                 OI_VAT: parseFloat(currentObject.OI_VAT),
-                                IR_RT_NR: 0,
+                                IR_RT_NR: "0",
                                 IR_COMMENT: 'Keine',
                                 IR_QTY: 0,
                                 tableData: {
@@ -319,15 +320,15 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 cellEditable={{
                     onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
                         return new Promise((resolve, reject) => {
-                        //console.log('newValue: ' + newValue);
-                        const dataUpdate = [...data]
-                        const rowDataUpdate = rowData;
-                        const columnField = columnDef.field;
-                        rowDataUpdate[columnField] = newValue;
-                        const index = rowData.tableData.id;
-                        dataUpdate[index] = rowDataUpdate;
-                        setData([...dataUpdate]);
-                        setTimeout(resolve, 1000);
+                            //console.log('newValue: ' + newValue);
+                            const dataUpdate = [...data]
+                            const rowDataUpdate = rowData;
+                            const columnField = columnDef.field;
+                            rowDataUpdate[columnField] = newValue;
+                            const index = rowData.tableData.id;
+                            dataUpdate[index] = rowDataUpdate;
+                            setData([...dataUpdate]);
+                            setTimeout(resolve, 1000);
                         });
                     }
                 }}
@@ -341,7 +342,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 color="primary"
                 title="Bestellung speichern"
                 >
-                    Reklamation / Retoure erfassen
+                    Reklamation und Retoure erfassen
                 </Button>
             </Grid>
             <Grid item xs={12}>
