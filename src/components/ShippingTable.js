@@ -183,7 +183,7 @@ function sleep(ms) {
         var orderNumb = selectedData[0]["O_NR"];
 
         //Kundennummer
-        var customerNumb = selectedData[0]["O_NR"];
+        var customer_number = selectedData[0]["C_NR"];
 
         //Firmenname
         var company_Name = selectedData[0]["C_COMPANY"];
@@ -198,7 +198,7 @@ function sleep(ms) {
        var customer_mail = selectedData[0]["C_MAIL"];
 
 
-        PdfCreate(res.data, company_Name, orderNumb, customerNumb, logoBase64.src, custom_Address, customer_phone, customer_mail);
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
       
         })
         .catch(err => {
@@ -206,7 +206,7 @@ function sleep(ms) {
         })
         
 
-function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_Number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -251,7 +251,7 @@ console.log("TableData", tableData);
               var invoiceNumber = orderNumber;
 
               //Kundennummer
-               var customerNumber = customer_Number;
+               var customerNumber = customer_number;
 
               //Unternehmensname
               var companyName = company_Name;
@@ -384,10 +384,12 @@ const pdfObject = jsPDFInvoiceTemplate(props);
           return;
         }          
         
+        //Bestellnummer
         var orderNumb = selectedData[0]["O_NR"];
+
         console.log("Test 1: "+orderNumb)
-        var customerNumb = selectedData[0]["O_NR"];
-        console.log("Test 2: "+customerNumb)
+        var customer_number = selectedData[0]["C_NR"];
+        console.log("Test 2: "+customer_number)
         var customer_Name = selectedData[0]["C_FIRSTNAME"] +" " +selectedData[0]["C_LASTNAME"];
 
         //Kundenanschrift
@@ -400,7 +402,7 @@ const pdfObject = jsPDFInvoiceTemplate(props);
       var customer_mail = selectedData[0]["C_MAIL"];
 
 
-        PdfCreate(res.data, customer_Name, orderNumb, customerNumb, logoBase64.src, custom_Address, customer_phone, customer_mail);
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
       
         })
         .catch(err => {
@@ -408,7 +410,7 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         })
         
 
-function PdfCreate(OrderitemsData, customer_Name, orderNumber, customer_Number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -447,13 +449,13 @@ console.log("TableData", tableData);
 
 
               //Name für Lieferschein stückeln
-              var invoiceName = orderNumber+"_"+dd+""+mm+""+yyyy;
+              var invoiceName = orderNumb+"_"+dd+""+mm+""+yyyy;
 
               //Rechnungsnummer = Bestellnummer
-              var delivOrderNumber = orderNumber;
+              var orderNumber = orderNumb;
 
               //Kundennummer
-               var customerNumber = customer_Number;
+               var customerNumber = customer_number;
 
                //Kundenname
                var customerName = customer_Name;
@@ -497,12 +499,11 @@ var props = {
       address: customerAddress,
       phone: customerPhone,
       email: customerMail,
-      /*otherInfo: "www.website.al",*/
   },
   invoice: {
-      label: "Lieferschein #: "+delivOrderNumber,
+      label: "Lieferschein #: ",
       invTotalLabel: "Total:",
-      num: "",
+      num: orderNumber,
       invDate: "Versandbereit am: " + delivDate,
       invGenDate: "Ausgestellt am: " + paymentdate,
       header: ["#", "Beschreibung", "", "Menge", "",""],

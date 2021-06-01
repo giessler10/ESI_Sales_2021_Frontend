@@ -20,6 +20,23 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
+const useStyles = theme => ({
+  root: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+  },
+  error: {
+      color: "red"
+  },
+  errorAlert: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+  }
+});
+
 const options= { 
   textLabels: {
   body: {

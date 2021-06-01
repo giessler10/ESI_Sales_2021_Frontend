@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 
 import { forwardRef } from 'react';
@@ -48,15 +48,8 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  const useStyles = theme => ({
-    root: {
-        //padding: theme.spacing(2),
-        float: "left",
-        alignItems: "left",
-    },
-    
-});
 
+  
 
 export default function Editable() {
     const { useState } = React;
@@ -66,7 +59,6 @@ export default function Editable() {
     const [O_OT_NR, setOderType] = useState();
     const [data, setData] = useState([]);
     const [backendResponse, setBackendResponse] = useState(null);
-    
     const [columns, setColumns] = useState([
         /*
         {
@@ -119,6 +111,14 @@ export default function Editable() {
         }
     ]);
   
+
+    const theme = createMuiTheme({
+      palette: {
+        primary: { main: '#11cb5f' }, // Purple and green play nicely together.
+        secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+      },
+    });
+    
     function createOrderitems() {
         console.log(
             data.map((element) => {
@@ -208,13 +208,14 @@ export default function Editable() {
             <div
               style={{ paddingLeft: "20px"}}
               onChange={(e) => setasDraft(e.target.value)}>
-            <b style={{color: "#006064"}}>Als Entwurf speichern? *</b>  <br />
-              <input
+            <b >Als Entwurf speichern? *</b>  <br />
+            <input
                 defaultChecked
+                color="secondary"
                 type="radio"
                 value={true}
                 name="asDraft"/> Ja <br/>
-              <input 
+              <input
                 type="radio" 
                 value={false} 
                 name="asDraft" /> Nein <br />

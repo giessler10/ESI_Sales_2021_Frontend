@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
       flexGrow: 1,
-      width: '2000px',
+      width: '1350px',
       backgroundColor: theme.palette.background.paper,
       textColor: "green",
       textAlign: 'center',
