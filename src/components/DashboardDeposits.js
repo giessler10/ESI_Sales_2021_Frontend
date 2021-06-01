@@ -22,11 +22,6 @@ export default function Deposits() {
       <Typography color="textSecondary" className={classes.depositContext}>
         YTD 15 März, 2021
       </Typography>
-      <div>
-        <Link color="#006064" href="/Orders" /*onClick={preventDefault}*/>
-          Details anzeigen
-        </Link>
-      </div>
     </React.Fragment>
   );
 }

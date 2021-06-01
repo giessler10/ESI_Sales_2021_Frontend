@@ -57,11 +57,24 @@ class NewOrderTableClass extends Component {
                     title: "Farbcode",
                     field: "OI_HEXCOLOR",
                     tooltip: "HEX-Code: #282C34",
-                    cellStyle: (input, rowData) => {
+                   /*  cellStyle: (input, rowData) => {
                         return {
                             backgroundColor: rowData?.colorCode || input,
                         };
-                    }
+                    } */
+                },
+                {
+                    title: "Farbe",
+                    field: "OI_HEXCOLOR",
+                    tooltip: "HEX-Code: #282C34",
+                    cellStyle: (input, rowData) => {
+                        return {
+                            
+                            backgroundColor: rowData?.colorCode || input,
+                            color: 'rgba(0,0,0,0)'
+                        };
+                    },
+                    editable: 'never'
                 },
                 { 
                     title: "Bild", 
@@ -292,20 +305,20 @@ class NewOrderTableClass extends Component {
                     <Grid container spacing={3} align="left">
                         <Grid item xs style={{alignContent:"left"}}>
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">Auftragstyp *</FormLabel>
+                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" control={<Radio />} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" control={<Radio />} label="Normal" />
+                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
+                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
 
                         <Grid item xs style={{alignContent:"left"}}>
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">Als Entwurf speichern? *</FormLabel>
+                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Als Entwurf speichern? *</b></FormLabel>
                                 <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="0" control={<Radio />} label="Ja" />
-                                    <FormControlLabel key="1" value="1" control={<Radio />} label="Nein" />
+                                    <FormControlLabel key="0" value="0" control={<Radio style={{color: "#006064"}} />} label="Ja" />
+                                    <FormControlLabel key="1" value="1" control={<Radio style={{color: "#006064"}}/>} label="Nein" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>

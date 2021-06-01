@@ -104,7 +104,7 @@ class AddCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio style={{color:"#006064"}}/>} label={v.CT_DESC} />
                     ))
                 });
             }
@@ -350,7 +350,7 @@ class AddCustomerForm extends Component {
                         <FormControl>
                             <Grid container spacing={4}>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Vorname*"
                                         type="text"
@@ -363,7 +363,7 @@ class AddCustomerForm extends Component {
                                         </div>
                                 </Grid>
 
-                                    <Grid item sm={6} xs={12}>                
+                                    <Grid item sm={4} xs={12}>                
                                         <TextField
                                             label="Nachname*"
                                             type="text"
@@ -376,7 +376,7 @@ class AddCustomerForm extends Component {
                                         </div>
                                 </Grid>
                 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Straße*"
                                         type="text"
@@ -389,7 +389,7 @@ class AddCustomerForm extends Component {
                                     </div>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>         
+                                <Grid item sm={4} xs={12}>         
                                     <TextField
                                         label="Hausnummer*"
                                         type="text"
@@ -402,7 +402,7 @@ class AddCustomerForm extends Component {
                                     </div>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Postleitzahl*"
                                         type="number"
@@ -415,7 +415,7 @@ class AddCustomerForm extends Component {
                                     </div>                                  
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Stadt*"
                                         type="text"
@@ -428,7 +428,7 @@ class AddCustomerForm extends Component {
                                     </div>                                                                       
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <FormControl>
                                         <InputLabel id="country">Land*</InputLabel>
                                         <Select
@@ -446,7 +446,7 @@ class AddCustomerForm extends Component {
                                     </FormControl>
                                 </Grid>    
         
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Telefon*"
                                         type="text"
@@ -459,7 +459,7 @@ class AddCustomerForm extends Component {
                                     </div>                                   
                                 </Grid>       
         
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="E-Mail*"
                                         type="text"
@@ -472,7 +472,7 @@ class AddCustomerForm extends Component {
                                     </div>                                                                   
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Firma"
                                         type="text"
@@ -485,13 +485,13 @@ class AddCustomerForm extends Component {
                                     </div>                                                                     
                                 </Grid> 
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <FormControl component="fieldset">
-                                        <FormLabel>Kundentyp</FormLabel>
+                                        <FormLabel><b style={{color:"black"}}>Kundentyp</b></FormLabel>
         
                                         <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
                                             {this.state.radioButtonCustomerType}
-                                        </RadioGroup>
+                                        </RadioGroup >
                                         <span className={classes.error}>{this.state.errors["C_CT_ID"]}</span>
                                     </FormControl>
                                 </Grid>

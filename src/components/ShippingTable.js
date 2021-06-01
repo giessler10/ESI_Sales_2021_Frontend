@@ -5,6 +5,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {Button, Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 import FullScreenQSDialog from '../components/FullScreenQSDialog';
 import ShippingButton from '../components/ShippingButton'
@@ -46,6 +47,7 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
     <React.Fragment>
       <Grid container direction="row" justify="flex-end" alignItems="center">
         <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
         <FullScreenQSDialog selectedRows={selectedRows.data}/> 
         <ShippingButton/>
       </Grid>
@@ -83,10 +85,6 @@ textLabels: {
 };
 
 
-
-
-
-
  useEffect(() => {
   //Orders aus MySQL ziehen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=7')
@@ -108,6 +106,8 @@ textLabels: {
           console.log(err.message); //Error-Handling
       })
 });
+
+
 
   //Check if database is offline (AWS)
   function IsDataBaseOffline(res){
@@ -167,7 +167,65 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function PdfCreate(OrderitemsData,logoBase64){
+
+
+
+
+
+
+
+//#region Rechnung erstellen
+
+ //Rechnung Button Click 
+ function CreateInvoice(){
+
+  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
+   if(selectedData.length > 1) {
+    alert("Bitte nur ein Datensatz auswählen");
+    return;
+  }
+  
+      // Abfrage Orderitems
+      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
+      
+      .then(res => {
+        console.log("RESPONSE Orderitems:", res); //Data from Gateway
+        
+        if(IsDataBaseOffline(res)) return; //Check if db is available
+    
+        if(res.data.length === 0) { //Check if data is available
+          //setOrderitemsData(undefined);
+          return;
+        }          
+        
+        //Bestellnummer
+        var orderNumb = selectedData[0]["O_NR"];
+
+        //Kundennummer
+        var customer_number = selectedData[0]["C_NR"];
+
+        //Firmenname
+        var company_Name = selectedData[0]["C_COMPANY"];
+        
+        //Firmenanschrift
+       var custom_Address = selectedData[0]["C_STREET"]+" "+selectedData[0]["C_HOUSENR"]+", ("+selectedData[0]["C_CO_ID"]+") "+selectedData[0]["CI_DESC"];
+
+        //Kundentelefon
+       var customer_phone  = selectedData[0]["C_TEL"];
+
+       //Kundenmail
+       var customer_mail = selectedData[0]["C_MAIL"];
+
+
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+      
+        })
+        .catch(err => {
+            console.log(err.message); //Error-Handling
+        })
+        
+
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -175,11 +233,13 @@ function PdfCreate(OrderitemsData,logoBase64){
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
-    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)),
+    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(OrderitemsData[index]["OI_PRICE"]),
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))
+    unit: String(OrderitemsData[index]["OI_PRICE"]) + " €",
+    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
+    
 }));
+
 
 console.log("TableData", tableData);
 
@@ -188,6 +248,7 @@ console.log("TableData", tableData);
                 var dd = String(invoicedate.getDate()).padStart(2, '0');
                 var mm = String(invoicedate.getMonth() + 1).padStart(2, '0'); //January is 0!
                 var yyyy = invoicedate.getFullYear();
+                
 
                 invoicedate = dd + '.' + mm + '.' + yyyy;
 
@@ -201,10 +262,35 @@ console.log("TableData", tableData);
 
                 paymentdate = dd + '.' + mm + '.' + yyyy;
 
+
+              //Name für Lieferschein stückeln
+              var invoiceName = orderNumber+"_"+dd+""+mm+""+yyyy;
+
+              //Rechnungsnummer = Bestellnummer
+              var invoiceNumber = orderNumber;
+
+              //Kundennummer
+               var customerNumber = customer_number;
+
+              //Unternehmensname
+              var companyName = company_Name;
+
+              //Kundenadresse
+              var customerAddress = custom_Address;
+
+              //Kundentelefon
+              var customerPhone = customer_phone;
+
+              //Kundenmail
+              var customerMail = customer_mail;
+
+              //Gesamtpreis
+              var tot = tableData.total;
+
 var props = {
   outputType: OutputType.Save,
   returnJsPDFDocObject: true,
-  fileName: "Lieferschein",
+  fileName: "Rechnung "+invoiceName,
   orientationLandscape: false,
   logo: {
       //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
@@ -225,24 +311,225 @@ var props = {
       website: "www.yourshirt.de",
   },
   contact: {
-      label: "Invoice issued for:",
-      name: "Client Name",
-      address: "Albania, Tirane, Astir",
-      phone: "(+355) 069 22 22 222",
-      email: "client@website.al",
-      otherInfo: "www.website.al",
+      label: "Kundennummer: "+customerNumber,
+      name: companyName,
+      address: customerAddress,
+      phone: customerPhone,
+      email: customerMail,
+      /*otherInfo: "www.website.al",*/
   },
   invoice: {
-      label: "Invoice #: ",
+      label: "Rechnung #: ",
       invTotalLabel: "Total:",
-      num: 19,
-      invDate: "Payment Date: " + invoicedate,
-      invGenDate: "Invoice Date: " + paymentdate,
-      header: ["#", "Description", "Price per Piece", "Quantity", "Price net","Price gross"],
+      num: invoiceNumber,
+      invDate: "Zahlungseingang: " + invoicedate,
+      invGenDate: "Rechnungsdatum: " + paymentdate,
+      header: ["#", "Beschreibung", "Preis pro Stück", "Menge", "Preis (Netto)","Preis (Brutto"],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
-      invTotal: "145,250.50",
+      invTotal: tot,
+      invCurrency: "EUR",
+      /*row1: {
+          col1: 'VAT:',
+          col2: '19',
+          col3: '%',
+          style: {
+              fontSize: 10 //optional, default 12
+          }
+      },
+      row2: {
+          col1: 'SubTotal:',
+          col2: '116,199.90',
+          col3: 'EUR',
+          style: {
+              fontSize: 10 //optional, default 12
+          }
+      },*/
+      invDescLabel: "From YourShirt with Love :)",
+      invDesc: "",
+  },
+  footer: {
+      text: "Die Rechnung wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
+  },
+  pageEnable: true,
+  pageLabel: "Page ",
+};
+
+const pdfObject = jsPDFInvoiceTemplate(props);
+
+}
+
+ }
+
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#region Lieferschein erstellen
+
+ //Rechnung Button Click 
+ function CreateDelivOrder(){
+
+  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
+   if(selectedData.length > 1) {
+    alert("Bitte nur ein Datensatz auswählen");
+    return;
+  }
+  
+      // Abfrage Orderitems
+      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
+      
+      .then(res => {
+        console.log("RESPONSE Orderitems:", res); //Data from Gateway
+        
+        if(IsDataBaseOffline(res)) return; //Check if db is available
+    
+        if(res.data.length === 0) { //Check if data is available
+          //setOrderitemsData(undefined);
+          return;
+        }          
+        
+        //Bestellnummer
+        var orderNumb = selectedData[0]["O_NR"];
+
+        console.log("Test 1: "+orderNumb)
+        var customer_number = selectedData[0]["C_NR"];
+        console.log("Test 2: "+customer_number)
+        var customer_Name = selectedData[0]["C_FIRSTNAME"] +" " +selectedData[0]["C_LASTNAME"];
+
+        //Kundenanschrift
+        var custom_Address = selectedData[0]["C_STREET"]+" "+selectedData[0]["C_HOUSENR"]+", ("+selectedData[0]["C_CO_ID"]+") "+selectedData[0]["CI_DESC"];
+
+       //Kundentelefon
+      var customer_phone  = selectedData[0]["C_TEL"];
+
+      //Kundenmail
+      var customer_mail = selectedData[0]["C_MAIL"];
+
+
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+      
+        })
+        .catch(err => {
+            console.log(err.message); //Error-Handling
+        })
+        
+
+function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
+
+  console.log("Orderitemdata Länge:", OrderitemsData.length);
+
+  var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
+
+    num: String(OrderitemsData[index]["OI_NR"]),
+    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
+    price: "",
+    quantity: String(OrderitemsData[index]["OI_QTY"]),
+    unit: "Stück",
+    total: ""
+    
+}));
+
+
+console.log("TableData", tableData);
+
+                //DeliverDate
+                var delivDate = new Date();
+                var dd = String(delivDate.getDate()).padStart(2, '0');
+                var mm = String(delivDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = delivDate.getFullYear();
+
+
+                delivDate = dd + '.' + mm + '.' + yyyy;
+
+                //Getting paymentdate
+                var paymentdate = new Date();
+                paymentdate.setDate(paymentdate.getDate() + 14);
+
+                var dd = String(paymentdate.getDate()).padStart(2, '0');
+                var mm = String(paymentdate.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = paymentdate.getFullYear();
+
+                paymentdate = dd + '.' + mm + '.' + yyyy;
+
+
+              //Name für Lieferschein stückeln
+              var invoiceName = orderNumb+"_"+dd+""+mm+""+yyyy;
+
+              //Rechnungsnummer = Bestellnummer
+              var orderNumber = orderNumb;
+
+              //Kundennummer
+               var customerNumber = customer_number;
+
+               //Kundenname
+               var customerName = customer_Name;
+
+              //Kundenadresse
+              var customerAddress = custom_Address;
+
+              //Kundentelefon
+              var customerPhone = customer_phone;
+
+              //Kundenmail
+              var customerMail = customer_mail;
+
+
+var props = {
+  outputType: OutputType.Save,
+  returnJsPDFDocObject: true,
+  fileName: "Lieferschein "+invoiceName,
+  orientationLandscape: false,
+  logo: {
+      //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+      src: logoBase64,
+      width: 53.33, //aspect ratio = width/height
+      height: 26.66,
+      margin: {
+          top: 0, //negative or positive num, from the current position
+          left: 0 //negative or positive num, from the current position
+      }
+  },
+  business: {
+      name: "YourShirt GmbH",
+      address: "Schutterlindenberg 66, (DE) 77933 Lahr",
+      phone: "(+49) 7821 66 66 66",
+      email: "info@yourshirt.com",
+      //email_1: "info@example.al",
+      website: "www.yourshirt.de",
+  },
+  contact: {
+      label: "Kundennummer: "+customerNumber,
+      name: customerName,
+      address: customerAddress,
+      phone: customerPhone,
+      email: customerMail,
+  },
+  invoice: {
+      label: "Lieferschein #: ",
+      invTotalLabel: "Total:",
+      num: orderNumber,
+      invDate: "Versandbereit am: " + delivDate,
+      invGenDate: "Ausgestellt am: " + paymentdate,
+      header: ["#", "Beschreibung", "", "Menge", "",""],
+      headerBorder: false,
+      tableBodyBorder: false,
+      table: tableData,
+     /* invTotal: "145,250.50",
       invCurrency: "EUR",
       row1: {
           col1: 'VAT:',
@@ -259,12 +546,12 @@ var props = {
           style: {
               fontSize: 10 //optional, default 12
           }
-      },
-      invDescLabel: "Invoice Note",
-      invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+      },*/
+      invDescLabel: "From YourShirt with Love :)",
+      invDesc: "",
   },
   footer: {
-      text: "The invoice is created on a computer and is valid without the signature and stamp.",
+      text: "Die Rechnung wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
   },
   pageEnable: true,
   pageLabel: "Page ",
@@ -274,42 +561,22 @@ const pdfObject = jsPDFInvoiceTemplate(props);
 
 }
 
- //Lieferschein Button Click 
- function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
-
-
-
-      // Abfrage Orderitems
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
-      
-      .then(res => {
-        console.log("RESPONSE Orderitems:", res); //Data from Gateway
-        
-        if(IsDataBaseOffline(res)) return; //Check if db is available
-    
-        if(res.data.length === 0) { //Check if data is available
-          //setOrderitemsData(undefined);
-          return;
-        }          
-        
-        //console.log("RESPOSNEDATE", res.data);
-        //setOrderitemsData(res.data);
-      
-        //console.log("Orderitem Daten: ", OrderitemsData)
-        PdfCreate(res.data,logoBase64.src);
-      
-        })
-        .catch(err => {
-            console.log(err.message); //Error-Handling
-        })
-        
  }
+
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {

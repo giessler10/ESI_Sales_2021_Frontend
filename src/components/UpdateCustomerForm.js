@@ -9,7 +9,6 @@ const useStyles = theme => ({
     root: {
         padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
     },
     error: {
         color: "red"
@@ -104,7 +103,7 @@ class UpdateCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio style={{color:"green"}}/>} label={v.CT_DESC} />
                     ))
                 });
             }
@@ -139,7 +138,7 @@ class UpdateCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel key={key} value={v.CT_ID} control={<Radio />} label={v.CT_DESC} />
+                        <FormControlLabel  key={key} value={v.CT_ID} control={<Radio/>} label={v.CT_DESC} />
                     ))
                 });
             }
@@ -402,7 +401,7 @@ class UpdateCustomerForm extends Component {
         let content = "";
 
         return (
-            <div className={classes.root}>
+           
                 <form onSubmit={this.submitHandler}>
                     <div style={{ padding: "20px", alignContent:"center", fontSize: 12}}>
                         <Collapse className={classes.alert} in={errorMessageVisible}>
@@ -444,7 +443,7 @@ class UpdateCustomerForm extends Component {
                         <FormControl>
                             <Grid container spacing={4}>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Vorname*"
                                         type="text"
@@ -455,7 +454,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_FIRSTNAME"]}</span>
                                 </Grid>
 
-                                    <Grid item sm={6} xs={12}>                
+                                    <Grid item sm={4} xs={12}>                
                                         <TextField
                                             label="Nachname*"
                                             type="text"
@@ -466,7 +465,7 @@ class UpdateCustomerForm extends Component {
                                         <span className={classes.error}>{this.state.errors["C_LASTNAME"]}</span>
                                 </Grid>
                 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Straße*"
                                         type="text"
@@ -477,7 +476,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_STREET"]}</span>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>         
+                                <Grid item sm={4} xs={12}>         
                                     <TextField
                                         label="Hausnummer*"
                                         type="text"
@@ -488,7 +487,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_HOUSENR"]}</span>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <TextField
                                         label="Postleitzahl*"
                                         type="number"
@@ -499,7 +498,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_CI_PC"]}</span>
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Stadt*"
                                         type="text"
@@ -510,7 +509,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["CI_DESC"]}</span>                                   
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <FormControl>
                                         <InputLabel id="country">Land*</InputLabel>
                                         <Select
@@ -526,7 +525,7 @@ class UpdateCustomerForm extends Component {
                                     </FormControl>
                                 </Grid>    
         
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Telefon*"
                                         type="text"
@@ -537,7 +536,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_TEL"]}</span>
                                 </Grid>       
         
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="E-Mail*"
                                         type="text"
@@ -548,7 +547,7 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_EMAIL"]}</span>                                    
                                 </Grid>
 
-                                <Grid item sm={6} xs={12}>                                    
+                                <Grid item sm={4} xs={12}>                                    
                                     <TextField
                                         label="Firma"
                                         type="text"
@@ -559,9 +558,9 @@ class UpdateCustomerForm extends Component {
                                     <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span>                                  
                                 </Grid> 
 
-                                <Grid item sm={6} xs={12}>
+                                <Grid item sm={4} xs={12}>
                                     <FormControl component="fieldset">
-                                        <FormLabel>Kundentyp</FormLabel>
+                                        <FormLabel> <b>Kundentyp</b></FormLabel>
         
                                         <RadioGroup name="C_CT_ID" value={C_CT_ID} onChange={this.changeHandler}>
                                             {this.state.radioButtonCustomerType}
@@ -587,7 +586,7 @@ class UpdateCustomerForm extends Component {
                         </FormControl>
                     </div>
                 </form>
-            </div>
+            
         );
     }
 }

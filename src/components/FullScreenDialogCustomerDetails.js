@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    textColor: "green",
+    textColor: "#006064",
     textAlign: 'center',
     color: theme.palette.text.secondary
   },  
@@ -88,9 +88,11 @@ export default function FullScreenDialog(props) {
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Kundennummer {C_NR}</h2>
+            <UpdateCustomerForm C_NR={C_NR}></UpdateCustomerForm>
           </Grid>
+          
         </div>
-        <UpdateCustomerForm C_NR={C_NR}></UpdateCustomerForm>
+        
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Einsicht in Kundenbestellungen</h2>
