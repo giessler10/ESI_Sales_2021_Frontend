@@ -88,9 +88,11 @@ export default function FullScreenDialog(props) {
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Kundennummer {C_NR}</h2>
+            <UpdateCustomerForm C_NR={C_NR}></UpdateCustomerForm>
           </Grid>
+          
         </div>
-        <UpdateCustomerForm C_NR={C_NR}></UpdateCustomerForm>
+        
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Einsicht in Kundenbestellungen</h2>

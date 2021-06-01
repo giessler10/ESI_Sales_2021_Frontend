@@ -1,26 +1,28 @@
 import React from 'react';
 import Faq from 'react-faq-component';
+import Typography from '@material-ui/core/Typography';
+
 export default function FaqBereich() {
     const data = {
         title: "FAQ",
         rows: [
           {
             
-            title: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr.",
-            content: ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            title: "Der Kunde möchte seinen Auftrag änden, ich habe ihn jedoch schon in die Produktion gegeben. Was jetzt?",
+            content: "Leider zu spät."
             
           },
           {
-            title: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr.",
-            content: ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            title: "In der Qualitätsprüfung des Auftrages sind minimale Mängel festgestellt worden. Gebe ich den Auftrag an den Versanddienstleister weiter?",
+            content: "Nein, Qualität steht bei uns an erster Stelle. Wähle unter 'Versandbereite Aufträge' den Auftrag aus, wähle 'QS' an und fülle das Formular aus. Ein neuer Auftrag wird in der Produktion angestoßen."
           },
           {
-            title: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr.",
-            content: ", sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            title: "Der Kunde reklamiert einzelne Positionen seines Auftrages. Lege ich nun einen komplett neuen Auftrag an?",
+            content: "Nein, es muss kein neuer Auftrag angelegt werden. Gehe unter 'Geschlossene Aufträge' und wähle den Auftrag, welcher der Kunde reklamiert. Wähle die einzelnen Positionen und entsprechenden Gründe aus und lege die Beanstandung an. Dein Job ist in erster Linie getan."
           },
           {
-            title: "What is the package version?",
-            content: "V.XX.XX.X"
+            title: "Ab welchem Gewicht muss ich die Ware in einen seperaten Versandkarton packen?",
+            content : "Das Gewicht des Paketes darf 32 Kilogramm nicht überschreiten. Lieber ein Mal mehr wiegen."
           }]
       }
       const styles = {

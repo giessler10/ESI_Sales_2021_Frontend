@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  paperII: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    width: '500px',
+  },
   root: {
     flexGrow: 1,
     width: '100%',
@@ -37,8 +43,10 @@ const Hilfebereich = () => {
            <Chatbot/>
 
            <br></br>
-           <Paper className={classes.paper}>
-           <h2>Kontaktformular</h2>
+           
+           <Paper className={classes.paperII}>
+           <h2>Trotzdem noch Fragen?</h2>
+           <h4>Senden Sie uns ein Ticket. Die CMS-Consulting wird sich binnen des nächsten Werktages bei Ihnen melden.</h4>
 <Form/>
 </Paper>
 

@@ -95,6 +95,7 @@ export default function FullScreenDialogOrderDetails(props) {
             disabled
             id="Bestellnummer"
             label="Bestellnummer"
+            color="secondary"
             defaultValue={order[0]}
             variant="filled"/>
           <TextField
