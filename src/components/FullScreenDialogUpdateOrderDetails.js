@@ -96,7 +96,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 
-export default function FullScreenDialogOrderDetails(props) {
+export default function FullScreenDialogUpdateOrderDetails(props) {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
