@@ -84,11 +84,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MoreThan2Rows(selectedRows){
-  if(selectedRows.length > 1) 
-    {return true;}
-    return false;
-};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -96,24 +91,29 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 
-export default function FullScreenDialogOrderDetails(props) {
+export default function QSFormCellEdittable(props) {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     var OI_O_NR = props.OI_O_NR;
-    var order = props.order;
-    var selectedRows = props.selectedRows;
 
     const { useState, useEffect } = React;
     const [backendResponse, setBackendResponse] = useState(null);
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState([
         {
+            title: "Position", 
+            field: "OI_NR",
+            type: "numeric",
+            editable: 'never'
+        },
+        {
             title: "Materialbeschreibung",
             field: "OI_MATERIALDESC",
             tooltip: "Materialbeschreibung",
             lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' },
+            editable: 'never'
         },
         {
             title: "Farbcode",
@@ -124,23 +124,27 @@ export default function FullScreenDialogOrderDetails(props) {
                     backgroundColor: rowData?.colorCode || input,
                 };
             },
+            editable: 'never'
         },
         { 
             title: "Bild", 
-            field: "IM_FILE", 
+            field: "IM_FILE",
+            editable: 'never'
         },
         { 
             title: "Menge", 
             field: "OI_QTY",
             initialEditValue: 1,
-            type: "numeric" 
+            type: "numeric",
+            editable: 'never'
         },
         {
             title: "Preis",
             field: "OI_PRICE",
             tooltip: "Einzelpreis",
             type: "currency",
-            currencySetting:{ currencyCode:'EUR', minimumFractionDigits:2, maximumFractionDigits:2}
+            currencySetting:{ currencyCode:'EUR', minimumFractionDigits:2, maximumFractionDigits:2},
+            editable: 'never'
         },
         {
             title: "Mehrwertsteuer",
@@ -148,39 +152,77 @@ export default function FullScreenDialogOrderDetails(props) {
             initialEditValue: 0.19,
             tooltip: "Mehrwertsteuer",
             editable: 'never'
+        },
+        {
+            title: "Grund der QS",
+            field: "QI_COMMENT",
+            tooltip: "Grund für die QS",
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Keine Auftragsposition': 'Keine Auftragsposition', 'Beschädigt': 'Beschädigt'}
+        },
+        { 
+            title: "Gemeldete Menge", 
+            field: "QI_QTY",
+            type: "numeric",
         }
     ]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    function createPostBody() {
+        var dataForQS = [];
+        var errorMessage = "";
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+        data.forEach( (currentObject, index) => {
+            if(currentObject.QI_QTY != 0 && currentObject.QI_COMMENT != 'Keine'){
+                if(currentObject.QI_QTY > currentObject.OI_QTY){
+                    errorMessage = "Gemeldete Menge bei Position " + (index+1) + " darf nicht größer der Auftragsmenge sein!";
+                    return;
+                }
+                else{
+                    dataForQS = [...dataForQS, currentObject];
+                }
+            }
+            else{
+                if(currentObject.QI_QTY != 0 && currentObject.QI_COMMENT == 'Keine'){
+                    errorMessage = "Bitte bei Position " + (index+1) + "  einen Grund angeben!";
+                    return;
+                }
+                else if(currentObject.QI_QTY == 0 && currentObject.QI_COMMENT != 'Keine'){
+                    errorMessage = "Bitte bei Position " + (index+1) + " eine Menge angeben!";
+                    return;
+                }
 
-    function createOrderitems() {
-        const orderitems = data.map((element) => {
-            return {
-                "OI_NR": element.tableData.id + 1,
-                "OI_MATERIALDESC": element.OI_MATERIALDESC,
-                "OI_HEXCOLOR": element.OI_HEXCOLOR,
-                "OI_QTY": element.OI_QTY,
-                "IM_FILE": element.IM_FILE,
-                "OI_PRICE": element.OI_PRICE,
-                "OI_VAT": element.OI_VAT
-            };
+            }
         });
 
-        axios
-            .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR +'/orderitems', orderitems)
-            .then((response) => {
-                setBackendResponse(response.data.message);
-            })
-            .catch((error) => {
-            console.log(error);
-                setBackendResponse(error.message);
-            })
+        if(dataForQS.length == 0 && errorMessage == ""){
+            setBackendResponse("Bitte für mindestens eine Position eine Menge und einen Grund angeben!");
+        }
+        else if(errorMessage != ""){
+            setBackendResponse(errorMessage);
+        }
+        else{
+            const body = dataForQS.map((element) => {
+                return {
+                    "QI_O_NR": OI_O_NR,
+                    "QI_OI_NR": element.tableData.id + 1,
+                    "QI_QTY": element.QI_QTY,
+                    "QI_COMMENT": element.QI_COMMENT
+                };
+            });
+
+            console.log(body);
+
+            /*
+            axios
+                .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/38/orderitems', body)
+                .then((response) => {
+                    setBackendResponse(response.data.message);
+                })
+                .catch((error) => {
+                console.log(error);
+                    setBackendResponse(error.message);
+                })
+            */
+        }
     }
 
     useEffect(() => {
@@ -190,11 +232,13 @@ export default function FullScreenDialogOrderDetails(props) {
                 .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
                 .then(
                     (res) => {
-                        //console.log(res);
+                        //console.log(res.status);
+
                         if(res.data.length === 0) { //Check if data is available
                             setData(undefined);
                             return;
                         } 
+
                         return res.data;
                     }
                 )
@@ -204,12 +248,15 @@ export default function FullScreenDialogOrderDetails(props) {
 
                         responseArray.forEach( (currentObject, index) => {
                             var newData = {
+                                OI_NR: currentObject.OI_NR,
                                 OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
                                 OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
                                 IM_FILE: "Muss in der Lambda noch erweitert werden",
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
                                 OI_VAT: parseFloat(currentObject.OI_VAT),
+                                QI_COMMENT: 'Keine',
+                                QI_QTY: 0,
                                 tableData: {
                                     id: index
                                 }
@@ -227,101 +274,64 @@ export default function FullScreenDialogOrderDetails(props) {
     }, [data]);
 
     return (
-        <div>
-            <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <EditIcon/>
-                Auftrag bearbeiten
-            </Button>
-            <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Auftragdetails
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
-                <div className={classes.table}>
-                    <h2>Positionen</h2>
-                    <MaterialTable
-                        style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
-                        title="Auftrag bearbeiten"
-                        columns={columns}
-                        data={data}
-                        options={{
-                        headerStyle: {
-                            backgroundColor: "#006064",
-                            color: "#FFFF",
-                        },
-                        textLabels: {
-                        body: {
-                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                            toolTip: "Sort",
-                            columnHeaderTooltip: column => `Sort for ${column.label}`
-                        }
-                        }
-                        }}
-                        icons={tableIcons}
-                        editable={{
-                        onRowAdd: (newData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                setData([...data, newData]);
-                                //console.log(count, newData);
-            
-                                resolve();
-                            }, 1000);
-                            }),
-                        onRowUpdate: (newData, oldData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                const dataUpdate = [...data];
-                                const index = oldData.tableData.id;
-                                dataUpdate[index] = newData;
-                                setData([...dataUpdate]);
-            
-                                resolve();
-                            }, 1000);
-                            }),
-                        onRowDelete: (oldData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                const dataDelete = [...data];
-                                const index = oldData.tableData.id;
-                                dataDelete.splice(index, 1);
-                                setData([...dataDelete]);
-            
-                                resolve();
-                            }, 1000);
-                            }),
-                        }}
-                    />
-                    <Grid item xs={12}>
-                
-                        <Button
-                        onClick={createOrderitems}
-                        style={{ float: "right", margin: "20px" }}
-                        variant="outlined"
-                        color="primary"
-                        title="Bestellung speichern"
-                        >
-                            Änderungen speichern
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <div style={{
-                            display: "flex",
-                            alignItems: "center",
-                            paddingTop: "10px",
-                            margin: "20px",
-                            }}>
-                        <h3>Bestätigung: {backendResponse}</h3>
-                        </div>
-                    </Grid>
+        <div className={classes.table}>
+            <MaterialTable
+                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
+                title="Positionen"
+                columns={columns}
+                data={data}
+                options={{
+                headerStyle: {
+                    backgroundColor: "#006064",
+                    color: "#FFFF",
+                },
+                textLabels: {
+                body: {
+                    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                    toolTip: "Sort",
+                    columnHeaderTooltip: column => `Sort for ${column.label}`
+                }
+                }
+                }}
+                icons={tableIcons}
+                cellEditable={{
+                    onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+                        return new Promise((resolve, reject) => {
+                        //console.log('newValue: ' + newValue);
+                        const dataUpdate = [...data]
+                        const rowDataUpdate = rowData;
+                        const columnField = columnDef.field;
+                        rowDataUpdate[columnField] = newValue;
+                        const index = rowData.tableData.id;
+                        dataUpdate[index] = rowDataUpdate;
+                        setData([...dataUpdate]);
+                        setTimeout(resolve, 1000);
+                        });
+                    }
+                }}
+            />
+            <Grid item xs={12}>
+        
+                <Button
+                onClick={createPostBody}
+                style={{ float: "right", margin: "20px" }}
+                variant="outlined"
+                color="primary"
+                title="Bestellung speichern"
+                >
+                    QS erfassen
+                </Button>
+            </Grid>
+            <Grid item xs={12}>
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    paddingTop: "10px",
+                    margin: "20px",
+                    }}>
+                <h3>Bestätigung: {backendResponse}</h3>
                 </div>
-            </Dialog>
+            </Grid>
         </div>
     );
 }

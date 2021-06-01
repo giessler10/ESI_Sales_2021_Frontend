@@ -8,12 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import UpdateCustomerForm from './UpdateCustomerForm';
-import CustomerOrders from './customerOrdersTable';
-import {Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import OrderPositionsTable from './orderPositionsTable.js';
-import TextField from '@material-ui/core/TextField';
+import OrderHeader from './OrderHeader';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,56 +85,12 @@ export default function FullScreenDialogOrderDetails(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div className={classes.root}>
-          <br/>
-          <Grid xs={4}>
-          <TextField
-            disabled
-            id="Bestellnummer"
-            label="Bestellnummer"
-            color="secondary"
-            defaultValue={order[0]}
-            variant="filled"/>
-          <TextField
-            disabled
-            id="Kundennummer"
-            label="Kundennummer"
-            defaultValue={order[1]}
-            variant="filled"/>
-          <br/>
-            <TextField
-            disabled
-            id="Vorname"
-            label="Vorname"
-            defaultValue={order[10]}
-            variant="filled"/>
-          <TextField
-            disabled
-            id="Nachname"
-            label="Nachname"
-            defaultValue={order[11]}
-            variant="filled"/>
-          <br/>
-            <TextField
-            disabled
-            id="Auftragsstatus"
-            label="Auftragsstatus"
-            defaultValue={order[6]}
-            variant="filled"/>
-          <TextField
-            disabled
-            id="PLZ"
-            label="PLZ"
-            defaultValue={order[13]}
-            variant="filled"/>
-        </Grid>
-          <div className={classes.table}>
-            <h2>Positionen</h2>
-            <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
-          </div>
+        <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
+        <div className={classes.table}>
+          <h2>Positionen</h2>
+          <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
         </div>
       </Dialog>
-
     </div>
   );
 }

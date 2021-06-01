@@ -45,13 +45,19 @@ export default function DraftOrders(){
   customToolbarSelect: (selectedRows, data) => {
     var order = data[selectedRows.data[0].index].data;
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}>
+    return  <div>
       <Grid container direction="row" justify="flex-end" alignItems="center">
-        <FullScreenUpdateDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
-        <DeleteOrderButton O_NR={OI_O_NR}/>
-        <ProductionButton O_NR={OI_O_NR}/>
+        <div style={{ paddingRight: "10px"}}>
+          <FullScreenUpdateDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <DeleteOrderButton O_NR={OI_O_NR}/>
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <ProductionButton O_NR={OI_O_NR}/>
+        </div>
       </Grid>
-    </div>;},
+      </div>;},
       
   textLabels: {
     body: {
@@ -108,7 +114,7 @@ function DataAreEqual(data, sortedOrders){
     _selectedData.push(allData[element.dataIndex])
   });
  
-  console.log("Selektierte Daten: ", _selectedData)
+  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
  }

@@ -24,78 +24,80 @@ export default function OrderPositionsTable(props){
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: () => {},
-textLabels: {
-  body: {
-    noMatch: "Es wurden keine passenden Aufträge gefunden.",
-    toolTip: "Sort",
-    columnHeaderTooltip: column => `Sort for ${column.label}`
-  }
-}
-};
-
-useEffect(() => {
-  var OI_O_NR = props.OI_O_NR;
-
-
-  // --> AufrufREST Link
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
-      .then(res => {
-
-        if(res.data.length === 0) { //Check if data is available
-          setAllData(undefined);
-          return;
-        }          
-
-        if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-        setAllData(res.data); //Set new table data
-
-      })
-      .catch( error => {
-        var errorObject = error.response.data;
-        var errorMessage = errorObject.errorMessage;
-        console.log(errorMessage); //Error-Handling
-      })
-});
-
-
-//Check if old data = new data
-function DataAreEqual(data, sortedOrders){
-  if(data.sort().join(',') === sortedOrders.sort().join(',')){
-    return true;
+    textLabels: {
+      body: {
+        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        toolTip: "Sort",
+        columnHeaderTooltip: column => `Sort for ${column.label}`
+      }
     }
-    else return false;
-}
+  };
 
-//Get selected rows
- function rowSelectEvent(curRowSelected, allRowsSelected){  
+  useEffect(() => {
+    var OI_O_NR = props.OI_O_NR;
+    if(allData != undefined){
+      if(allData.length == 0){
+      // --> AufrufREST Link
+      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
+          .then(res => {
+            //console.log(res);
+            if(res.data.length === 0) { //Check if data is available
+              setAllData(undefined);
+              return;
+            } 
+  
+            setAllData(res.data); //Set new table data
+            return res.data;
 
-  var _selectedData = [];
+          })
+          .catch( error => {
+            var errorObject = error.response.data;
+            var errorMessage = errorObject.errorMessage;
+            console.log(errorMessage); //Error-Handling
+          })
+    }
+    }
+  }, [allData]);
 
-  //No selection
-  if(allRowsSelected.length === 0) { 
-    setSelectedData(undefined);
+
+  //Check if old data = new data
+  function DataAreEqual(data, sortedOrders){
+    if(data.sort().join(',') === sortedOrders.sort().join(',')){
+      return true;
+      }
+      else return false;
+  }
+
+  //Get selected rows
+  function rowSelectEvent(curRowSelected, allRowsSelected){  
+
+    var _selectedData = [];
+
+    //No selection
+    if(allRowsSelected.length === 0) { 
+      setSelectedData(undefined);
+      return;
+    }
+
+    //Loop over all entries 
+    allRowsSelected.forEach(element => {
+      _selectedData.push(allData[element.dataIndex])
+    });
+  
+    console.log("Selektierte Daten: ", _selectedData)
+    setSelectedData(_selectedData);
     return;
   }
 
-  //Loop over all entries 
-  allRowsSelected.forEach(element => {
-    _selectedData.push(allData[element.dataIndex])
+  const getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MuiTypography: {
+            h6: {
+              fontWeight: "600",
+            }
+        }
+    }
   });
- 
-  console.log("Selektierte Daten: ", _selectedData)
-  setSelectedData(_selectedData);
-  return;
- }
-
-const getMuiTheme = () => createMuiTheme({
-  overrides: {
-    MuiTypography: {
-          h6: {
-            fontWeight: "600",
-          }
-      }
-  }
-});
 
   return (
     <div>

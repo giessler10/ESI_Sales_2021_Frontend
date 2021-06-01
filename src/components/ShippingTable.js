@@ -54,6 +54,26 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
     </React.Fragment>
   </div>;},
 
+customToolbarSelect: (selectedRows, data) => {
+  var order = data[selectedRows.data[0].index].data;
+  var OI_O_NR = data[selectedRows.data[0].index].data[0];
+  return  <div>
+    <React.Fragment>
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+      <div style={{ paddingRight: "10px"}}>
+        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+      </div>
+      <div style={{ paddingRight: "10px"}}>
+        <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+      </div>
+      <div style={{ paddingRight: "10px"}}>
+        <ShippingButton/>
+      </div>
+      </Grid>
+    </React.Fragment>
+  </div>;
+},
+
 
 textLabels: {
   body: {
@@ -129,14 +149,13 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
 }
 
 
-function MoreThan2Rows(){
-  if(typeof selectedData != "undefined") {
-
-    if(selectedData.length > 1) 
-      {return true;}
-    if(selectedData == "undefined")
-    {
+function MoreThan2Rows(selectedRows){
+  if(selectedRows != undefined){
+    if(selectedRows.length > 1){
       return true;
+    }
+    else{
+      return false;
     }
   }
   else{

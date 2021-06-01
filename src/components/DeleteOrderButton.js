@@ -5,12 +5,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from "axios";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-  console.log(props.O_NR);
+  //console.log(props.O_NR);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,7 +19,7 @@ export default function AlertDialog(props) {
   const handleClose = () => {
     setOpen(false);
 
-    //Auftrag an Produktion übergeben
+    //Auftrag löschen
     axios.delete('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR)
     .then(
         (res) => {
@@ -62,7 +62,7 @@ export default function AlertDialog(props) {
         variant="outlined"
         onClick={handleClickOpen}
         title="Produktionsauftrag">
-          <PlayCircleFilledWhiteIcon />
+          <DeleteIcon />
         Löschen
       </Button>
       <Dialog
