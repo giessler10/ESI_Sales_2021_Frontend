@@ -114,7 +114,7 @@ function DataAreEqual(data, sortedOrders){
     _selectedData.push(allData[element.dataIndex])
   });
  
-  console.log("Selektierte Daten: ", _selectedData)
+  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
  }

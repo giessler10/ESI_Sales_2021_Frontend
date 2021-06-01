@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-  console.log(props.O_NR);
+  //console.log(props.O_NR);
 
   const handleClickOpen = () => {
     setOpen(true);
