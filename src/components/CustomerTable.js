@@ -90,12 +90,18 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
   return;
 }
 
-function MoreThan2Rows(){
-  if(selectedData.length > 1) 
-  {    
-    return true;
-   }
-   return false;
+function MoreThan2Rows(selectedRows){
+  if(selectedRows != undefined){
+    if(selectedRows.length > 1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else{
+    return false;
+  }
 };
 
 const getMuiTheme = () => createMuiTheme({

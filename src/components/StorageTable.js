@@ -113,10 +113,18 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
 }
 
 
-function MoreThan2Rows(){
-  if(selectedData.length > 1) 
-    {return true;}
+function MoreThan2Rows(selectedRows){
+  if(selectedRows != undefined){
+    if(selectedRows.length > 1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else{
     return false;
+  }
 };
 
 function sleep(ms) {
