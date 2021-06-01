@@ -22,7 +22,7 @@ export default function OrderTable(){
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
   {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
   {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
-  {name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+  {name: "O_TIMESTAMP_FORMAT", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
   {name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
   {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
   {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false}}, 
