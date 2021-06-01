@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    textColor: "green",
+    textColor: "#006064",
     textAlign: 'center',
     color: theme.palette.text.secondary
   },  
