@@ -64,6 +64,9 @@ customToolbarSelect: (selectedRows, data) => {
         <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
       </div>
       <div style={{ paddingRight: "10px"}}>
+        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
+      </div>
+      <div style={{ paddingRight: "10px"}}>
         <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
       </div>
       <div style={{ paddingRight: "10px"}}>
@@ -538,7 +541,7 @@ var props = {
           style: {
               fontSize: 10 //optional, default 12
           }
-          
+
       },
       row2: {
           col1: 'SubTotal:',

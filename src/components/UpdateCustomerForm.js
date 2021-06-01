@@ -138,7 +138,7 @@ class UpdateCustomerForm extends Component {
             (res) => {
                 this.setState({
                     radioButtonCustomerType: res.map((v, key) => (
-                        <FormControlLabel  key={key} value={v.CT_ID} control={<Radio/>} label={v.CT_DESC} />
+                        <FormControlLabel  key={key} value={v.CT_ID} control={<Radio style={{color:"#006064"}}/>} label={v.CT_DESC} />
                     ))
                 });
             }
