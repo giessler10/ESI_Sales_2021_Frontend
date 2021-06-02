@@ -168,6 +168,13 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Gemeldete Menge", 
             field: "IR_QTY",
             type: "numeric",
+        },
+        {
+            title: "Neuproduktion",
+            field: "NewProduction",
+            tooltip: "Position neu produzieren lassen?",
+            lookup: { 0: 'Nein',  1: 'Ja'},
+            editable: 'never'
         }
     ]);
 
@@ -176,7 +183,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
         var errorMessage = "";
 
         data.forEach( (currentObject, index) => {
-            console.log(currentObject);
+            //console.log(currentObject);
             if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0"){
                 if(currentObject.IR_QTY > currentObject.OI_QTY){
                     errorMessage = "Gemeldete Menge bei Position " + (index+1) + " darf nicht größer der Auftragsmenge sein!";
@@ -223,19 +230,19 @@ export default function RetoureReklamationFormCellEdittable(props) {
         else{
             const body = dataForQS.map((element) => {
                 return {
-                    "QI_O_NR": OI_O_NR,
-                    "QI_OI_NR": element.tableData.id + 1,
+                    "IR_O_NR": OI_O_NR,
+                    "IR_OI_NR": element.tableData.id + 1,
                     "IR_RT_NR": parseInt(element.IR_RT_NR),
                     "IR_QTY": element.IR_QTY,
-                    "IR_COMMENT": element.IR_COMMENT
+                    "IR_COMMENT": element.IR_COMMENT,
+                    "NewProduction": parseInt(element.NewProduction)
                 };
             });
 
-            console.log(body);
-
-            /*
+            //console.log(body);
+            
             axios
-                .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/38/orderitems', body)
+                .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/itemReturn', body)
                 .then((response) => {
                     setBackendResponse(response.data.message);
                 })
@@ -243,7 +250,6 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 console.log(error);
                     setBackendResponse(error.message);
                 })
-            */
         }
     }
 
@@ -280,6 +286,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
                                 IR_RT_NR: "0",
                                 IR_COMMENT: 'Keine',
                                 IR_QTY: 0,
+                                NewProduction: "0",
                                 tableData: {
                                     id: index
                                 }

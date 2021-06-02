@@ -209,11 +209,10 @@ export default function QSFormCellEdittable(props) {
                 };
             });
 
-            console.log(body);
-
-            /*
+            //console.log(body);
+            
             axios
-                .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/38/orderitems', body)
+                .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/qualityIssue', body)
                 .then((response) => {
                     setBackendResponse(response.data.message);
                 })
@@ -221,7 +220,6 @@ export default function QSFormCellEdittable(props) {
                 console.log(error);
                     setBackendResponse(error.message);
                 })
-            */
         }
     }
 
