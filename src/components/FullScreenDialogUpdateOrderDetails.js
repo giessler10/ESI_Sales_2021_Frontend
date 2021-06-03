@@ -206,7 +206,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                             var newData = {
                                 OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
                                 OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: "Muss in der Lambda noch erweitert werden",
+                                IM_FILE: currentObject.IM_FILE,
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
                                 OI_VAT: parseFloat(currentObject.OI_VAT),
