@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+import QualityCell from'./QualityCell';
 
 
 export default function OrderPositionsTable(props){
@@ -16,7 +17,16 @@ export default function OrderPositionsTable(props){
   {name: "OI_NR", label: "Position", options: {filter: true, sort: true, display: true }}, 
   {name: "OI_IST_NR", label: "Status", options: {filter: true,  sort: false,  display: true}}, 
   {name: "OI_MATERIALDESC", label: "Materialbeschreibung", options: {filter: true, sort: false, display: true}},  
-  {name: "OI_HEXCOLOR", label: "Farbe", options: {filter: true, sort: true, display: true}}, 
+  {name: "OI_HEXCOLOR", label: "Farbwert", options: {filter: true, sort: true, display: true}},
+  {name: "OI_HEXCOLOR", label: "Farbe", options: {filter: true,sort: true, display: true, 
+    customBodyRender: (value, tableMeta, updateValue) => {
+      return (
+        <QualityCell
+          value={value}
+          index={tableMeta.columnIndex}
+          change={event => updateValue(event)}
+        />
+      );}}},
   {name: "OI_QTY", label: "Menge", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_PRICE", label: "Preis", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_VAT", label: "Mehrwertsteuer", options: {filter: true, sort: true, display: true}} 
