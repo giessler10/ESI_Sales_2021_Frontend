@@ -14,7 +14,7 @@ export default function OrderPositionsTable(props){
   const columns = [
   {name: "OI_O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: false}}, 
   {name: "OI_NR", label: "Position", options: {filter: true, sort: true, display: true }}, 
-  {name: "OI_IST_NR", label: "Status", options: {filter: true,  sort: false,  display: true}}, 
+  {name: "IST_DESC", label: "Status", options: {filter: true,  sort: false,  display: true}}, 
   {name: "OI_MATERIALDESC", label: "Materialbeschreibung", options: {filter: true, sort: false, display: true}},  
   {name: "OI_HEXCOLOR", label: "Farbe", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_QTY", label: "Menge", options: {filter: true, sort: true, display: true}}, 
