@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 
+
 class QualityCell extends Component {
     static propTypes = {
       value: PropTypes.string.isRequired,
@@ -16,7 +17,8 @@ class QualityCell extends Component {
         <p
           value={value}
           onChange={event => change(event.target.value, index)}
-          style={{ backgroundColor: backgroundColor ,color: value}}>{"."}</p>
+          style={{ backgroundColor: backgroundColor, color: value}}>{"."}</p>
+          
       )
     }
   }
