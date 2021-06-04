@@ -27,7 +27,8 @@ const RecentProblems = () => {
         <MUIDataTable
             title="Auftragsbestandteile"
             data={dataAuftraege}
-            columns={columnsAuftraege}/>
+            columns={columnsAuftraege}
+            options={options}/>
         </MuiThemeProvider>
     )
 }

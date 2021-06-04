@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, FormControl, Grid} from '@material-ui/core';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const ShippingButton = () => {
   return (
@@ -9,11 +10,12 @@ const ShippingButton = () => {
           <FormControl>
             <Grid item xs={12}>
               <Button
-                style={{ background: "#006064", color: "#ffffff"}}
+                color="primary"
                 type="submit"
-                variant="contained"
+                variant="outlined"
                 title="Kundendetails abfragen">
-                weg damit
+                 <LocalShippingIcon/>
+                Versand
               </Button>
             </Grid>
           </FormControl>

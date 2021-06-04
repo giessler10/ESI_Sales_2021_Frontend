@@ -8,7 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import EditOrders from './EditOrders';
+import DescriptionIcon from '@material-ui/icons/Description';
+import OrderPositionsTable from './orderPositionsTable.js';
+import OrderHeader from './OrderHeader';
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -19,15 +22,43 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+  },
+  root: {
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },  
+  table: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%'
+  }
 }));
+
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog() {
+export default function FullScreenDialogOrderDetails(props) {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+
+  var OI_O_NR = props.OI_O_NR;
+  var order = props.order;
+  var selectedRows = props.selectedRows;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,23 +68,28 @@ export default function FullScreenDialog() {
     setOpen(false);
   };
 
+
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Auftrag Bearbeiten
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+        Auftragdetails
       </Button>
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Auftrag bearbeiten
+              Auftragdetails
             </Typography>
           </Toolbar>
         </AppBar>
-            <EditOrders/>
+        <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
+        <div className={classes.table}>
+          <h2>Positionen</h2>
+          <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
+        </div>
       </Dialog>
     </div>
   );

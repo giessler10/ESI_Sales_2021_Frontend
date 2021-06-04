@@ -4,9 +4,13 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
-import { DataGrid, gridDateTimeFormatter } from '@material-ui/data-grid';
+import ProductionButton from '../components/ProductionButton'
+import DeleteOrderButton from '../components/DeleteOrderButton'
+import { Grid } from '@material-ui/core';
 
-export default function CustomerTable(){
+import FullScreenUpdateDialogOrderDetails from'./FullScreenDialogUpdateOrderDetails';
+
+export default function DraftOrders(){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
@@ -37,12 +41,24 @@ export default function CustomerTable(){
   {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
-  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+  const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
   customToolbarSelect: (selectedRows, data) => {
     var order = data[selectedRows.data[0].index].data;
     var OI_O_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/></div>;
-  },
+    return  <div>
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+        <div style={{ paddingRight: "10px"}}>
+          <FullScreenUpdateDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <DeleteOrderButton O_NR={OI_O_NR}/>
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <ProductionButton O_NR={OI_O_NR}/>
+        </div>
+      </Grid>
+      </div>;},
+      
   textLabels: {
     body: {
       noMatch: "Es wurden keine passenden Aufträge gefunden.",
@@ -55,7 +71,7 @@ export default function CustomerTable(){
 
 useEffect(() => {
   // Get Customerdata
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=9')
       .then(res => {
 
         if(res.data.length === 0) { //Check if data is available
@@ -98,35 +114,28 @@ function DataAreEqual(data, sortedOrders){
     _selectedData.push(allData[element.dataIndex])
   });
  
-  console.log("Selektierte Daten: ", _selectedData)
+  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
  }
 
- //Lieferschein Button Click 
- function OpenMore(){
-  <div><FullScreenDialogOrderDetails/></div>
- };
-
 const getMuiTheme = () => createMuiTheme({
   overrides: {
     MuiTypography: {
-          h6: {
-            fontWeight: "600",
-          }
+      h6: {
+        fontWeight: "600",
       }
+    }
   }
 });
 
+
   return (
-    <div>
-    <MuiThemeProvider theme={getMuiTheme()} > 
-      <MUIDataTable
-        data={allData}
-        columns={columns}
-        options={options}/>
-        <br></br>
+    <MuiThemeProvider theme={getMuiTheme()}>
+    <MUIDataTable
+      data={allData} 
+      columns={columns}
+      options={options}/> 
     </MuiThemeProvider>
-   </div>
-  );            
+  );        
 }

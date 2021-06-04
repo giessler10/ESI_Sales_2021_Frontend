@@ -8,9 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import AddFilledCustomerForm from './AddFilledCustomerForm';
+import UpdateCustomerForm from './UpdateCustomerForm';
 import CustomerOrders from './customerOrdersTable';
 import {Grid} from '@material-ui/core';
+import DescriptionIcon from '@material-ui/icons/Description';
 import CreateIcon from '@material-ui/icons/Create';
 
 
@@ -31,21 +32,34 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    textColor: "green",
+    textColor: "#006064",
     textAlign: 'center',
-    color: theme.palette.text.secondary,
-
+    color: theme.palette.text.secondary
   },  
+  table: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%'
+  }
 }));
 
+function MoreThan2Rows(selectedRows){
+  if(selectedRows.length > 1) 
+    {return true;}
+    return false;
+};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog() {
+export default function FullScreenDialog(props) {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+
+  var C_NR = props.C_NR;
+  var selectedRows = props.selectedRows;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,35 +71,36 @@ export default function FullScreenDialog() {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}> <CreateIcon/>
-        Kunde bearbeiten
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+        Kundendetails
       </Button>
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Kundendetail
+              Kundendetails
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <div className={classes.root}>
           <Grid item xs={12}>
-            <h2 >Kundendetails</h2>
+            <h2 >Kundennummer {C_NR}</h2>
+            <UpdateCustomerForm C_NR={C_NR}></UpdateCustomerForm>
           </Grid>
+          
         </div>
-        <AddFilledCustomerForm></AddFilledCustomerForm>
+        
         <div className={classes.root}>
           <Grid item xs={12}>
             <h2 >Einsicht in Kundenbestellungen</h2>
           </Grid>
         </div>
-        <CustomerOrders></CustomerOrders>
+        <div className={classes.table}>
+          <CustomerOrders C_NR={C_NR}></CustomerOrders>
+        </div>
       </Dialog>
     </div>
   );

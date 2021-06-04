@@ -20,12 +20,39 @@ const getMuiTheme = () => createMuiTheme({
   }
 });
 
+const useStyles = theme => ({
+  root: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+  },
+  error: {
+      color: "red"
+  },
+  errorAlert: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+  }
+});
+
+const options= { 
+  textLabels: {
+  body: {
+    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+    toolTip: "Sort",
+    columnHeaderTooltip: column => `Sort for ${column.label}`
+  }
+}};
+
 const CustomerDetails = () => {
   return (
     <MuiThemeProvider theme={getMuiTheme()}> 
     <MUIDataTable
       data={dataCustomersDetails}
       columns={columnsCustomersDetails}/>
+      options={options}
     </MuiThemeProvider>
   )
 }

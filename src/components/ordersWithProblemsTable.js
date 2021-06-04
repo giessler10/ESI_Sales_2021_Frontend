@@ -1,14 +1,9 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
-import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
+import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
-
-
-//importierte Seiten
-import OrderDetails from './specOrderDetails';
-import FullScreenDialog from'./FullScreenDialog';
 
 
 export default function ProgressOrders(){
@@ -24,7 +19,7 @@ export default function ProgressOrders(){
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
   {name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
   {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
-  {name: "O_TIMESTAMP", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
+  {name: "O_TIMESTAMP_FORMAT", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
   {name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
   {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
   {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false}}, 
@@ -43,49 +38,49 @@ export default function ProgressOrders(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
   const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
+  customToolbarSelect: (selectedRows, data) => {
+    var order = data[selectedRows.data[0].index].data;
+    var OI_O_NR = data[selectedRows.data[0].index].data[0];
+    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/></div>;
+  },
+  textLabels: {
+    body: {
+      noMatch: "Es wurden keine passenden Aufträge gefunden.",
+      toolTip: "Sort",
+      columnHeaderTooltip: column => `Sort for ${column.label}`
+    }
+  }
 };
+
 
 useEffect(() => {
   // Get Customerdata
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=5,6')
       .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
 
-      if(res.data.length === 0) { //Check if data is available
-        setAllData(undefined);
-        return;
-      }          
+        if(res.data.length === 0) { //Check if data is available
+          setAllData(undefined);
+          return;
+        }          
 
-      if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
-      setAllData(res.data); //Set new table data
+        if (DataAreEqual(allData, res.data)) return; //Check if data has changed       
+        setAllData(res.data); //Set new table data
 
       })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
+      .catch( error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
       })
 });
 
-  //Check if database is offline (AWS)
-  function IsDataBaseOffline(res){
-    if(res.data.errorMessage == null) return false; 
-    if(res.data.errorMessage === 'undefined') return false;
-    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
-        alert("Database is offline (AWS).");
-        return true;
-    }     
-    return false;
+//Check if old data = new data
+function DataAreEqual(data, sortedOrders){
+  if(data.sort().join(',') === sortedOrders.sort().join(',')){
+    return true;
+    }
+    else return false;
   }
-
-    //Check if old data = new data
-    function DataAreEqual(data, sortedOrders){
-      if(data.sort().join(',') === sortedOrders.sort().join(',')){
-        return true;
-        }
-        else return false;
-      }
 
 //Get selected rows
  function rowSelectEvent(curRowSelected, allRowsSelected){  
@@ -110,7 +105,7 @@ useEffect(() => {
 
  //Lieferschein Button Click 
  function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
+  <div><FullScreenDialogOrderDetails/></div>
  };
 
 
@@ -130,9 +125,7 @@ const getMuiTheme = () => createMuiTheme({
     <MUIDataTable
       data={allData} 
       columns={columns}
-      options={options}/> 
-      
-      
+      options={options}/>      
     </MuiThemeProvider>
   );        
 }

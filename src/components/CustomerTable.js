@@ -4,6 +4,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
+import { Button } from '@material-ui/core';
 
 export default function CustomerTable(){
 
@@ -23,16 +24,40 @@ export default function CustomerTable(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {return  <div><FullScreenDialogCustomerDetails/></div>;}
-};
+    customToolbarSelect: (selectedRows, data) => {
+      var C_NR = data[selectedRows.data[0].index].data[0];
+      return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
+    },
+    textLabels: {
+      body: {
+        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        toolTip: "Sort",
+        columnHeaderTooltip: column => `Sort for ${column.label}`
+      }
+    },
+    customToolbar: () => {
+      return (
+        <div>
+          <Button
+            onClick={updateView}
+            style={{ float: "right"}}
+            variant="outlined"
+            color="primary"
+            title="Aktualiseren"
+            >
+              Aktualisieren
+          </Button>
+        </div>
+      );
+    }
+  };
+
 
 useEffect(() => {
-  // Get Customerdata
+  // --> TODO  eurem REST Link einfügen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
-      console.log("RESPONSE:", res); //Data from Gateway
-      
-      if(IsDataBaseOffline(res)) return; //Check if db is available
+      //console.log("RESPONSE:", res); //Data from Gateway
 
       if(res.data.length === 0) { //Check if data is available
         setAllData(undefined);
@@ -43,32 +68,45 @@ useEffect(() => {
       setAllData(res.data); //Set new table data
 
       })
-      .catch(err => {
-          console.log(err.message); //Error-Handling
+      .catch( error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
       })
 });
 
-  //Check if database is offline (AWS)
-  function IsDataBaseOffline(res){
-    if(res.data.errorMessage == null) return false; 
-    if(res.data.errorMessage === 'undefined') return false;
-    if(res.data.errorMessage.endsWith("timed out after 3.00 seconds")){
-        alert("Database is offline (AWS).");
-        return true;
-    }     
-    return false;
+const updateView = () => {
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
+  .then(res => {
+  //console.log("RESPONSE:", res); //Data from Gateway
+
+  if(res.data.length === 0) { //Check if data is available
+    setAllData(undefined);
+    return;
+  }          
+
+  setAllData(res.data); //Set new table data
+
+  })
+  .catch( error => {
+    var errorObject = error.response.data;
+    var errorMessage = errorObject.errorMessage;
+    console.log(errorMessage); //Error-Handling
+  })
+};
+
+document.getElementsByClassName("MUIDataTableBody-emptyTitle-175").innerHTML = "testest";
+
+//Check if old data = new data
+function DataAreEqual(data, sortedOrders){
+  if(data.sort().join(',') === sortedOrders.sort().join(',')){
+    return true;
+    }
+    else return false;
   }
 
-    //Check if old data = new data
-    function DataAreEqual(data, sortedOrders){
-      if(data.sort().join(',') === sortedOrders.sort().join(',')){
-        return true;
-        }
-        else return false;
-      }
-
 //Get selected rows
- function rowSelectEvent(curRowSelected, allRowsSelected){  
+function rowSelectEvent(curRowSelected, allRowsSelected){  
 
   var _selectedData = [];
 
@@ -83,15 +121,24 @@ useEffect(() => {
     _selectedData.push(allData[element.dataIndex])
   });
  
-  console.log("Selektierte Daten: ", _selectedData)
+  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
- }
+}
 
- //Lieferschein Button Click 
- function OpenMore(){
-  <div><FullScreenDialogCustomerDetails/></div>
- };
+function MoreThan2Rows(selectedRows){
+  if(selectedRows != undefined){
+    if(selectedRows.length > 1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else{
+    return false;
+  }
+};
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {
@@ -112,8 +159,6 @@ const getMuiTheme = () => createMuiTheme({
         options={options}/>
         <br></br>
     </MuiThemeProvider>
-
    </div>
-
   );            
 }

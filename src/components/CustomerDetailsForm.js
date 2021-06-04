@@ -173,8 +173,7 @@ class AddCustomerForm extends Component {
             errors["C_STREET"] = "Straße angeben";
         }
         if(this.state.C_STREET != ""){
-            if(!this.state.C_STREET.match(/^[a-zA-Z,ß]+$/)){
-                console.log(this.state.C_STREET.match(/^[a-zA-Z]+$/));
+            if(!this.state.C_STREET.match(/^[a-zA-Z,ß,-]+$/)){
                 formIsValid = false;
                 errors["C_STREET"] = "Nur Buchstaben erlaubt";
             }
@@ -403,8 +402,7 @@ class AddCustomerForm extends Component {
                                     </FormControl>
                                 </Grid>
 
- 
-
+                                <Grid item xs={12}/>
                                 <Grid item xs={12}>                                    
                                     <Button
                                         style={{ background: "#006064", color: "#ffffff"}}
@@ -417,7 +415,7 @@ class AddCustomerForm extends Component {
 
                             </Grid>
                             <div>
-                                <h3>Bestätigung: {(content = this.state.data)}</h3>
+                                <h3>Bestätigung {(content = this.state.data)}</h3>
                             </div>
                         </FormControl>
                     </div>

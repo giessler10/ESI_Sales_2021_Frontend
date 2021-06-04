@@ -22,9 +22,17 @@ const getMuiTheme = () => createMuiTheme({
             h6: {
               fontWeight: "600",
             }
-        }
-    }
-  });
+        },
+    
+    textLabels: {
+      body: {
+        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        toolTip: "Sort",
+        columnHeaderTooltip: column => `Sort for ${column.label}`,
+      }
+    },
+  }});
+    
   
 
 

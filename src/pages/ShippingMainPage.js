@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import {Button, FormControl, Grid} from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,11 +9,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import AlarmOnTwoToneIcon from '@material-ui/icons/AlarmOnTwoTone';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 //importierte Seiten
 import ShippingTable from '../components/ShippingTable';
-import ShippingButton from '../components/ShippingButton'
-import QSButton from '../components/QSButton'
+import StorageTable from '../components/StorageTable';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -84,34 +84,17 @@ export default function ScrollableTabsButtonForce() {
                 textColor="primary"
                 aria-label="scrollable force tabs example"
                 >
-                <Tab label="Aufträge bereit für den Versand" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
+                <Tab label="Auslagerfähige Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
+                <Tab label="Versandbereite Aufträge" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
+            <TabPanel value={value} index={0}> 
+              <StorageTable/>
+            </TabPanel>
 
-            <TabPanel value={value} index={0}>
-                <div className={classes.root}>
-                    <Grid item xs={12}>
-                        <h2> Versandbereite Aufträge </h2> 
-                    </Grid>
-                </div>
-                <ShippingTable></ShippingTable>
-
-                <div className={classes.root}>
-                    <Grid item xs={12}>
-                        <h2 >QS Problem der ausgewählten Ware melden</h2>
-                        <QSButton></QSButton>
-                    </Grid>
-                </div>
-
-                <div className={classes.root}>
-                    <Grid item xs={12}>
-                        <h2 >Ausgewählte Ware versenden</h2>
-                        <ShippingButton></ShippingButton>
-                    </Grid>
-                </div>
-
+            <TabPanel value={value} index={1}>   
+              <ShippingTable/>
             </TabPanel>   
         </div>
     )
-}
-
+};
