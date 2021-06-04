@@ -40,6 +40,7 @@ const useStyles = theme => ({
     }
 });
 
+
 class NewOrderTableClass extends Component {
     constructor(props) {
         super(props);
@@ -168,6 +169,8 @@ class NewOrderTableClass extends Component {
             })
         );
         */
+
+ 
 
         const orderitems = this.state.data.map((element) => {
             return {
