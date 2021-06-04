@@ -195,120 +195,40 @@ class NewOrderTableClass extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    setCustomer = (e) => {
-        console.log(e.target.value);
-        this.setState({ C_NR: e.target.value });
-    };
-
     createOrderitems = () => {
-        /*
-        console.log(
-            this.state.data.map((element) => {
+        if(this.handleValidation()){
+
+            const orderitems = this.state.data.map((element) => {
                 return {
                     "OI_NR": element.tableData.id + 1,
                     "OI_MATERIALDESC": element.OI_MATERIALDESC,
                     "OI_HEXCOLOR": element.OI_HEXCOLOR,
                     "OI_QTY": element.OI_QTY,
-                    "IM_FILE": element.IM_FILE,
+                    "IM_FILE": "P:/images/" + this.state.C_NR + "/" + element.IM_FILE,
                     "OI_PRICE": element.OI_PRICE,
                     "OI_VAT": element.OI_VAT
                 };
-            })
-        );
-        */
+            });
+        
+            var body = {
+                C_NR: parseInt(this.state.C_NR),
+                O_OT_NR: parseInt(this.state.O_OT_NR),
+                draft: this.valueToBoolean(this.state.draft),
+                orderitems: orderitems
+            }
 
- 
-
-        const orderitems = this.state.data.map((element) => {
-            return {
-                "OI_NR": element.tableData.id + 1,
-                "OI_MATERIALDESC": element.OI_MATERIALDESC,
-                "OI_HEXCOLOR": element.OI_HEXCOLOR,
-                "OI_QTY": element.OI_QTY,
-                "IM_FILE": "P:/images/" + this.state.C_NR + "/" + element.IM_FILE,
-                "OI_PRICE": element.OI_PRICE,
-                "OI_VAT": element.OI_VAT
-            };
-        });
-    
-        var body = {
-            C_NR: parseInt(this.state.C_NR),
-            O_OT_NR: parseInt(this.state.O_OT_NR),
-            draft: this.valueToBoolean(this.state.draft),
-            orderitems: orderitems
-        }
-
-        body = JSON.stringify(body);
-        //console.log(body);
-            console.log(body);
-            console.log(body.C_NR);
-            console.log(body);
-         
-        if (body === undefined || body.C_NR === undefined || body.O_OT_NR === undefined  || body.draft === undefined || body.orderitems === undefined ) return;
-        axios
-            .post(
-                "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders", body
-            )
-            .then((res) => {
-                //console.log(res.data);
-                var data = JSON.stringify(res.data);
-                data = JSON.parse(data);
-                data = data.message;
-                //console.log(data);
-                return data;
-            })
-            .then((data) => {
-                console.log("responseMessage: " + data);
-                this.setState({ responseMessage: data });
-                this.setState({ responseMessageVisible: true },()=>{ 
-                    window.setTimeout(()=>{
-                        this.setState({responseMessageVisible: false})
-                    },5000);
-                });
-            })
-            .then((response) => {
-                console.log(response);
-            })
-            .then((response) => this.setState({ response }))
-            .catch(
-                (error) => {
-                    //console.log(e);
-                    var errorObject = error.response.data;
-                    var errorMessage = errorObject.errorMessage;
-                    this.setState({ 
-                        errorObject: errorObject,
-                        errorMessage: errorMessage 
-                    });
-                    this.setState({ errorMessageVisible: true},()=>{ 
-                            window.setTimeout(()=>{
-                                this.setState({errorMessageVisible: false})
-                            },5000);
-                        }
-                    )
-                }
-            );
-    };
-
-
-    submitHandler = (e) => {
-        e.preventDefault();
-        console.log(this.state);
-
-        //Check Form
-        if(this.handleValidation()){
-            console.log(this.state);
+            body = JSON.stringify(body);
+            
             axios
                 .post(
-                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers",
-                    this.state
+                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders", body
                 )
-                .then(console.log(this.state))
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     var data = JSON.stringify(res.data);
                     data = JSON.parse(data);
                     data = data.message;
-                    console.log(data);
+                    //console.log(data);
                     return data;
                 })
                 .then((data) => {
@@ -394,160 +314,165 @@ class NewOrderTableClass extends Component {
 
         return (
             <div style={{ maxWidth: '100%' }}>
-                <form onSubmit={this.submitHandler}>
-                    <Collapse className={classes.alert} in={errorMessageVisible}>
-                        <Alert severity="error"
-                            action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    this.setState({ errorMessageVisible: false});
-                                }}
-                            >
-                                <GridCloseIcon fontSize="inherit" />
-                            </IconButton>
-                            }
+                <Collapse className={classes.alert} in={errorMessageVisible}>
+                    <Alert severity="error"
+                        action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                this.setState({ errorMessageVisible: false});
+                            }}
                         >
-                        {errorMessage}
-                        </Alert>
-                    </Collapse>
-                    <Collapse className={classes.alert} in={responseMessageVisible}>
-                        <Alert severity="success"
-                            action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    this.setState({ responseMessageVisible: false});
-                                }}
-                            >
-                                <GridCloseIcon fontSize="inherit" />
-                            </IconButton>
-                            }
+                            <GridCloseIcon fontSize="inherit" />
+                        </IconButton>
+                        }
+                    >
+                    {errorMessage}
+                    </Alert>
+                </Collapse>
+                <Collapse className={classes.alert} in={responseMessageVisible}>
+                    <Alert severity="success"
+                        action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                this.setState({ responseMessageVisible: false});
+                            }}
                         >
-                        {responseMessage}
-                        </Alert>
-                    </Collapse>
-                    
-                    <div style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
-                        <Grid container spacing={3} align="left">
-                            <Grid item xs style={{alignContent:"left"}}>
-                                <FormControl component="fieldset">
-                                    <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
-                                    <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                        <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
-                                        <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-
+                            <GridCloseIcon fontSize="inherit" />
+                        </IconButton>
+                        }
+                    >
+                    {responseMessage}
+                    </Alert>
+                </Collapse>
+                
+                <div style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
+                    <Grid container spacing={3} align="left">
                         <Grid item xs style={{alignContent:"left"}}>
                             <FormControl component="fieldset">
-                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Als Entwurf speichern? *</b></FormLabel>
-                                <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="0" control={<Radio style={{color: "#006064"}} />} label="Ja" />
-                                    <FormControlLabel key="1" value="1" control={<Radio style={{color: "#006064"}}/>} label="Nein" />
+                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
+                                <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
+                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
+                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
-                        
-                        <Grid item sm={6} xs={12}>                                    
-                            <Autocomplete
-                                id="combo-box-Customer"
-                                options={this.state.customers}
-                                getOptionLabel={(option) => option.C_DESC}
-                                style={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Kunde" variant="outlined"/>}
-                                onInputChange={this.setCustomer}
+
+                    <Grid item xs style={{alignContent:"left"}}>
+                        <FormControl component="fieldset">
+                            <FormLabel component="legend"> <b style={{color: "#006064"}}>Als Entwurf speichern? *</b></FormLabel>
+                            <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler}>
+                                <FormControlLabel key="0" value="0" control={<Radio style={{color: "#006064"}} />} label="Ja" />
+                                <FormControlLabel key="1" value="1" control={<Radio style={{color: "#006064"}}/>} label="Nein" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+                    
+                    <Grid item sm={6} xs={12}>                                    
+                        <Autocomplete
+                            id="combo-box-Customer"
+                            options={this.state.customers}
+                            getOptionLabel={(option) => option.C_DESC}
+                            style={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Kunde" variant="outlined"/>}
+                            onChange={(event, value) => {
+                                    if(value != null){
+                                        this.setState({ C_NR: value.C_NR });
+                                    }
+                                    else{
+                                        this.setState({ C_NR: "" });
+                                    }
+                                }
+                            }
+                        />
+                        <div>
+                            <span className={classes.error}>{this.state.errors["C_NR"] }</span>
+                        </div>
+                                            
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <MaterialTable
+                            localization={{
+                                toolbar: {
+                                    body: {
+                                        emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
+                                    }
+                                }
+                            }}
+                            style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
+                            title="Editable Preview"
+                            columns={columns}
+                            data={data}
+                            title="Auftragspositionen"
+                            icons={tableIcons}
+                            options={{
+                                headerStyle: {
+                                    backgroundColor: "#006064",
+                                    color: "#FFFF",
+                                },
+                                textLabels: {
+                                    body: {
+                                        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                                        toolTip: "Sort",
+                                        columnHeaderTooltip: column => `Sort for ${column.label}`
+                                    }
+                                }
+                            }}
+                            editable={{
+                                    onRowAdd: newData =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                        this.setState({data: [...data, newData]});
+
+                                        resolve();
+                                        }, 1000)
+                                    }),
+                                    onRowUpdate: (newData, oldData) =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                        const dataUpdate = [...data];
+                                        const index = oldData.tableData.id;
+                                        dataUpdate[index] = newData;
+                                        this.setState({data: [...dataUpdate]});
+
+                                        resolve();
+                                        }, 1000)
+                                    }),
+                                    onRowDelete: oldData =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                        const dataDelete = [...data];
+                                        const index = oldData.tableData.id;
+                                        dataDelete.splice(index, 1);
+                                        this.setState({data: [...dataDelete]});
+                                        
+                                        resolve()
+                                        }, 1000)
+                                    }),
+                                }}
                             />
-                            <div>
-                                <span className={classes.error}>{this.state.errors["C_NR"] }</span>
-                            </div>
-                                                
                         </Grid>
 
                         <Grid item xs={12}>
-                            <MaterialTable
-                                localization={{
-                                    toolbar: {
-                                        body: {
-                                            emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
-                                        }
-                                    }
-                                }}
-                                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
-                                title="Editable Preview"
-                                columns={columns}
-                                data={data}
-                                title="Auftragspositionen"
-                                icons={tableIcons}
-                                options={{
-                                    headerStyle: {
-                                      backgroundColor: "#006064",
-                                      color: "#FFFF",
-                                    },
-                                    textLabels: {
-                                        body: {
-                                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                                            toolTip: "Sort",
-                                            columnHeaderTooltip: column => `Sort for ${column.label}`
-                                        }
-                                    }
-                                }}
-                                editable={{
-                                        onRowAdd: newData =>
-                                        new Promise((resolve, reject) => {
-                                            setTimeout(() => {
-                                            this.setState({data: [...data, newData]});
-
-                                            resolve();
-                                            }, 1000)
-                                        }),
-                                        onRowUpdate: (newData, oldData) =>
-                                        new Promise((resolve, reject) => {
-                                            setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
-                                            dataUpdate[index] = newData;
-                                            this.setState({data: [...dataUpdate]});
-
-                                            resolve();
-                                            }, 1000)
-                                        }),
-                                        onRowDelete: oldData =>
-                                        new Promise((resolve, reject) => {
-                                            setTimeout(() => {
-                                            const dataDelete = [...data];
-                                            const index = oldData.tableData.id;
-                                            dataDelete.splice(index, 1);
-                                            this.setState({data: [...dataDelete]});
-                                            
-                                            resolve()
-                                            }, 1000)
-                                        }),
-                                    }}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <Button
-                                    onClick={this.createOrderitems}
-                                    style={{ float: "right", margin: "20px" }}
-                                    variant="outlined"
-                                    color="primary"
-                                    type="submit"
-                                    title="Bestellung speichern"
-                                >
-                                    Auftrag anlegen
-                                </Button>
-                            </Grid>
+                            <Button
+                                onClick={this.createOrderitems}
+                                style={{ float: "right", margin: "20px" }}
+                                variant="outlined"
+                                color="primary"
+                                type="submit"
+                                title="Bestellung speichern"
+                            >
+                                Auftrag anlegen
+                            </Button>
                         </Grid>
-                    </div>  
-                    
-                </form>
+                    </Grid>
+                </div>
             </div>    
         )
     }
