@@ -4,6 +4,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogCustomerDetails from'./FullScreenDialogCustomerDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
+import { Button } from '@material-ui/core';
 
 export default function CustomerTable(){
 
@@ -23,18 +24,33 @@ export default function CustomerTable(){
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: (selectedRows, data) => {
-    var C_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
-  },
-  textLabels: {
-    body: {
-      noMatch: "Es wurden keine passenden Aufträge gefunden.",
-      toolTip: "Sort",
-      columnHeaderTooltip: column => `Sort for ${column.label}`
+    customToolbarSelect: (selectedRows, data) => {
+      var C_NR = data[selectedRows.data[0].index].data[0];
+      return  <div style={{ paddingRight: "10px"}}><FullScreenDialogCustomerDetails selectedRows={selectedRows.data} C_NR={C_NR}/></div>;
+    },
+    textLabels: {
+      body: {
+        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        toolTip: "Sort",
+        columnHeaderTooltip: column => `Sort for ${column.label}`
+      }
+    },
+    customToolbar: () => {
+      return (
+        <div>
+          <Button
+            onClick={updateView}
+            style={{ float: "right"}}
+            variant="outlined"
+            color="primary"
+            title="Aktualiseren"
+            >
+              Aktualisieren
+          </Button>
+        </div>
+      );
     }
-  }
-};
+  };
 
 
 useEffect(() => {
@@ -58,6 +74,26 @@ useEffect(() => {
         console.log(errorMessage); //Error-Handling
       })
 });
+
+const updateView = () => {
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
+  .then(res => {
+  //console.log("RESPONSE:", res); //Data from Gateway
+
+  if(res.data.length === 0) { //Check if data is available
+    setAllData(undefined);
+    return;
+  }          
+
+  setAllData(res.data); //Set new table data
+
+  })
+  .catch( error => {
+    var errorObject = error.response.data;
+    var errorMessage = errorObject.errorMessage;
+    console.log(errorMessage); //Error-Handling
+  })
+};
 
 document.getElementsByClassName("MUIDataTableBody-emptyTitle-175").innerHTML = "testest";
 
