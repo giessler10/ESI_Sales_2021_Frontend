@@ -7,7 +7,6 @@ import { GridCloseIcon } from '@material-ui/data-grid';
 
 import axios from "axios";
 import { forwardRef } from 'react';
-import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -47,6 +46,7 @@ class NewOrderTableClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            
             data: [],
             columns: [
                 {
@@ -133,7 +133,7 @@ class NewOrderTableClass extends Component {
 
             O_OT_NR: "2",     //Ordertype default 2
             draft: "0",       //Entwurf
-            C_NR: null,      //Kundennummer
+            C_NR: "",        //Kundennummer
 
             //Response
             response: [],
@@ -145,7 +145,8 @@ class NewOrderTableClass extends Component {
             errorMessageVisible: false,
             errorObject: null,
 
-            customers: []
+            customers: [],
+            errors: {}
         };
 
         //Customers laden
@@ -239,7 +240,11 @@ class NewOrderTableClass extends Component {
 
         body = JSON.stringify(body);
         //console.log(body);
-
+            console.log(body);
+            console.log(body.C_NR);
+            console.log(body);
+         
+        if (body === undefined || body.C_NR === undefined || body.O_OT_NR === undefined  || body.draft === undefined || body.orderitems === undefined ) return;
         axios
             .post(
                 "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders", body
@@ -284,6 +289,76 @@ class NewOrderTableClass extends Component {
             );
     };
 
+
+    submitHandler = (e) => {
+        e.preventDefault();
+        console.log(this.state);
+
+        //Check Form
+        if(this.handleValidation()){
+            console.log(this.state);
+            axios
+                .post(
+                    "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers",
+                    this.state
+                )
+                .then(console.log(this.state))
+                .then((res) => {
+                    console.log(res.data);
+                    var data = JSON.stringify(res.data);
+                    data = JSON.parse(data);
+                    data = data.message;
+                    console.log(data);
+                    return data;
+                })
+                .then((data) => {
+                    console.log("responseMessage: " + data);
+                    this.setState({ responseMessage: data });
+                    this.setState({ responseMessageVisible: true },()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({responseMessageVisible: false})
+                        },5000);
+                    });
+                })
+                .then((response) => {
+                    console.log(response);
+                })
+                .then((response) => this.setState({ response }))
+                .catch(
+                    (error) => {
+                        //console.log(e);
+                        var errorObject = error.response.data;
+                        var errorMessage = errorObject.errorMessage;
+                        this.setState({ 
+                            errorObject: errorObject,
+                            errorMessage: errorMessage 
+                        });
+                        this.setState({ errorMessageVisible: true},()=>{ 
+                                window.setTimeout(()=>{
+                                    this.setState({errorMessageVisible: false})
+                                },5000);
+                            }
+                        )
+                    }
+                );
+        }
+    };
+
+    handleValidation() {
+        let errors = {};
+        let formIsValid = true;    
+
+        //Kundennummer prüfen
+        if(this.state.C_NR == ""){
+            formIsValid = false;
+            errors["C_NR"] = "Kundennummer angeben";
+        }
+
+        this.setState({errors: errors});
+        return formIsValid;
+    };
+
+
     valueToBoolean = (value) => {
         if(value == 0){
             return true;
@@ -310,58 +385,64 @@ class NewOrderTableClass extends Component {
             errorMessage,           //ErrorMessage
             errorMessageVisible,    //StatusErrorMessage
             responseMessage,        //ResponseMessage
-            responseMessageVisible  //ReponseMessageStatus
+            responseMessageVisible,  //ReponseMessageStatus
+
+            errors
+
+  
         } = this.state;
 
         return (
             <div style={{ maxWidth: '100%' }}>
-                <Collapse className={classes.alert} in={errorMessageVisible}>
-                    <Alert severity="error"
-                        action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                this.setState({ errorMessageVisible: false});
-                            }}
+                <form onSubmit={this.submitHandler}>
+                    <Collapse className={classes.alert} in={errorMessageVisible}>
+                        <Alert severity="error"
+                            action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    this.setState({ errorMessageVisible: false});
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
+                            }
                         >
-                            <GridCloseIcon fontSize="inherit" />
-                        </IconButton>
-                        }
-                    >
-                    {errorMessage}
-                    </Alert>
-                </Collapse>
-                <Collapse className={classes.alert} in={responseMessageVisible}>
-                    <Alert severity="success"
-                        action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                this.setState({ responseMessageVisible: false});
-                            }}
+                        {errorMessage}
+                        </Alert>
+                    </Collapse>
+                    <Collapse className={classes.alert} in={responseMessageVisible}>
+                        <Alert severity="success"
+                            action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    this.setState({ responseMessageVisible: false});
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
+                            }
                         >
-                            <GridCloseIcon fontSize="inherit" />
-                        </IconButton>
-                        }
-                    >
-                    {responseMessage}
-                    </Alert>
-                </Collapse>
-                <div style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
-                    <Grid container spacing={3} align="left">
-                        <Grid item xs style={{alignContent:"left"}}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
-                                <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
+                        {responseMessage}
+                        </Alert>
+                    </Collapse>
+                    
+                    <div style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
+                        <Grid container spacing={3} align="left">
+                            <Grid item xs style={{alignContent:"left"}}>
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
+                                    <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
+                                        <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
+                                        <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Grid>
 
                         <Grid item xs style={{alignContent:"left"}}>
                             <FormControl component="fieldset">
@@ -381,18 +462,23 @@ class NewOrderTableClass extends Component {
                                 style={{ width: 300 }}
                                 renderInput={(params) => <TextField {...params} label="Kunde" variant="outlined"/>}
                                 onInputChange={this.setCustomer}
-                            />                                                         
+                            />
+                            <div>
+                                <span className={classes.error}>{this.state.errors["C_NR"] }</span>
+                            </div>
+                                                
                         </Grid>
 
                         <Grid item xs={12}>
                             <MaterialTable
-                             localization={{
-                              toolbar: {
-                              nRowsSelected: '{0} item(s) selected',},
-                              body: {
-                                    emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
-                                    }}}
-                                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
+                                localization={{
+                                    toolbar: {
+                                        body: {
+                                            emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
+                                        }
+                                    }
+                                }}
+                                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
                                 title="Editable Preview"
                                 columns={columns}
                                 data={data}
@@ -403,62 +489,65 @@ class NewOrderTableClass extends Component {
                                       backgroundColor: "#006064",
                                       color: "#FFFF",
                                     },
-                                  textLabels: {
-                                    body: {
-                                      noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                                      toolTip: "Sort",
-                                      columnHeaderTooltip: column => `Sort for ${column.label}`
+                                    textLabels: {
+                                        body: {
+                                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                                            toolTip: "Sort",
+                                            columnHeaderTooltip: column => `Sort for ${column.label}`
+                                        }
                                     }
-                                  }
                                 }}
                                 editable={{
-                                    onRowAdd: newData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                        this.setState({data: [...data, newData]});
+                                        onRowAdd: newData =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                            this.setState({data: [...data, newData]});
 
-                                        resolve();
-                                        }, 1000)
-                                    }),
-                                    onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                        const dataUpdate = [...data];
-                                        const index = oldData.tableData.id;
-                                        dataUpdate[index] = newData;
-                                        this.setState({data: [...dataUpdate]});
+                                            resolve();
+                                            }, 1000)
+                                        }),
+                                        onRowUpdate: (newData, oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                            const dataUpdate = [...data];
+                                            const index = oldData.tableData.id;
+                                            dataUpdate[index] = newData;
+                                            this.setState({data: [...dataUpdate]});
 
-                                        resolve();
-                                        }, 1000)
-                                    }),
-                                    onRowDelete: oldData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                        const dataDelete = [...data];
-                                        const index = oldData.tableData.id;
-                                        dataDelete.splice(index, 1);
-                                        this.setState({data: [...dataDelete]});
-                                        
-                                        resolve()
-                                        }, 1000)
-                                    }),
-                                }}
-                            />
+                                            resolve();
+                                            }, 1000)
+                                        }),
+                                        onRowDelete: oldData =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                            const dataDelete = [...data];
+                                            const index = oldData.tableData.id;
+                                            dataDelete.splice(index, 1);
+                                            this.setState({data: [...dataDelete]});
+                                            
+                                            resolve()
+                                            }, 1000)
+                                        }),
+                                    }}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <Button
+                                    onClick={this.createOrderitems}
+                                    style={{ float: "right", margin: "20px" }}
+                                    variant="outlined"
+                                    color="primary"
+                                    type="submit"
+                                    title="Bestellung speichern"
+                                >
+                                    Auftrag anlegen
+                                </Button>
+                            </Grid>
                         </Grid>
-
-                        <Grid item xs={12}>
-                            <Button
-                                onClick={this.createOrderitems}
-                                style={{ float: "right", margin: "20px" }}
-                                variant="outlined"
-                                color="primary"
-                                title="Bestellung speichern"
-                            >
-                                Auftrag anlegen
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </div>    
+                    </div>  
+                    
+                </form>
             </div>    
         )
     }
