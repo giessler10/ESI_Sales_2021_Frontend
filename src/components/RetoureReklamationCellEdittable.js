@@ -185,7 +185,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Grund der Retoure / Reklamation",
             field: "IR_COMMENT",
             tooltip: "Grund der Retoure / Reklamation",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt'}
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
         },
         { 
             title: "Gemeldete Menge", 

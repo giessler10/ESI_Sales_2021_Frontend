@@ -22,6 +22,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { Autocomplete } from '@material-ui/lab';
 
 const useStyles = theme => ({
     root: {
@@ -78,7 +79,7 @@ class NewOrderTableClass extends Component {
                     editable: 'never'
                 },
                 { 
-                    title: "Bild", 
+                    title: "Bildname", 
                     field: "IM_FILE", 
                 },
                 { 
@@ -143,13 +144,59 @@ class NewOrderTableClass extends Component {
             errorMessage: null,
             errorMessageVisible: false,
             errorObject: null,
+
+            customers: []
         };
+
+        //Customers laden
+        axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
+        .then(
+            (res) => {
+                console.log(res.status);
+                return res.data;
+            }
+        )
+        .then(
+            (res) => {
+                var customers = [];
+                res.forEach((currentCustomer, index) => {
+                    var customer = {
+                        C_DESC: currentCustomer.C_DESC,
+                        C_NR: currentCustomer.C_NR
+                    }
+                    customers.push(customer);
+                });
+                this.setState({customers: customers});
+            }
+        )
+        .catch(
+            (error) => {
+                //console.log(e);
+                var errorObject = error.response.data;
+                var errorMessage = errorObject.errorMessage;
+                this.setState({ 
+                    errorObject: errorObject,
+                    errorMessage: errorMessage 
+                });
+                this.setState({ errorMessageVisible: true},()=>{ 
+                        window.setTimeout(()=>{
+                            this.setState({errorMessageVisible: false})
+                        },5000);
+                    }
+                )
+            }
+        );
     }
 
     changeHandler = (e) => {
         console.log(e.target.name);
         console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value });
+    };
+
+    setCustomer = (e) => {
+        console.log(e.target.value);
+        this.setState({ C_NR: e.target.value });
     };
 
     createOrderitems = () => {
@@ -177,7 +224,7 @@ class NewOrderTableClass extends Component {
                 "OI_MATERIALDESC": element.OI_MATERIALDESC,
                 "OI_HEXCOLOR": element.OI_HEXCOLOR,
                 "OI_QTY": element.OI_QTY,
-                "IM_FILE": element.IM_FILE,
+                "IM_FILE": "P:/images/" + this.state.C_NR + "/" + element.IM_FILE,
                 "OI_PRICE": element.OI_PRICE,
                 "OI_VAT": element.OI_VAT
             };
@@ -327,14 +374,15 @@ class NewOrderTableClass extends Component {
                         </Grid>
                         
                         <Grid item sm={6} xs={12}>                                    
-                            <TextField
-                                label="Kundennummer"
-                                type="text"
-                                name="C_NR"
-                                value={C_NR}
-                                onChange={this.changeHandler}
-                                title="Kundennummer"/>                                                                    
-                        </Grid> 
+                            <Autocomplete
+                                id="combo-box-Customer"
+                                options={this.state.customers}
+                                getOptionLabel={(option) => option.C_DESC}
+                                style={{ width: 300 }}
+                                renderInput={(params) => <TextField {...params} label="Kunde" variant="outlined"/>}
+                                onInputChange={this.setCustomer}
+                            />                                                         
+                        </Grid>
 
                         <Grid item xs={12}>
                             <MaterialTable

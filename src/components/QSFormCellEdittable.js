@@ -180,7 +180,7 @@ export default function QSFormCellEdittable(props) {
             title: "Grund der QS",
             field: "QI_COMMENT",
             tooltip: "Grund für die QS",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Keine Auftragsposition': 'Keine Auftragsposition', 'Beschädigt': 'Beschädigt'}
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Bildplatzierung': 'Falsche Bildplatzierung', 'Falsche Ware': 'Falsche Ware', 'Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
         },
         { 
             title: "Gemeldete Menge", 
