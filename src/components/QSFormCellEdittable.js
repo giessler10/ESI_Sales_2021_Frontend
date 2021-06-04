@@ -119,9 +119,21 @@ export default function QSFormCellEdittable(props) {
             title: "Farbcode",
             field: "OI_HEXCOLOR",
             tooltip: "HEX-Code: #282C34",
-            cellStyle: (input, rowData) => {
+           /*  cellStyle: (input, rowData) => {
                 return {
                     backgroundColor: rowData?.colorCode || input,
+                };
+            } */
+        },
+        {
+            title: "Farbe",
+            field: "OI_HEXCOLOR",
+            tooltip: "HEX-Code: #282C34",
+            cellStyle: (input, rowData) => {
+                return {
+                    
+                    backgroundColor: rowData?.colorCode || input,
+                    color: 'rgba(0,0,0,0)'
                 };
             },
             editable: 'never'

@@ -41,6 +41,7 @@ const useStyles = theme => ({
     }
 });
 
+
 class NewOrderTableClass extends Component {
     constructor(props) {
         super(props);
@@ -167,6 +168,8 @@ class NewOrderTableClass extends Component {
             })
         );
         */
+
+ 
 
         const orderitems = this.state.data.map((element) => {
             return {
@@ -335,6 +338,12 @@ class NewOrderTableClass extends Component {
 
                         <Grid item xs={12}>
                             <MaterialTable
+                             localization={{
+                              toolbar: {
+                              nRowsSelected: '{0} item(s) selected',},
+                              body: {
+                                    emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
+                                    }}}
                                 style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
                                 title="Editable Preview"
                                 columns={columns}
