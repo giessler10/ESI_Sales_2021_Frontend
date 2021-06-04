@@ -31,6 +31,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import MaterialTable from "material-table";
+import Alert from '@material-ui/lab/Alert';
+import { Collapse } from '@material-ui/core';
+import { GridCloseIcon } from '@material-ui/data-grid';
 
 const tableIcons = {
     //Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -106,8 +109,16 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
     var selectedRows = props.selectedRows;
 
     const { useState, useEffect } = React;
-    const [backendResponse, setBackendResponse] = useState(null);
     const [data, setData] = useState([]);
+
+    //Response
+    const [responseMessage, setResponseMessage] = useState(null);
+    const [responseMessageVisible, setResponseMessageVisible] = useState(false);
+
+    //Error,
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+
     const [columns, setColumns] = useState([
         {
             title: "Materialbeschreibung",
@@ -188,13 +199,36 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
 
         axios
             .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR +'/orderitems', orderitems)
+            .then((res) => {
+                //console.log(res.data);
+                var data = JSON.stringify(res.data);
+                data = JSON.parse(data);
+                data = data.message;
+                //console.log(data);
+                return data;
+            })
+            .then((data) => {
+                setResponseMessage(data);
+                setResponseMessageVisible(true);
+                window.setTimeout(()=>{
+                    setResponseMessageVisible(false);
+                },5000);
+            })
             .then((response) => {
-                setBackendResponse(response.data.message);
+                //console.log(response);
             })
-            .catch((error) => {
-            console.log(error);
-                setBackendResponse(error.message);
-            })
+            .catch(
+                (error) => {
+                    console.log(error);
+                    var errorObject = error.response.data;
+                    var errorMessage = errorObject.errorMessage;
+                        setErrorMessage(errorMessage);
+                        setErrorMessageVisible(true) 
+                        window.setTimeout(()=>{
+                            setErrorMessageVisible(false);
+                        },5000);
+                }
+            );
     }
 
     useEffect(() => {
@@ -257,11 +291,53 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                     </Toolbar>
                 </AppBar>
                 <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
+                <div  style={{
+                    paddingTop: "20px",
+                    margin: "20px",
+                    paddingLeft: '5%',
+                    paddingRight: '5%'
+                }}>
+                    <Collapse className={classes.alert} in={errorMessageVisible}>
+                        <Alert severity="error"
+                            action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setErrorMessageVisible(false);
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
+                            }
+                        >
+                        {errorMessage}
+                        </Alert>
+                    </Collapse>
+                    <Collapse className={classes.alert} in={responseMessageVisible}>
+                        <Alert severity="success"
+                            action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setResponseMessageVisible(false);
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
+                            }
+                        >
+                        {responseMessage}
+                        </Alert>
+                    </Collapse>
+                </div>
                 <div className={classes.table}>
-                    <h2>Positionen</h2>
                     <MaterialTable
                         style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
-                        title="Auftrag bearbeiten"
+                        title="Auftragspositionen"
                         columns={columns}
                         data={data}
                         options={{
@@ -323,16 +399,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                         >
                             Änderungen speichern
                         </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <div style={{
-                            display: "flex",
-                            alignItems: "center",
-                            paddingTop: "10px",
-                            margin: "20px",
-                            }}>
-                        <h3>Bestätigung: {backendResponse}</h3>
-                        </div>
                     </Grid>
                 </div>
             </Dialog>

@@ -31,6 +31,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import MaterialTable from "material-table";
+import Alert from '@material-ui/lab/Alert';
+import { Collapse } from '@material-ui/core';
+import { GridCloseIcon } from '@material-ui/data-grid';
 
 const tableIcons = {
     //Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -98,8 +101,16 @@ export default function RetoureReklamationFormCellEdittable(props) {
     var OI_O_NR = props.OI_O_NR;
 
     const { useState, useEffect } = React;
-    const [backendResponse, setBackendResponse] = useState(null);
     const [data, setData] = useState([]);
+
+    //Response
+    const [responseMessage, setResponseMessage] = useState(null);
+    const [responseMessageVisible, setResponseMessageVisible] = useState(false);
+
+    //Error,
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+
     const [columns, setColumns] = useState([
         {
             title: "Position", 
@@ -222,10 +233,19 @@ export default function RetoureReklamationFormCellEdittable(props) {
         });
 
         if(dataForQS.length == 0 && errorMessage == ""){
-            setBackendResponse("Bitte für mindestens eine Position eine Art, eine Menge und einen Grund angeben!");
+            errorMessage = "Bitte für mindestens eine Position eine Art, eine Menge und einen Grund angeben!";
+            setErrorMessage(errorMessage);
+            setErrorMessageVisible(true) 
+            window.setTimeout(()=>{
+                setErrorMessageVisible(false);
+            },5000);
         }
         else if(errorMessage != ""){
-            setBackendResponse(errorMessage);
+            setErrorMessage(errorMessage);
+            setErrorMessageVisible(true) 
+            window.setTimeout(()=>{
+                setErrorMessageVisible(false);
+            },5000);
         }
         else{
             const body = dataForQS.map((element) => {
@@ -243,13 +263,36 @@ export default function RetoureReklamationFormCellEdittable(props) {
             
             axios
                 .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/itemReturn', body)
+                .then((res) => {
+                    //console.log(res.data);
+                    var data = JSON.stringify(res.data);
+                    data = JSON.parse(data);
+                    data = data.message;
+                    //console.log(data);
+                    return data;
+                })
+                .then((data) => {
+                    setResponseMessage(data);
+                    setResponseMessageVisible(true);
+                    window.setTimeout(()=>{
+                        setResponseMessageVisible(false);
+                    },5000);
+                })
                 .then((response) => {
-                    setBackendResponse(response.data.message);
+                    //console.log(response);
                 })
-                .catch((error) => {
-                console.log(error);
-                    setBackendResponse(error.message);
-                })
+                .catch(
+                    (error) => {
+                        console.log(error);
+                        var errorObject = error.response.data;
+                        var errorMessage = errorObject.errorMessage;
+                            setErrorMessage(errorMessage);
+                            setErrorMessageVisible(true) 
+                            window.setTimeout(()=>{
+                                setErrorMessageVisible(false);
+                            },5000);
+                    }
+                );
         }
     }
 
@@ -304,64 +347,99 @@ export default function RetoureReklamationFormCellEdittable(props) {
     }, [data]);
 
     return (
-        <div className={classes.table}>
-            <MaterialTable
-                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
-                title="Positionen"
-                columns={columns}
-                data={data}
-                options={{
-                headerStyle: {
-                    backgroundColor: "#006064",
-                    color: "#FFFF",
-                },
-                textLabels: {
-                body: {
-                    noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                    toolTip: "Sort",
-                    columnHeaderTooltip: column => `Sort for ${column.label}`
-                }
-                }
-                }}
-                icons={tableIcons}
-                cellEditable={{
-                    onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-                        return new Promise((resolve, reject) => {
-                            //console.log('newValue: ' + newValue);
-                            const dataUpdate = [...data]
-                            const rowDataUpdate = rowData;
-                            const columnField = columnDef.field;
-                            rowDataUpdate[columnField] = newValue;
-                            const index = rowData.tableData.id;
-                            dataUpdate[index] = rowDataUpdate;
-                            setData([...dataUpdate]);
-                            setTimeout(resolve, 1000);
-                        });
+        <div>
+            <div  style={{
+                paddingTop: "20px",
+                margin: "20px",
+                paddingLeft: '5%',
+                paddingRight: '5%'
+            }}>
+                <Collapse className={classes.alert} in={errorMessageVisible}>
+                    <Alert severity="error"
+                        action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setErrorMessageVisible(false);
+                            }}
+                        >
+                            <GridCloseIcon fontSize="inherit" />
+                        </IconButton>
+                        }
+                    >
+                    {errorMessage}
+                    </Alert>
+                </Collapse>
+                <Collapse className={classes.alert} in={responseMessageVisible}>
+                    <Alert severity="success"
+                        action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setResponseMessageVisible(false);
+                            }}
+                        >
+                            <GridCloseIcon fontSize="inherit" />
+                        </IconButton>
+                        }
+                    >
+                    {responseMessage}
+                    </Alert>
+                </Collapse>
+            </div>
+            <div className={classes.table}>
+                <MaterialTable
+                    style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' } }}
+                    title="Auftragspositionen"
+                    columns={columns}
+                    data={data}
+                    options={{
+                    headerStyle: {
+                        backgroundColor: "#006064",
+                        color: "#FFFF",
+                    },
+                    textLabels: {
+                    body: {
+                        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                        toolTip: "Sort",
+                        columnHeaderTooltip: column => `Sort for ${column.label}`
                     }
-                }}
-            />
-            <Grid item xs={12}>
-        
-                <Button
-                onClick={createPostBody}
-                style={{ float: "right", margin: "20px" }}
-                variant="outlined"
-                color="primary"
-                title="Bestellung speichern"
-                >
-                    Reklamation und Retoure erfassen
-                </Button>
-            </Grid>
-            <Grid item xs={12}>
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingTop: "10px",
-                    margin: "20px",
-                    }}>
-                <h3>Bestätigung: {backendResponse}</h3>
-                </div>
-            </Grid>
+                    }
+                    }}
+                    icons={tableIcons}
+                    cellEditable={{
+                        onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+                            return new Promise((resolve, reject) => {
+                                //console.log('newValue: ' + newValue);
+                                const dataUpdate = [...data]
+                                const rowDataUpdate = rowData;
+                                const columnField = columnDef.field;
+                                rowDataUpdate[columnField] = newValue;
+                                const index = rowData.tableData.id;
+                                dataUpdate[index] = rowDataUpdate;
+                                setData([...dataUpdate]);
+                                setTimeout(resolve, 1000);
+                            });
+                        }
+                    }}
+                />
+                <Grid item xs={12}>
+            
+                    <Button
+                    onClick={createPostBody}
+                    style={{ float: "right", margin: "20px" }}
+                    variant="outlined"
+                    color="primary"
+                    title="Bestellung speichern"
+                    >
+                        Reklamation und Retoure erfassen
+                    </Button>
+                </Grid>
+            </div>
         </div>
     );
 }
