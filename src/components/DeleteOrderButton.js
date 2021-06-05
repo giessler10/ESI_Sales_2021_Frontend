@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-  //console.log(props.O_NR);
+  const [text, setText] = React.useState("Möchten Sie den Auftrag wirklich löschen?");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,7 +18,13 @@ export default function AlertDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+  }
 
+  const handleCloseAbort = () => {
+    setOpen(false);
+  }
+
+  const handleCloseConfirm = () => {
     //Auftrag löschen
     axios.delete('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR)
     .then(
@@ -29,28 +35,20 @@ export default function AlertDialog(props) {
     )
     .then(
         (res) => {
-          return res.body;
+          //console.log(res.body);    
+               
+          setOpen(false);
         }
     )
     .catch(
-        (error) => {
-          console.log(error);
-          /*
-            
-            var errorObject = error.response.data;
-            var errorMessage = errorObject.errorMessage;
-            this.setState({ 
-                errorObject: errorObject,
-                errorMessage: errorMessage 
-            });
-            this.setState({ errorMessageVisible: true},()=>{ 
-                    window.setTimeout(()=>{
-                        this.setState({errorMessageVisible: false})
-                    },5000);
-                }
-            )
-          */
-        }
+      (error) => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage);
+
+        //Error-Handling - DB offline
+        setText("Fehler beim Löschen des Auftrags! " + errorMessage);
+      }
     );
   };
 
@@ -74,14 +72,14 @@ export default function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title">{"Auftrag löschen?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Möchten Sie den Auftrag wirklich löschen?
+            {text}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleCloseConfirm} color="primary">
             Löschen
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleCloseAbort} color="secondary" autoFocus>
             Abbrechen
           </Button>
         </DialogActions>
