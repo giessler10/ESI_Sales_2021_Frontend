@@ -22,6 +22,11 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import { Autocomplete } from '@material-ui/lab';
+import Paper from '@material-ui/core/Paper';
+
+
+
+import ColorHead from "./mostUsedColorHead";
 
 const useStyles = theme => ({
     root: {
@@ -40,6 +45,8 @@ const useStyles = theme => ({
         paddingBottom: "30px"
     }
 });
+
+
 
 
 class NewOrderTableClass extends Component {
@@ -373,7 +380,8 @@ class NewOrderTableClass extends Component {
                         </FormControl>
                     </Grid>
                     
-                    <Grid item sm={6} xs={12}>                                    
+                    <Grid item sm={6} xs={12}>  
+                    <b style={{color: "#006064"}}>Kundennummer</b>                                  
                         <Autocomplete
                             id="combo-box-Customer"
                             options={this.state.customers}
@@ -395,6 +403,15 @@ class NewOrderTableClass extends Component {
                         </div>
                                             
                     </Grid>
+                    
+                    <Grid item xs={6}>
+                    
+                   </Grid>
+                   <Grid item xs={5}>
+                    <ColorHead></ColorHead>
+                   </Grid>
+
+                    
 
                     <Grid item xs={12}>
                         <MaterialTable
