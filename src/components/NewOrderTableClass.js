@@ -216,10 +216,14 @@ class NewOrderTableClass extends Component {
                     "OI_VAT": element.OI_VAT
                 };
             });
-        
+            
+            if(this.state.O_OT_NR == 1){
+                this.setState({C_NR: 0});
+            }
+
             var body = {
                 C_NR: parseInt(this.state.C_NR),
-                O_OT_NR: parseInt(this.state.O_OT_NR),
+                //O_OT_NR: parseInt(this.state.O_OT_NR),
                 draft: this.valueToBoolean(this.state.draft),
                 orderitems: orderitems
             }
