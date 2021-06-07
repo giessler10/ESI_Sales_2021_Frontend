@@ -200,7 +200,19 @@ class NewOrderTableClass extends Component {
         console.log(e.target.name);
         console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value });
-    };
+
+        //Auftragstyp prüfen
+        /*if(this.state.O_OT_NR === 1){
+            this.setState({C_NR: 0});
+        };*/
+
+    }
+
+
+    //Ausgrauen(value) {
+        //return("Hallo");
+      //};
+
 
     createOrderitems = () => {
         if(this.handleValidation()){
@@ -368,7 +380,7 @@ class NewOrderTableClass extends Component {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}}/>} label="Vorproduktion" />
+                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}} checked={this.Ausgrauen}/>} label="Vorproduktion" />
                                     <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>

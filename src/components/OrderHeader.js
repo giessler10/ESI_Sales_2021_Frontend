@@ -38,6 +38,7 @@ export default function OrderHeader(props) {
                 label="Bestelldatum"
                 defaultValue={order[3]}
                 variant="filled"/>
+            <br/>
             <TextField
                 disabled
                 id="Kundennummer"
@@ -51,7 +52,7 @@ export default function OrderHeader(props) {
                 defaultValue={order[6]}
                 variant="filled"/>
             <br/>
-                <TextField
+            <TextField
                 disabled
                 id="Vorname"
                 label="Vorname"
