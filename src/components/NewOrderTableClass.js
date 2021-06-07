@@ -47,7 +47,16 @@ const useStyles = theme => ({
 });
 
 
-
+function preProdDisabled(val)
+{ 
+    //wenn 1 dann vorproduktion
+    if(val==="1"){
+        return true;
+    }
+    else{
+        return false;
+    }
+};
 
 class NewOrderTableClass extends Component {
     constructor(props) {
@@ -200,19 +209,7 @@ class NewOrderTableClass extends Component {
         console.log(e.target.name);
         console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value });
-
-        //Auftragstyp prüfen
-        /*if(this.state.O_OT_NR === 1){
-            this.setState({C_NR: 0});
-        };*/
-
     }
-
-
-    //Ausgrauen(value) {
-        //return("Hallo");
-      //};
-
 
     createOrderitems = () => {
         if(this.handleValidation()){
@@ -309,7 +306,9 @@ class NewOrderTableClass extends Component {
         else{
             return false;
         }
-    }
+    };
+
+
 
 
     render() {
@@ -380,18 +379,18 @@ class NewOrderTableClass extends Component {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}} checked={this.Ausgrauen}/>} label="Vorproduktion" />
+                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
                                     <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
 
-                    <Grid item xs style={{alignContent:"left"}}>
+                        <Grid item xs style={{alignContent:"left"}}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend"> <b style={{color: "#006064"}}>Als Entwurf speichern? *</b></FormLabel>
                             <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler}>
-                                <FormControlLabel key="0" value="0" control={<Radio style={{color: "#006064"}} />} label="Ja" />
-                                <FormControlLabel key="1" value="1" control={<Radio style={{color: "#006064"}}/>} label="Nein" />
+                                <FormControlLabel key="0" value="0" disabled={preProdDisabled(O_OT_NR)} control={<Radio style={{color: "#006064"}} />} label="Ja" />
+                                <FormControlLabel key="1" value="1" disabled={preProdDisabled(O_OT_NR)} control={<Radio style={{color: "#006064"}}/>} label="Nein" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
@@ -399,6 +398,7 @@ class NewOrderTableClass extends Component {
                     <Grid item sm={6} xs={12}>  
                     <b style={{color: "#006064"}}>Kundennummer</b>                                  
                         <Autocomplete
+                            disabled={preProdDisabled(O_OT_NR)}
                             id="combo-box-Customer"
                             options={this.state.customers}
                             getOptionLabel={(option) => option.C_DESC}
@@ -417,7 +417,6 @@ class NewOrderTableClass extends Component {
                         <div>
                             <span className={classes.error}>{this.state.errors["C_NR"] }</span>
                         </div>
-                                            
                     </Grid>
                     
                     <Grid item xs={6}>
@@ -491,6 +490,8 @@ class NewOrderTableClass extends Component {
                                 }}
                             />
                         </Grid>
+
+                        
 
                         <Grid item xs={12}>
                             <Button
