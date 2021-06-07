@@ -5,6 +5,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {Button, Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
+import { makeStyles } from '@material-ui/core/styles';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 import FullScreenQSDialog from '../components/FullScreenQSDialog';
@@ -74,6 +75,9 @@ textLabels: {
   }
 }
 };
+
+
+
 
 
  useEffect(() => {
@@ -223,7 +227,7 @@ function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, l
   var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
 
     num: String(OrderitemsData[index]["OI_NR"]),
-    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
+    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]+" (Farbe: "+OrderitemsData[index]["OI_HEXCOLOR"]+")"),
     price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
     quantity: String(OrderitemsData[index]["OI_QTY"]),
     unit: String(OrderitemsData[index]["OI_PRICE"]) + " €",
@@ -313,8 +317,8 @@ var props = {
       label: "Rechnung #: ",
       invTotalLabel: "Total:",
       num: invoiceNumber,
-      invDate: "Zahlungseingang: " + invoicedate,
-      invGenDate: "Rechnungsdatum: " + paymentdate,
+      invDate: "Rechnungsdatum: " + invoicedate, 
+      invGenDate: "Zahlungsziel: " + paymentdate,
       header: ["#", "Beschreibung", "Preis pro Stück", "Menge", "Preis (Netto)","Preis (Brutto"],
       headerBorder: false,
       tableBodyBorder: false,
@@ -411,8 +415,11 @@ const pdfObject = jsPDFInvoiceTemplate(props);
       //Kundenmail
       var customer_mail = selectedData[0]["C_MAIL"];
 
+      //Bestelldatum
+      var orderDate = selectedData[0]["O_TIMESTAMP_FORMAT"];
 
-        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate);
       
         })
         .catch(err => {
@@ -420,7 +427,7 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         })
         
 
-function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -428,7 +435,7 @@ function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, lo
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
-    price: "",
+    price: String(OrderitemsData[index]["OI_HEXCOLOR"]),
     quantity: String(OrderitemsData[index]["OI_QTY"]),
     unit: "Stück",
     total: ""
@@ -447,16 +454,7 @@ console.log("TableData", tableData);
 
                 delivDate = dd + '.' + mm + '.' + yyyy;
 
-                //Getting paymentdate
-                var paymentdate = new Date();
-                paymentdate.setDate(paymentdate.getDate() + 14);
-
-                var dd = String(paymentdate.getDate()).padStart(2, '0');
-                var mm = String(paymentdate.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = paymentdate.getFullYear();
-
-                paymentdate = dd + '.' + mm + '.' + yyyy;
-
+                var dateWithoutTime = order_date.substring(0,order_date.length-5);
 
               //Name für Lieferschein stückeln
               var invoiceName = orderNumb+"_"+dd+""+mm+""+yyyy;
@@ -514,9 +512,9 @@ var props = {
       label: "Lieferschein #: ",
       invTotalLabel: "Total:",
       num: orderNumber,
-      invDate: "Versandbereit am: " + delivDate,
-      invGenDate: "Ausgestellt am: " + paymentdate,
-      header: ["#", "Beschreibung", "", "Menge", "",""],
+      invDate: "Bestelldatum: " + dateWithoutTime, 
+      invGenDate: "Versandbereit am: " + delivDate,
+      header: ["#", "Beschreibung", "Farbe", "Menge", "",""],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
@@ -562,26 +560,27 @@ const pdfObject = jsPDFInvoiceTemplate(props);
 
 
 
-
-
-
-
-
-
-
-
 const getMuiTheme = () => createMuiTheme({
   overrides: {
     MuiTypography: {
           h6: {
             fontWeight: "600",
           }
-      }
-  }
+      },
+      MUIDataTable: {
+        responsiveStacked: {
+          maxHeight: 'none',
+          overflowX:'auto',
+          maxWidth: "100%"
+        },
+      },
+  },
 });
 
+//const classes = useStyles();
+
   return (
-    <div>
+    <div /*className={classes.overflow}*/>
     <MuiThemeProvider theme={getMuiTheme()} > 
       <MUIDataTable
         data={allData}

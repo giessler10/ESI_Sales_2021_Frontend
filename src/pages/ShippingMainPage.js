@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
       flexGrow: 1,
-      width: '100%',
+      width: "91vw",
       backgroundColor: theme.palette.background.paper,
       textColor: "green",
       textAlign: 'center',
       color: theme.palette.text.secondary,
-  
+
     },  
+
   }));
 
 function TabPanel(props) {
@@ -89,11 +90,17 @@ export default function ScrollableTabsButtonForce() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}> 
+            <div >
               <StorageTable/>
+              </div>
             </TabPanel>
 
-            <TabPanel value={value} index={1}>   
+            <TabPanel value={value} index={1}>
+            <div >   
+              
               <ShippingTable/>
+              
+              </div>
             </TabPanel>   
         </div>
     )
