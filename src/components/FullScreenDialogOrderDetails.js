@@ -87,7 +87,7 @@ export default function FullScreenDialogOrderDetails(props) {
         </AppBar>
         <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
         <div className={classes.table}>
-          <h2>Positionen</h2>
+          <h2>Auftragspositionen</h2>
           <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
         </div>
       </Dialog>
