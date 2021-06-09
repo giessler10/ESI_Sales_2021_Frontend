@@ -44,6 +44,9 @@ const useStyles = theme => ({
           marginTop: theme.spacing(2),
         },
         paddingBottom: "30px"
+    },
+    FormControlLabel: {
+        color: "grey"
     }
 });
 
@@ -432,8 +435,8 @@ class NewOrderTableClass extends Component {
                         <FormControl component="fieldset">
                             <FormLabel component="legend"  > <b  style={{color: "#006064"}} id="LabelEntwurf"  name="formlabel1">Als Entwurf speichern? *</b></FormLabel>
                             <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler} >
-                                <FormControlLabel  key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}    />} label="Ja" />
-                                <FormControlLabel key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}/>} label="Nein" />
+                                <FormControlLabel  className={classes.FormControlLabel} key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}    />} label="Ja" />
+                                <FormControlLabel className={classes.FormControlLabel} key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}/>} label="Nein" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
