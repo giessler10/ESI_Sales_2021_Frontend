@@ -210,9 +210,10 @@ function sleep(ms) {
 
        //Kundenmail
        var customer_mail = selectedData[0]["C_MAIL"];
+       
+       var steuersatz = String(res.data[0]["OI_VAT"]*100);
 
-
-        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz);
       
         })
         .catch(err => {
@@ -220,7 +221,7 @@ function sleep(ms) {
         })
         
 
-function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -230,8 +231,8 @@ function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, l
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]+" (Farbe: "+OrderitemsData[index]["OI_HEXCOLOR"]+")"),
     price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(OrderitemsData[index]["OI_PRICE"]) + " €",
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
+    unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €",
+    total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
     
 }));
 
@@ -282,6 +283,9 @@ console.log("TableData", tableData);
               //Gesamtpreis
               var tot = tableData.total;
 
+              //Variabler Steuersatz ausgehend vom ersten Datensatz
+              var vat = steuersatz;
+
 var props = {
   outputType: OutputType.Save,
   returnJsPDFDocObject: true,
@@ -315,32 +319,32 @@ var props = {
   },
   invoice: {
       label: "Rechnung #: ",
-      invTotalLabel: "Total:",
+      invTotalLabel: "Summe:",
       num: invoiceNumber,
       invDate: "Rechnungsdatum: " + invoicedate, 
       invGenDate: "Zahlungsziel: " + paymentdate,
-      header: ["#", "Beschreibung", "Preis pro Stück", "Menge", "Preis (Netto)","Preis (Brutto"],
+      header: ["#", "Beschreibung", "Stückpreis (Netto)", "Menge", "Einzelpreis (Brutto)","Gesamtpreis (Brutto)"],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
       invTotal: tot,
       invCurrency: "EUR",
-      /*row1: {
-          col1: 'VAT:',
-          col2: '19',
+      row1: {
+          col1: 'Mehrwertsteuer:',
+          col2: vat,
           col3: '%',
           style: {
               fontSize: 10 //optional, default 12
           }
-      },
+      /*},
       row2: {
           col1: 'SubTotal:',
           col2: '116,199.90',
           col3: 'EUR',
           style: {
               fontSize: 10 //optional, default 12
-          }
-      },*/
+          }*/
+      },
       invDescLabel: "From YourShirt with Love :)",
       invDesc: "",
   },
