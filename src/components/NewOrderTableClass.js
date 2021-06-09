@@ -47,24 +47,27 @@ const useStyles = theme => ({
     }
 });
 
-function changeColor(color){
+//function changeColor(color){
 
-var radioJa = document.getElementById("radioJa"); //Entwurf JA
-var radioNein = document.getElementById("radioNein"); //Entwurf NEIN
-var labelEntwurf = document.getElementById("LabelEntwurf"); //Überschrift Entwurf
+//var radioJa = document.getElementById("radioJa"); //Entwurf JA
+//var radioNein = document.getElementById("radioNein"); //Entwurf NEIN
+//var labelEntwurf = document.getElementById("LabelEntwurf"); //Überschrift Entwurf
 //var labelKundennummer = document.getElementById("labelKundennummer"); //Überschrift Kundennummer
 
-if(radioJa === null || radioJa === undefined) return;
-if(radioNein === null || radioNein === undefined) return;
-if(labelEntwurf === null || labelEntwurf === undefined) return;
+//if(radioJa === null || radioJa === undefined) return;
+//if(radioNein === null || radioNein === undefined) return;
+//if(labelEntwurf === null || labelEntwurf === undefined) return;
 //if(labelKundennummer === null || labelKundennummer === undefined) return;
 
-radioJa.style.color = color;
-radioNein.style.color = color;
-labelEntwurf.style.color = color;
+//radioJa.style.color = color;
+//radioNein.style.color = color;
+//labelEntwurf.style.color = color;
 //labelKundennummer.style.color = color;
 
    
+//}
+
+function changeColor(color){
 }
 
 
@@ -404,8 +407,8 @@ class NewOrderTableClass extends Component {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" onChange={changeColor("#adadad")}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" onChange={changeColor("#006064")} control={<Radio style={{color: "#006064"}}/>} label="Normal" />
+                                    <FormControlLabel key="0" value="1" onChange={e => changeColor(e.target.value)}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
+                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
