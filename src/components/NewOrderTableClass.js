@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import MaterialTable from 'material-table'
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, Grid, TextField, Radio, RadioGroup, FormLabel, Button, IconButton, Collapse } from '@material-ui/core';
@@ -22,11 +22,9 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import { Autocomplete } from '@material-ui/lab';
-import Paper from '@material-ui/core/Paper';
-
-
-
 import ColorHead from "./mostUsedColorHead";
+
+
 
 const useStyles = theme => ({
     root: {
@@ -37,6 +35,9 @@ const useStyles = theme => ({
     error: {
         color: "red"
     },
+    greyed: {
+         color: "red"
+    },
     alert: {
         width: '100%',
         '& > * + *': {
@@ -46,19 +47,42 @@ const useStyles = theme => ({
     }
 });
 
+function changeColor(color){
+
+var radioJa = document.getElementById("radioJa"); //Entwurf JA
+var radioNein = document.getElementById("radioNein"); //Entwurf NEIN
+var labelEntwurf = document.getElementById("LabelEntwurf"); //Überschrift Entwurf
+//var labelKundennummer = document.getElementById("labelKundennummer"); //Überschrift Kundennummer
+
+if(radioJa === null || radioJa === undefined) return;
+if(radioNein === null || radioNein === undefined) return;
+if(labelEntwurf === null || labelEntwurf === undefined) return;
+//if(labelKundennummer === null || labelKundennummer === undefined) return;
+
+radioJa.style.color = color;
+radioNein.style.color = color;
+labelEntwurf.style.color = color;
+//labelKundennummer.style.color = color;
+
+   
+}
+
 
 function preProdDisabled(val)
 { 
     //wenn 1 dann vorproduktion
     if(val==="1"){
+        //<div>className={useStyles.greyed}</div>
         return true;
     }
     else{
         return false;
     }
+
 };
 
 class NewOrderTableClass extends Component {
+  
     constructor(props) {
         super(props);
         this.state = {
@@ -310,8 +334,9 @@ class NewOrderTableClass extends Component {
 
 
 
-
     render() {
+
+        
         const { classes } = this.props;
 
         const {
@@ -373,30 +398,30 @@ class NewOrderTableClass extends Component {
                     </Alert>
                 </Collapse>
                 
-                <div style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
+                <div id="divTest" style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
                     <Grid container spacing={3} align="left">
                         <Grid item xs style={{alignContent:"left"}}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
+                                    <FormControlLabel key="0" value="1" onChange={changeColor("#adadad")}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
+                                    <FormControlLabel key="1" value="2" onChange={changeColor("#006064")} control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
 
-                        <Grid item xs style={{alignContent:"left"}}>
+                        <Grid className="GridEntwurf" name="gridEntwurf" item xs style={{alignContent:"left", color: "#006064"}}>
                         <FormControl component="fieldset">
-                            <FormLabel component="legend"> <b style={{color: "#006064"}}>Als Entwurf speichern? *</b></FormLabel>
-                            <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler}>
-                                <FormControlLabel key="0" value="0" disabled={preProdDisabled(O_OT_NR)} control={<Radio style={{color: "#006064"}} />} label="Ja" />
-                                <FormControlLabel key="1" value="1" disabled={preProdDisabled(O_OT_NR)} control={<Radio style={{color: "#006064"}}/>} label="Nein" />
+                            <FormLabel component="legend"  > <b  style={{color: "#006064"}} id="LabelEntwurf"  name="formlabel1">Als Entwurf speichern? *</b></FormLabel>
+                            <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler} >
+                                <FormControlLabel  key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: "#006064"}}    />} label="Ja" />
+                                <FormControlLabel key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: "#006064"}}/>} label="Nein" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
                     
                     <Grid item sm={6} xs={12}>  
-                    <b style={{color: "#006064"}}>Kundennummer</b>                                  
+                    <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
                         <Autocomplete
                             disabled={preProdDisabled(O_OT_NR)}
                             id="combo-box-Customer"
