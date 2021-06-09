@@ -26,13 +26,13 @@ export default function StorageOrders(){
   {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
   {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
   {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
-  {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
-  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
-  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
-  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
-  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
-  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
-  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
+  {name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: false}},
+  {name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: false}},
+  {name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: false}},
+  {name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: false}},
+  {name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: false}},
+  {name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: false}},
+  {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
   const options = { 

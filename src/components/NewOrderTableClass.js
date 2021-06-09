@@ -441,15 +441,15 @@ class NewOrderTableClass extends Component {
                         </FormControl>
                     </Grid>
                     
-                    <Grid item sm={6} xs={12}>  
+                    <Grid item sm={7} xs={12}>  
                     <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
                         <Autocomplete
                             disabled={preProdDisabled(O_OT_NR)}
                             id="combo-box-Customer"
                             options={this.state.customers}
                             getOptionLabel={(option) => option.C_DESC}
-                            style={{ width: 300 }}
-                            renderInput={(params) => <TextField {...params} label="Kunde" variant="outlined"/>}
+                            style={{ width: "650px" }}
+                            renderInput={(params) => <TextField {...params} label="" variant="outlined"/>}
                             onChange={(event, value) => {
                                     if(value != null){
                                         this.setState({ C_NR: value.C_NR });
@@ -465,10 +465,10 @@ class NewOrderTableClass extends Component {
                         </div>
                     </Grid>
                     
-                    <Grid item xs={6}>
+                    <Grid item xs={5}>
                     
                    </Grid>
-                   <Grid item xs={5}>
+                   <Grid item xs={7}>
                     <ColorHead></ColorHead>
                    </Grid>
 

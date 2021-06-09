@@ -32,13 +32,13 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
 {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
 {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
-{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
-{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
-{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
-{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
-{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
-{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
-{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
+{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: false}},
+{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: false}},
+{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: false}},
+{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: false}},
+{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: false}},
+{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: false}},
+{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
@@ -213,7 +213,8 @@ function sleep(ms) {
        
        var steuersatz = String(res.data[0]["OI_VAT"]*100);
 
-        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz);
+       var img = String(res.data[0]["OI_VAT"]*100);
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz, img);
       
         })
         .catch(err => {
@@ -221,7 +222,7 @@ function sleep(ms) {
         })
         
 
-function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz){
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz, ){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -422,8 +423,11 @@ const pdfObject = jsPDFInvoiceTemplate(props);
       //Bestelldatum
       var orderDate = selectedData[0]["O_TIMESTAMP_FORMAT"];
 
+        //bild
+      var img = selectedData[0]["IM_FILE"];
 
-        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate);
+
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate, img);
       
         })
         .catch(err => {
@@ -431,17 +435,20 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         })
         
 
-function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date){
+function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date, img){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
+  
   var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
+
+
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
     price: String(OrderitemsData[index]["OI_HEXCOLOR"]),
-    quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: "Stück",
+    quantity: String(OrderitemsData[index]["OI_QTY"]+" Stk."),
+    unit: String(img),
     total: ""
     
 }));
@@ -514,11 +521,11 @@ var props = {
   },
   invoice: {
       label: "Lieferschein #: ",
-      invTotalLabel: "Total:",
+      invTotalLabel: " ",
       num: orderNumber,
       invDate: "Bestelldatum: " + dateWithoutTime, 
       invGenDate: "Versandbereit am: " + delivDate,
-      header: ["#", "Beschreibung", "Farbe", "Menge", "",""],
+      header: ["#", "Beschreibung", "Farbe", "Menge", "Bild",""],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
@@ -545,7 +552,7 @@ var props = {
       invDesc: "",
   },
   footer: {
-      text: "Die Rechnung wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
+      text: "Dieser Lieferschein wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
   },
   pageEnable: true,
   pageLabel: "Page ",
