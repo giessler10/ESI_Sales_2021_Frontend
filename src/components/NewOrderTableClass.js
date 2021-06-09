@@ -47,6 +47,8 @@ const useStyles = theme => ({
     }
 });
 
+var colorDisabled ="#006064";
+
 //function changeColor(color){
 
 //var radioJa = document.getElementById("radioJa"); //Entwurf JA
@@ -67,7 +69,19 @@ const useStyles = theme => ({
    
 //}
 
-function changeColor(color){
+function changeColor(e){
+    if(e == 1){
+        colorDisabled ="#EBEBE4";
+        return colorDisabled;
+    }
+
+    if(e == 2){
+        colorDisabled ="#006064";
+        return colorDisabled;
+    }
+
+    return  colorDisabled ="#006064";
+    
 }
 
 
@@ -76,6 +90,7 @@ function preProdDisabled(val)
     //wenn 1 dann vorproduktion
     if(val==="1"){
         //<div>className={useStyles.greyed}</div>
+
         return true;
     }
     else{
@@ -339,7 +354,7 @@ class NewOrderTableClass extends Component {
 
     render() {
 
-        
+
         const { classes } = this.props;
 
         const {
@@ -408,7 +423,7 @@ class NewOrderTableClass extends Component {
                                 <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
                                 <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
                                     <FormControlLabel key="0" value="1" onChange={e => changeColor(e.target.value)}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" control={<Radio style={{color: "#006064"}}/>} label="Normal" />
+                                    <FormControlLabel key="1" value="2" onChange={e => changeColor(e.target.value)} control={<Radio style={{color: "#006064"}}/>} label="Normal" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -417,8 +432,8 @@ class NewOrderTableClass extends Component {
                         <FormControl component="fieldset">
                             <FormLabel component="legend"  > <b  style={{color: "#006064"}} id="LabelEntwurf"  name="formlabel1">Als Entwurf speichern? *</b></FormLabel>
                             <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler} >
-                                <FormControlLabel  key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: "#006064"}}    />} label="Ja" />
-                                <FormControlLabel key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: "#006064"}}/>} label="Nein" />
+                                <FormControlLabel  key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}    />} label="Ja" />
+                                <FormControlLabel key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}/>} label="Nein" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
