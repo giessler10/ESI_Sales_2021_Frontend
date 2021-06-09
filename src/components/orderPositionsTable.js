@@ -27,6 +27,7 @@ export default function OrderPositionsTable(props){
           change={event => updateValue(event)}
         />
       );}}},
+  {name: "IM_FILE", label: "Bild", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_QTY", label: "Menge", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_PRICE", label: "Preis", options: {filter: true, sort: true, display: true}}, 
   {name: "OI_VAT", label: "Mehrwertsteuer", options: {filter: true, sort: true, display: true}} 

@@ -172,7 +172,7 @@ export default function QSFormCellEdittable(props) {
         {
             title: "Mehrwertsteuer",
             field: "OI_VAT",
-            initialEditValue: 0.19,
+            initialEditValue: "19%",
             tooltip: "Mehrwertsteuer",
             editable: 'never'
         },
@@ -304,10 +304,10 @@ export default function QSFormCellEdittable(props) {
                                 OI_NR: currentObject.OI_NR,
                                 OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
                                 OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: "Muss in der Lambda noch erweitert werden",
+                                IM_FILE: currentObject.IM_FILE,
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: parseFloat(currentObject.OI_VAT),
+                                OI_VAT: '19%',
                                 QI_COMMENT: 'Keine',
                                 QI_QTY: 0,
                                 tableData: {
