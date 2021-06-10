@@ -49,7 +49,8 @@ export default function CustomerTable(){
           </Button>
         </div>
       );
-    }
+    },
+    selectableRows: 'single'
   };
 
 

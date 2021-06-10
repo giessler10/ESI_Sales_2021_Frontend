@@ -35,19 +35,22 @@ export default function ProgressOrders(){
   {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
-  const options = {filterType: 'checkbox', onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: (selectedRows, data) => {
-    var order = data[selectedRows.data[0].index].data;
-    var OI_O_NR = data[selectedRows.data[0].index].data[0];
-    return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/></div>;
-},
-textLabels: {
-  body: {
-    noMatch: "Es wurden keine passenden Aufträge gefunden.",
-    toolTip: "Sort",
-    columnHeaderTooltip: column => `Sort for ${column.label}`
-  }
-}
+  const options = {
+    filterType: 'checkbox', 
+    onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+    customToolbarSelect: (selectedRows, data) => {
+      var order = data[selectedRows.data[0].index].data;
+      var OI_O_NR = data[selectedRows.data[0].index].data[0];
+      return  <div style={{ paddingRight: "10px"}}><FullScreenDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/></div>;
+    },
+    textLabels: {
+      body: {
+        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        toolTip: "Sort",
+        columnHeaderTooltip: column => `Sort for ${column.label}`
+      }
+    },
+    selectableRows: 'single'
 };
 
 useEffect(() => {
