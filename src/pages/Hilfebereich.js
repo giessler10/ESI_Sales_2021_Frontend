@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paperII: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    align: 'center',
+    margin: "0",
     color: theme.palette.text.secondary,
     width: '500px',
   },
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const Hilfebereich = () => {
     const classes = useStyles();
     return (
-        <div>
+        <div align = "center" justify = "center" alignItems = "center">
             <Paper className={classes.paper}>
             <h2>Hilfebereich<br></br> </h2>   
 
@@ -43,12 +44,14 @@ const Hilfebereich = () => {
            <Chatbot/>
 
            <br></br>
-           
-           <Paper className={classes.paperII}>
+           <Paper>
+           <Paper className={classes.paperII} >
            <h2>Trotzdem noch Fragen?</h2>
            <h4>Senden Sie uns ein Ticket. Die CMS-Consulting wird sich binnen des nächsten Werktages bei Ihnen melden.</h4>
 <Form/>
 </Paper>
+</Paper>
+
 
            
         </div>
