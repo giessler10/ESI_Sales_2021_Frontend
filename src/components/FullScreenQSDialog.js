@@ -11,6 +11,8 @@ import {Button, Dialog } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import QSFormCellEdittable from './QSFormCellEdittable';
 
+import QSHistoryTable from './QSHistoryTable';
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
@@ -23,7 +25,12 @@ const useStyles = makeStyles((theme) => ({
   Button:{
     color: "#006064",
     backgroundColor: "#006064",
-  } 
+  },  
+  table: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingBottom: '2%'
+  }
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -79,6 +86,10 @@ export default function FullScreenQSDialog(props) {
         </AppBar>
         <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
         <QSFormCellEdittable OI_O_NR={OI_O_NR}/>
+        <div className={classes.table}>
+          <h2>Historie</h2>
+          <QSHistoryTable OI_O_NR={OI_O_NR}/>
+        </div>
       </Dialog>
     </div>
   );

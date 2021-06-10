@@ -32,7 +32,7 @@ import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import ShippingMainPage from './pages/ShippingMainPage';
-import EinstellungPage from './pages/Einstellungen.js';
+//import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
 import Footer from './footer'
 import OrderDetails from './components/specOrderDetails';
@@ -152,9 +152,9 @@ function App() {
       setSelectedIndex(3);
      }
 
-     else if (window.location.href.endsWith("Einstellungen")){
+     /*else if (window.location.href.endsWith("Einstellungen")){
       setSelectedIndex(4);
-     }
+     }*/
 
      else if (window.location.href.endsWith("Hilfebereich")){
       setSelectedIndex(5);
@@ -267,13 +267,13 @@ return (
 
           <Divider />
 
-            <ListItem button component={Link} to="/Einstellungen"  key="einstellungen" className={classes.activeTab} selected={selectedIndex === 4}
+         {/*   <ListItem button component={Link} to="/Einstellungen"  key="einstellungen" className={classes.activeTab} selected={selectedIndex === 4}
           onClick={event => handleListItemClick(event, 4)}>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Einstellungen" />
-            </ListItem>
+            </ListItem>*/}
 
             <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich" className={classes.activeTab} selected={selectedIndex === 5}
           onClick={event => handleListItemClick(event, 5)}>
@@ -323,9 +323,9 @@ return (
           <Route exact path="/Hilfebereich">
             <HilfebereichPage />
           </Route>
-          <Route exact path="/Einstellungen">
+       {/* <Route exact path="/Einstellungen">
             <EinstellungPage />
-          </Route>
+          </Route>*/}
           <Route exact path="/OrderDetails">
             <OrderDetails/>
           </Route>

@@ -20,7 +20,7 @@ export default function OrderHeader(props) {
 
   var OI_O_NR = props.OI_O_NR;
   var order = props.order;
-  console.log(order);
+  //console.log(order);
 
   return (
         <div className={classes.root}>
@@ -36,8 +36,9 @@ export default function OrderHeader(props) {
                 disabled
                 id="Bestelldatum"
                 label="Bestelldatum"
-                defaultValue={order[4]}
+                defaultValue={order[3]}
                 variant="filled"/>
+            <br/>
             <TextField
                 disabled
                 id="Kundennummer"
@@ -48,33 +49,33 @@ export default function OrderHeader(props) {
                 disabled
                 id="Kundentyp"
                 label="Kundentyp"
-                defaultValue={order[8]}
+                defaultValue={order[6]}
                 variant="filled"/>
             <br/>
-                <TextField
+            <TextField
                 disabled
                 id="Vorname"
                 label="Vorname"
-                defaultValue={order[10]}
+                defaultValue={order[8]}
                 variant="filled"/>
             <TextField
                 disabled
                 id="Nachname"
                 label="Nachname"
-                defaultValue={order[11]}
+                defaultValue={order[9]}
                 variant="filled"/>
             <br/>
                 <TextField
                 disabled
                 id="Auftragsstatus"
                 label="Auftragsstatus"
-                defaultValue={order[6]}
+                defaultValue={order[4]}
                 variant="filled"/>
             <TextField
                 disabled
                 id="PLZ"
                 label="PLZ"
-                defaultValue={order[13]}
+                defaultValue={order[11]}
                 variant="filled"/>
             </Grid>
         </div>

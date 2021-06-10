@@ -130,9 +130,21 @@ export default function QSFormCellEdittable(props) {
             title: "Farbcode",
             field: "OI_HEXCOLOR",
             tooltip: "HEX-Code: #282C34",
-            cellStyle: (input, rowData) => {
+           /*  cellStyle: (input, rowData) => {
                 return {
                     backgroundColor: rowData?.colorCode || input,
+                };
+            } */
+        },
+        {
+            title: "Farbe",
+            field: "OI_HEXCOLOR",
+            tooltip: "HEX-Code: #282C34",
+            cellStyle: (input, rowData) => {
+                return {
+                    
+                    backgroundColor: rowData?.colorCode || input,
+                    color: 'rgba(0,0,0,0)'
                 };
             },
             editable: 'never'
@@ -160,7 +172,7 @@ export default function QSFormCellEdittable(props) {
         {
             title: "Mehrwertsteuer",
             field: "OI_VAT",
-            initialEditValue: 0.19,
+            initialEditValue: "19%",
             tooltip: "Mehrwertsteuer",
             editable: 'never'
         },
@@ -168,7 +180,7 @@ export default function QSFormCellEdittable(props) {
             title: "Grund der QS",
             field: "QI_COMMENT",
             tooltip: "Grund für die QS",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Keine Auftragsposition': 'Keine Auftragsposition', 'Beschädigt': 'Beschädigt'}
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Bildplatzierung': 'Falsche Bildplatzierung', 'Falsche Ware': 'Falsche Ware', 'Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
         },
         { 
             title: "Gemeldete Menge", 
@@ -292,10 +304,10 @@ export default function QSFormCellEdittable(props) {
                                 OI_NR: currentObject.OI_NR,
                                 OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
                                 OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: "Muss in der Lambda noch erweitert werden",
+                                IM_FILE: currentObject.IM_FILE,
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: parseFloat(currentObject.OI_VAT),
+                                OI_VAT: '19%',
                                 QI_COMMENT: 'Keine',
                                 QI_QTY: 0,
                                 tableData: {

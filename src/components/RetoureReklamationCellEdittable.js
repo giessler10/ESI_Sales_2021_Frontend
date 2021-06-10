@@ -129,9 +129,21 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Farbcode",
             field: "OI_HEXCOLOR",
             tooltip: "HEX-Code: #282C34",
-            cellStyle: (input, rowData) => {
+           /*  cellStyle: (input, rowData) => {
                 return {
                     backgroundColor: rowData?.colorCode || input,
+                };
+            } */
+        },
+        {
+            title: "Farbe",
+            field: "OI_HEXCOLOR",
+            tooltip: "HEX-Code: #282C34",
+            cellStyle: (input, rowData) => {
+                return {
+                    
+                    backgroundColor: rowData?.colorCode || input,
+                    color: 'rgba(0,0,0,0)'
                 };
             },
             editable: 'never'
@@ -159,7 +171,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
         {
             title: "Mehrwertsteuer",
             field: "OI_VAT",
-            initialEditValue: 0.19,
+            initialEditValue: "19%",
             tooltip: "Mehrwertsteuer",
             editable: 'never'
         },
@@ -173,7 +185,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Grund der Retoure / Reklamation",
             field: "IR_COMMENT",
             tooltip: "Grund der Retoure / Reklamation",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt'}
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
         },
         { 
             title: "Gemeldete Menge", 
@@ -184,8 +196,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Neuproduktion",
             field: "NewProduction",
             tooltip: "Position neu produzieren lassen?",
-            lookup: { 0: 'Nein',  1: 'Ja'},
-            editable: 'never'
+            lookup: { 0: 'Nein',  1: 'Ja'}
         }
     ]);
 
@@ -322,10 +333,10 @@ export default function RetoureReklamationFormCellEdittable(props) {
                                 OI_NR: currentObject.OI_NR,
                                 OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
                                 OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: "Muss in der Lambda noch erweitert werden",
+                                IM_FILE: currentObject.IM_FILE,
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: parseFloat(currentObject.OI_VAT),
+                                OI_VAT: "19%",
                                 IR_RT_NR: "0",
                                 IR_COMMENT: 'Keine',
                                 IR_QTY: 0,

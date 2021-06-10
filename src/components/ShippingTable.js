@@ -5,6 +5,7 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {Button, Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
+import { makeStyles } from '@material-ui/core/styles';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 import FullScreenQSDialog from '../components/FullScreenQSDialog';
@@ -22,10 +23,8 @@ const [allData, setAllData] = useState([]); //alle Daten von DB.
 //Columns with properties
 const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
 {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
-{name: "O_OT_NR", label: "Auftragsart-Nr", options: {filter: true,  sort: false,  display: false}}, 
 {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
 {name: "O_TIMESTAMP_FORMAT", label: "Bestelldatum", options: {filter: true, sort: true, display: true}}, 
-{name: "OT_DESC", label: "Auftragsart", options: {filter: true, sort: true, display: true}}, 
 {name: "OST_DESC", label: "Auftragsstatus", options: {filter: true, sort: true, display: true}}, 
 {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
 {name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
@@ -33,13 +32,13 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "C_FIRSTNAME", label: "Vorname",options: {filter: true,sort: false,display: true}},
 {name: "C_LASTNAME",label: "Nachname",options: {filter: true,sort: false, display: true}},
 {name: "C_CO_ID", label: "Ländercode", options: {filter: true,sort: false, display: false}},
-{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: true}},
-{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: true}},
-{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: true}},
-{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: true}},
-{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: true}},
-{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: true}},
-{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: true}},
+{name: "C_CI_PC", label: "Postleitzahl", options: {filter: true,sort: true, display: false}},
+{name: "C_STREET", label: "Straße", options: {filter: true,sort: true, display: false}},
+{name: "C_HOUSENR", label: "Hausnummer", options: {filter: true,sort: true, display: false}},
+{name: "C_EMAIL",label: "Email",options: {filter: true,sort: false, display: false}},
+{name: "C_TEL",label: "Telefon",options: {filter: true,sort: false, display: false}},
+{name: "CO_DESC",label: "Land",options: {filter: true,sort: false, display: false}},
+{name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
@@ -51,16 +50,16 @@ customToolbarSelect: (selectedRows, data) => {
     <React.Fragment>
       <Grid container direction="row" justify="flex-end" alignItems="center">
       <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
       </div>
       <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
+        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
       </div>
       <div style={{ paddingRight: "10px"}}>
         <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
       </div>
       <div style={{ paddingRight: "10px"}}>
-        <ShippingButton/>
+        <ShippingButton selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/>
       </div>
       </Grid>
     </React.Fragment>
@@ -76,6 +75,9 @@ textLabels: {
   }
 }
 };
+
+
+
 
 
  useEffect(() => {
@@ -171,13 +173,6 @@ function sleep(ms) {
 
  //Rechnung Button Click 
  function CreateInvoice(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
-  
       // Abfrage Orderitems
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
       
@@ -208,9 +203,11 @@ function sleep(ms) {
 
        //Kundenmail
        var customer_mail = selectedData[0]["C_MAIL"];
+       
+       var steuersatz = String(res.data[0]["OI_VAT"]*100);
 
-
-        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+       var img = String(res.data[0]["OI_VAT"]*100);
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz, img);
       
         })
         .catch(err => {
@@ -218,18 +215,18 @@ function sleep(ms) {
         })
         
 
-function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz, ){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
   var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
 
     num: String(OrderitemsData[index]["OI_NR"]),
-    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
+    desc: String(OrderitemsData[index]["OI_MATERIALDESC"]+" (Farbe: "+OrderitemsData[index]["OI_HEXCOLOR"]+")"),
     price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(OrderitemsData[index]["OI_PRICE"]) + " €",
-    total: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
+    unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €",
+    total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
     
 }));
 
@@ -280,6 +277,9 @@ console.log("TableData", tableData);
               //Gesamtpreis
               var tot = tableData.total;
 
+              //Variabler Steuersatz ausgehend vom ersten Datensatz
+              var vat = steuersatz;
+
 var props = {
   outputType: OutputType.Save,
   returnJsPDFDocObject: true,
@@ -313,32 +313,32 @@ var props = {
   },
   invoice: {
       label: "Rechnung #: ",
-      invTotalLabel: "Total:",
+      invTotalLabel: "Summe:",
       num: invoiceNumber,
-      invDate: "Zahlungseingang: " + invoicedate,
-      invGenDate: "Rechnungsdatum: " + paymentdate,
-      header: ["#", "Beschreibung", "Preis pro Stück", "Menge", "Preis (Netto)","Preis (Brutto"],
+      invDate: "Rechnungsdatum: " + invoicedate, 
+      invGenDate: "Zahlungsziel: " + paymentdate,
+      header: ["#", "Beschreibung", "Stückpreis (Netto)", "Menge", "Einzelpreis (Brutto)","Gesamtpreis (Brutto)"],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
       invTotal: tot,
       invCurrency: "EUR",
-      /*row1: {
-          col1: 'VAT:',
-          col2: '19',
+      row1: {
+          col1: 'Mehrwertsteuer:',
+          col2: vat,
           col3: '%',
           style: {
               fontSize: 10 //optional, default 12
           }
-      },
+      /*},
       row2: {
           col1: 'SubTotal:',
           col2: '116,199.90',
           col3: 'EUR',
           style: {
               fontSize: 10 //optional, default 12
-          }
-      },*/
+          }*/
+      },
       invDescLabel: "From YourShirt with Love :)",
       invDesc: "",
   },
@@ -376,13 +376,6 @@ const pdfObject = jsPDFInvoiceTemplate(props);
 
  //Rechnung Button Click 
  function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
-  
       // Abfrage Orderitems
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
       
@@ -413,8 +406,14 @@ const pdfObject = jsPDFInvoiceTemplate(props);
       //Kundenmail
       var customer_mail = selectedData[0]["C_MAIL"];
 
+      //Bestelldatum
+      var orderDate = selectedData[0]["O_TIMESTAMP_FORMAT"];
 
-        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail);
+        //bild
+      var img = selectedData[0]["IM_FILE"];
+
+
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate, img);
       
         })
         .catch(err => {
@@ -422,17 +421,20 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         })
         
 
-function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail){
+function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date, img){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
+  
   var tableData = Array.from(Array(OrderitemsData.length), (item, index)=>({
+
+
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
-    price: "",
-    quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: "Stück",
+    price: String(OrderitemsData[index]["OI_HEXCOLOR"]),
+    quantity: String(OrderitemsData[index]["OI_QTY"]+" Stk."),
+    unit: String(img),
     total: ""
     
 }));
@@ -449,16 +451,7 @@ console.log("TableData", tableData);
 
                 delivDate = dd + '.' + mm + '.' + yyyy;
 
-                //Getting paymentdate
-                var paymentdate = new Date();
-                paymentdate.setDate(paymentdate.getDate() + 14);
-
-                var dd = String(paymentdate.getDate()).padStart(2, '0');
-                var mm = String(paymentdate.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = paymentdate.getFullYear();
-
-                paymentdate = dd + '.' + mm + '.' + yyyy;
-
+                var dateWithoutTime = order_date.substring(0,order_date.length-5);
 
               //Name für Lieferschein stückeln
               var invoiceName = orderNumb+"_"+dd+""+mm+""+yyyy;
@@ -514,11 +507,11 @@ var props = {
   },
   invoice: {
       label: "Lieferschein #: ",
-      invTotalLabel: "Total:",
+      invTotalLabel: " ",
       num: orderNumber,
-      invDate: "Versandbereit am: " + delivDate,
-      invGenDate: "Ausgestellt am: " + paymentdate,
-      header: ["#", "Beschreibung", "", "Menge", "",""],
+      invDate: "Bestelldatum: " + dateWithoutTime, 
+      invGenDate: "Versandbereit am: " + delivDate,
+      header: ["#", "Beschreibung", "Farbe", "Menge", "Bild",""],
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
@@ -545,7 +538,7 @@ var props = {
       invDesc: "",
   },
   footer: {
-      text: "Die Rechnung wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
+      text: "Dieser Lieferschein wurde am Computer erstellt und ist ohne Unterschrift und Stempel gültig.",
   },
   pageEnable: true,
   pageLabel: "Page ",
@@ -564,26 +557,27 @@ const pdfObject = jsPDFInvoiceTemplate(props);
 
 
 
-
-
-
-
-
-
-
-
 const getMuiTheme = () => createMuiTheme({
   overrides: {
     MuiTypography: {
           h6: {
             fontWeight: "600",
           }
-      }
-  }
+      },
+      MUIDataTable: {
+        responsiveStacked: {
+          maxHeight: 'none',
+          overflowX:'auto',
+          maxWidth: "100%"
+        },
+      },
+  },
 });
 
+//const classes = useStyles();
+
   return (
-    <div>
+    <div /*className={classes.overflow}*/>
     <MuiThemeProvider theme={getMuiTheme()} > 
       <MUIDataTable
         data={allData}
