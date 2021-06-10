@@ -170,7 +170,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
         {
             title: "Mehrwertsteuer",
             field: "OI_VAT",
-            initialEditValue: 0.19,
+            initialEditValue: "19%",
             tooltip: "Mehrwertsteuer",
             editable: 'never'
         }
@@ -193,7 +193,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                 "OI_QTY": element.OI_QTY,
                 "IM_FILE": element.IM_FILE,
                 "OI_PRICE": element.OI_PRICE,
-                "OI_VAT": element.OI_VAT
+                "OI_VAT": 0.19  //Mehrwersteuersatz 19%
             };
         });
 
@@ -257,7 +257,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                                 IM_FILE: currentObject.IM_FILE,
                                 OI_QTY: currentObject.OI_QTY,
                                 OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: parseFloat(currentObject.OI_VAT),
+                                OI_VAT: "19%",
                                 tableData: {
                                     id: index
                                 }

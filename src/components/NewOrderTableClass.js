@@ -163,7 +163,7 @@ class NewOrderTableClass extends Component {
                 {
                     title: "Mehrwertsteuer",
                     field: "OI_VAT",
-                    initialEditValue: 0.19,
+                    initialEditValue: "19%",
                     tooltip: "Mehrwertsteuer",
                     editable: 'never'
                 }
@@ -267,7 +267,7 @@ class NewOrderTableClass extends Component {
                     "OI_QTY": element.OI_QTY,
                     "IM_FILE": "P:/images/" + this.state.C_NR + "/" + element.IM_FILE,
                     "OI_PRICE": element.OI_PRICE,
-                    "OI_VAT": element.OI_VAT
+                    "OI_VAT": 0.19  //Mehrwersteuersatz 19%
                 };
             });
             
