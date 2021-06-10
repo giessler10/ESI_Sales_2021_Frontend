@@ -41,7 +41,9 @@ export default function QSHistoryTable(props){
         toolTip: "Sort",
         columnHeaderTooltip: column => `Sort for ${column.label}`
       }
-    }
+    },
+
+    selectableRows: false
   };
 
   useEffect(() => {
