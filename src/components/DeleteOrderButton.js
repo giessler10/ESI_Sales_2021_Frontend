@@ -52,9 +52,24 @@ export default function AlertDialog(props) {
     );
   };
 
+  function MoreThan2Rows(selectedRows){
+    if(selectedRows != undefined){
+      if(selectedRows.length > 1){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return false;
+    }
+  };
+
   return (
     <div>
       <Button
+        disabled={MoreThan2Rows(props.selectedRows)}
         color ="primary"
         type="submit"
         variant="outlined"

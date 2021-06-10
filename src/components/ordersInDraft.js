@@ -49,10 +49,10 @@ export default function DraftOrders(){
           <FullScreenUpdateDialogOrderDetails selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
         </div>
         <div style={{ paddingRight: "10px"}}>
-          <DeleteOrderButton O_NR={OI_O_NR}/>
+          <DeleteOrderButton selectedRows={selectedRows.data} O_NR={OI_O_NR}/>
         </div>
         <div style={{ paddingRight: "10px"}}>
-          <ProductionButton O_NR={OI_O_NR}/>
+          <ProductionButton selectedRows={selectedRows.data} O_NR={OI_O_NR}/>
         </div>
       </Grid>
       </div>;},

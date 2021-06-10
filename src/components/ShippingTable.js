@@ -50,16 +50,16 @@ customToolbarSelect: (selectedRows, data) => {
     <React.Fragment>
       <Grid container direction="row" justify="flex-end" alignItems="center">
       <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
       </div>
       <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows()} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
+        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
       </div>
       <div style={{ paddingRight: "10px"}}>
         <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
       </div>
       <div style={{ paddingRight: "10px"}}>
-        <ShippingButton/>
+        <ShippingButton selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/>
       </div>
       </Grid>
     </React.Fragment>
@@ -173,13 +173,6 @@ function sleep(ms) {
 
  //Rechnung Button Click 
  function CreateInvoice(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
-  
       // Abfrage Orderitems
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
       
@@ -383,13 +376,6 @@ const pdfObject = jsPDFInvoiceTemplate(props);
 
  //Rechnung Button Click 
  function CreateDelivOrder(){
-
-  //Check, vor PDF-Druck, dass nur 1 Datensatz ausgewählt ist
-   if(selectedData.length > 1) {
-    alert("Bitte nur ein Datensatz auswählen");
-    return;
-  }
-  
       // Abfrage Orderitems
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' +  selectedData[0]["O_NR"] + '/orderitems')
       
