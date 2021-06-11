@@ -102,6 +102,18 @@ function preProdDisabled(val)
 
 };
 
+function btnAddOrderDisabled(anzOrderitems){ 
+    //Wenn keine Position angelegt ist Btn ausblenden
+    //var anzOrderitems = this.state.data;
+    if(anzOrderitems.length == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+};
+
 class NewOrderTableClass extends Component {
   
     constructor(props) {
@@ -196,6 +208,8 @@ class NewOrderTableClass extends Component {
             draft: "0",       //Entwurf
             C_NR: "",        //Kundennummer
 
+            values: [],
+
             //Response
             response: [],
             responseMessage: null,
@@ -214,7 +228,7 @@ class NewOrderTableClass extends Component {
         axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
         .then(
             (res) => {
-                console.log(res.status);
+                //console.log(res.status);
                 return res.data;
             }
         )
@@ -251,8 +265,6 @@ class NewOrderTableClass extends Component {
     }
 
     changeHandler = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -297,18 +309,19 @@ class NewOrderTableClass extends Component {
                     return data;
                 })
                 .then((data) => {
-                    console.log("responseMessage: " + data);
+                    //console.log("responseMessage: " + data);
                     this.setState({ responseMessage: data });
                     this.setState({ responseMessageVisible: true },()=>{ 
                         window.setTimeout(()=>{
                             this.setState({responseMessageVisible: false})
-                        },5000);
+                        },6000);
                     });
+                    return data;
                 })
-                .then((response) => {
-                    console.log(response);
+                .then((data) => {
+                    //Reset State möglich
+                    this.resetStateInputData();
                 })
-                .then((response) => this.setState({ response }))
                 .catch(
                     (error) => {
                         //console.log(e);
@@ -321,12 +334,35 @@ class NewOrderTableClass extends Component {
                         this.setState({ errorMessageVisible: true},()=>{ 
                                 window.setTimeout(()=>{
                                     this.setState({errorMessageVisible: false})
-                                },5000);
+                                },6000);
                             }
                         )
                     }
                 );
         }
+    };
+
+    resetStateInputData(){ 
+        this.setState({ 
+            data: [],
+            O_OT_NR: "2",     //Ordertype default 2
+            draft: "0",       //Entwurf
+            C_NR: "",         //Kundennummer
+            values: []
+            
+            /*
+            //Response
+            response: [],
+            responseMessage: null,
+            responseMessageVisible: false,
+    
+            //Error,
+            errorMessage: null,
+            errorMessageVisible: false,
+            errorObject: null,
+            errors: {}
+            */
+        });
     };
 
     handleValidation() {
@@ -356,8 +392,6 @@ class NewOrderTableClass extends Component {
 
 
     render() {
-
-
         const { classes } = this.props;
 
         const {
@@ -421,88 +455,87 @@ class NewOrderTableClass extends Component {
                 
                 <div id="divTest" style={{ maxWidth: "100%", display: "flex", paddingTop: "10px", margin: "20px"}}>
                     <Grid container spacing={3} align="left">
-                        <Grid item xs style={{alignContent:"left"}}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
-                                <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
-                                    <FormControlLabel key="0" value="1" onChange={e => changeColor(e.target.value)}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
-                                    <FormControlLabel key="1" value="2" onChange={e => changeColor(e.target.value)} control={<Radio style={{color: "#006064"}}/>} label="Normal" />
-                                </RadioGroup>
-                            </FormControl>
+                        <Grid container spacing={3} align="center">
+                            <Grid item xs={3}>
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend"> <b style={{color: "#006064"}}>Auftragstyp *</b><br /></FormLabel>
+                                    <RadioGroup aria-label="orderType" name="O_OT_NR" value={O_OT_NR} onChange={this.changeHandler}>
+                                        <FormControlLabel key="0" value="1" onChange={e => changeColor(e.target.value)}  control={<Radio style={{color: "#006064"}} />} label="Vorproduktion" />
+                                        <FormControlLabel key="1" value="2" onChange={e => changeColor(e.target.value)} control={<Radio style={{color: "#006064"}}/>} label="Normal" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Grid>
+
+                            <Grid className="GridEntwurf" name="gridEntwurf" item xs={3} style={{color: "#006064"}}>
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend"  > <b  style={{color: "#006064"}} id="LabelEntwurf"  name="formlabel1">Als Entwurf speichern? *</b></FormLabel>
+                                    <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler} >
+                                        <FormControlLabel  className={classes.FormControlLabel} key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}    />} label="Ja" />
+                                        <FormControlLabel className={classes.FormControlLabel} key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}/>} label="Nein" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Grid>
+                        
+                            <Grid item xs={6} align="left">  
+                            <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
+                                <Autocomplete
+                                    disabled={preProdDisabled(O_OT_NR)}
+                                    id="combo-box-Customer"
+                                    options={this.state.customers}
+                                    value={this.state.values}
+                                    getOptionLabel={(option) => option.C_DESC}
+                                    style={{ width: "650px" }}
+                                    renderInput={(params) => <TextField {...params} label="" variant="outlined"/>}
+                                    onChange={(event, value) => {
+                                            if(value != null){
+                                                this.setState({ C_NR: value.C_NR });
+                                            }
+                                            else{
+                                                this.setState({ C_NR: "" });
+                                            }
+                                        }
+                                    }
+                                />
+                                <div>
+                                    <span className={classes.error}>{this.state.errors["C_NR"] }</span>
+                                </div>
+                            </Grid>
+                            
+                            <Grid item xs={6}></Grid>
+                            <Grid item xs={6}>
+                                <ColorHead></ColorHead>
+                            </Grid>
                         </Grid>
 
-                        <Grid className="GridEntwurf" name="gridEntwurf" item xs style={{alignContent:"left", color: "#006064"}}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend"  > <b  style={{color: "#006064"}} id="LabelEntwurf"  name="formlabel1">Als Entwurf speichern? *</b></FormLabel>
-                            <RadioGroup aria-label="draft" name="draft" value={draft} onChange={this.changeHandler} >
-                                <FormControlLabel  className={classes.FormControlLabel} key="1" value="0" id="radioJa" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}    />} label="Ja" />
-                                <FormControlLabel className={classes.FormControlLabel} key="0" value="1" id="radioNein" disabled={preProdDisabled(O_OT_NR)} control={<Radio  style={{color: colorDisabled}}/>} label="Nein" />
-                            </RadioGroup>
-                        </FormControl>
-                    </Grid>
-                    
-                    <Grid item sm={7} xs={12}>  
-                    <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
-                        <Autocomplete
-                            disabled={preProdDisabled(O_OT_NR)}
-                            id="combo-box-Customer"
-                            options={this.state.customers}
-                            getOptionLabel={(option) => option.C_DESC}
-                            style={{ width: "650px" }}
-                            renderInput={(params) => <TextField {...params} label="" variant="outlined"/>}
-                            onChange={(event, value) => {
-                                    if(value != null){
-                                        this.setState({ C_NR: value.C_NR });
+                        <Grid item xs={12}>
+                            <MaterialTable
+                                localization={{
+                                    toolbar: {
+                                        body: {
+                                            emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
+                                        }
                                     }
-                                    else{
-                                        this.setState({ C_NR: "" });
+                                }}
+                                style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
+                                title="Editable Preview"
+                                columns={columns}
+                                data={data}
+                                title="Auftragspositionen"
+                                icons={tableIcons}
+                                options={{
+                                    headerStyle: {
+                                        backgroundColor: "#006064",
+                                        color: "#FFFF",
+                                    },
+                                    textLabels: {
+                                        body: {
+                                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                                            toolTip: "Sort",
+                                            columnHeaderTooltip: column => `Sort for ${column.label}`
+                                        }
                                     }
-                                }
-                            }
-                        />
-                        <div>
-                            <span className={classes.error}>{this.state.errors["C_NR"] }</span>
-                        </div>
-                    </Grid>
-                    
-                    <Grid item xs={5}>
-                    
-                   </Grid>
-                   <Grid item xs={7}>
-                    <ColorHead></ColorHead>
-                   </Grid>
-
-                    
-
-                    <Grid item xs={12}>
-                        <MaterialTable
-                            localization={{
-                                toolbar: {
-                                    body: {
-                                        emptyDataSourceMessage: 'Keine Aufträge vorhanden.'
-                                    }
-                                }
-                            }}
-                            style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
-                            title="Editable Preview"
-                            columns={columns}
-                            data={data}
-                            title="Auftragspositionen"
-                            icons={tableIcons}
-                            options={{
-                                headerStyle: {
-                                    backgroundColor: "#006064",
-                                    color: "#FFFF",
-                                },
-                                textLabels: {
-                                    body: {
-                                        noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                                        toolTip: "Sort",
-                                        columnHeaderTooltip: column => `Sort for ${column.label}`
-                                    }
-                                }
-                            }}
-                            editable={{
+                                }}
+                                editable={{
                                     onRowAdd: newData =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
@@ -537,16 +570,17 @@ class NewOrderTableClass extends Component {
                             />
                         </Grid>
 
-                        
+                            
 
                         <Grid item xs={12}>
                             <Button
+                                disabled={btnAddOrderDisabled(this.state.data)}
                                 onClick={this.createOrderitems}
                                 style={{ float: "right", margin: "20px" }}
                                 variant="outlined"
                                 color="primary"
                                 type="submit"
-                                title="Bestellung speichern"
+                                title="Auftrag anlegen"
                             >
                                 Auftrag anlegen
                             </Button>

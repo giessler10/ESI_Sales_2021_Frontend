@@ -110,6 +110,8 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
 
     const { useState, useEffect } = React;
     const [data, setData] = useState([]);
+    //Initale Daten
+    const [dataInitial, setDataInitial] = useState([]);
 
     //Response
     const [responseMessage, setResponseMessage] = useState(null);
@@ -184,6 +186,18 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
         setOpen(false);
     };
 
+    function btnAddOrderDisabled(anzOrderitems){ 
+        //Wenn keine Position angelegt ist Btn ausblenden
+        //var anzOrderitems = this.state.data;
+        if(anzOrderitems.length == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    
+    };
+
     function createOrderitems() {
         const orderitems = data.map((element) => {
             return {
@@ -232,14 +246,15 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
     }
 
     useEffect(() => {
-        if(data != undefined){
-            if(data.length == 0){
+        if(dataInitial != undefined){
+            if(dataInitial.length == 0){
                 axios
                 .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
                 .then(
                     (res) => {
                         //console.log(res);
                         if(res.data.length === 0) { //Check if data is available
+                            setDataInitial(undefined);
                             setData(undefined);
                             return;
                         } 
@@ -265,6 +280,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                             dataUpdate = [...dataUpdate, newData];
                         });
 
+                        setDataInitial([...dataUpdate]);
                         setData([...dataUpdate]);
                 })
                 .catch((error) => {
@@ -391,6 +407,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                     <Grid item xs={12}>
                 
                         <Button
+                        disabled={btnAddOrderDisabled(data)}
                         onClick={createOrderitems}
                         style={{ float: "right", margin: "20px" }}
                         variant="outlined"
