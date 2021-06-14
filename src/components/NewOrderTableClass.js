@@ -153,7 +153,69 @@ class NewOrderTableClass extends Component {
                 },
                 { 
                     title: "Bildname", 
-                    field: "IM_FILE", 
+                    field: "IM_FILE"
+                },
+                { 
+                    title: "Menge", 
+                    field: "OI_QTY",
+                    initialEditValue: 1,
+                    type: "numeric" 
+                },
+                {
+                    title: "Preis",
+                    field: "OI_PRICE",
+                    tooltip: "Einzelpreis",
+                    type: "currency",
+                    currencySetting:{ 
+                        currencyCode: 'EUR',
+                        minimumFractionDigits: 2, 
+                        maximumFractionDigits: 2
+                    }
+                },
+                {
+                    title: "Mehrwertsteuer",
+                    field: "OI_VAT",
+                    initialEditValue: "19%",
+                    tooltip: "Mehrwertsteuer",
+                    editable: 'never'
+                }
+            ],
+
+            columnsPreproduction: [
+                {
+                    title: "Materialbeschreibung",
+                    field: "OI_MATERIALDESC",
+                    tooltip: "Materialbeschreibung",
+                    lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' }
+                },
+                {
+                    title: "Farbcode",
+                    field: "OI_HEXCOLOR",
+                    tooltip: "HEX-Code: #282C34",
+                   /*  cellStyle: (input, rowData) => {
+                        return {
+                            backgroundColor: rowData?.colorCode || input,
+                        };
+                    } */
+                },
+                {
+                    title: "Farbe",
+                    field: "OI_HEXCOLOR",
+                    tooltip: "HEX-Code: #282C34",
+                    cellStyle: (input, rowData) => {
+                        return {
+                            
+                            backgroundColor: rowData?.colorCode || input,
+                            color: 'rgba(0,0,0,0)'
+                        };
+                    },
+                    editable: 'never'
+                },
+                { 
+                    title: "Bildname", 
+                    field: "IM_FILE",
+                    initialEditValue: "",
+                    editable: 'never',
                 },
                 { 
                     title: "Menge", 
@@ -206,7 +268,7 @@ class NewOrderTableClass extends Component {
 
             O_OT_NR: "2",     //Ordertype default 2
             draft: "0",       //Entwurf
-            C_NR: "",        //Kundennummer
+            C_NR: 0,        //Kundennummer
 
             values: [],
 
@@ -247,7 +309,7 @@ class NewOrderTableClass extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
+                //console.log(error);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -270,31 +332,46 @@ class NewOrderTableClass extends Component {
 
     createOrderitems = () => {
         if(this.handleValidation()){
+            var orderitems;
 
-            const orderitems = this.state.data.map((element) => {
-                return {
-                    "OI_NR": element.tableData.id + 1,
-                    "OI_MATERIALDESC": element.OI_MATERIALDESC,
-                    "OI_HEXCOLOR": element.OI_HEXCOLOR,
-                    "OI_QTY": element.OI_QTY,
-                    "IM_FILE": "P:/images/" + this.state.C_NR + "/" + element.IM_FILE,
-                    "OI_PRICE": element.OI_PRICE,
-                    "OI_VAT": 0.19  //Mehrwersteuersatz 19%
-                };
-            });
-            
-            if(this.state.O_OT_NR == 1){
+            if(this.state.O_OT_NR == "1"){
                 this.setState({C_NR: 0});
+
+                orderitems = this.state.data.map((element) => {
+                    return {
+                        "OI_NR": element.tableData.id + 1,
+                        "OI_MATERIALDESC": element.OI_MATERIALDESC,
+                        "OI_HEXCOLOR": element.OI_HEXCOLOR,
+                        "OI_QTY": element.OI_QTY,
+                        "IM_FILE": "",
+                        "OI_PRICE": element.OI_PRICE,
+                        "OI_VAT": 0.19  //Mehrwersteuersatz 19%
+                    };
+                });
+            }
+            else{
+                orderitems = this.state.data.map((element) => {
+                    return {
+                        "OI_NR": element.tableData.id + 1,
+                        "OI_MATERIALDESC": element.OI_MATERIALDESC,
+                        "OI_HEXCOLOR": element.OI_HEXCOLOR,
+                        "OI_QTY": element.OI_QTY,
+                        "IM_FILE": element.IM_FILE != undefined ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
+                        "OI_PRICE": element.OI_PRICE,
+                        "OI_VAT": 0.19  //Mehrwersteuersatz 19%
+                    };
+                });
             }
 
             var body = {
                 C_NR: parseInt(this.state.C_NR),
-                //O_OT_NR: parseInt(this.state.O_OT_NR),
                 draft: this.valueToBoolean(this.state.draft),
                 orderitems: orderitems
             }
 
             body = JSON.stringify(body);
+
+            console.log(body);
             
             axios
                 .post(
@@ -324,7 +401,7 @@ class NewOrderTableClass extends Component {
                 })
                 .catch(
                     (error) => {
-                        //console.log(e);
+                        //console.log(error);
                         var errorObject = error.response.data;
                         var errorMessage = errorObject.errorMessage;
                         this.setState({ 
@@ -347,36 +424,30 @@ class NewOrderTableClass extends Component {
             data: [],
             O_OT_NR: "2",     //Ordertype default 2
             draft: "0",       //Entwurf
-            C_NR: "",         //Kundennummer
+            C_NR: 0,         //Kundennummer
             values: []
-            
-            /*
-            //Response
-            response: [],
-            responseMessage: null,
-            responseMessageVisible: false,
-    
-            //Error,
-            errorMessage: null,
-            errorMessageVisible: false,
-            errorObject: null,
-            errors: {}
-            */
         });
+
+        changeColor(2);
     };
 
     handleValidation() {
         let errors = {};
         let formIsValid = true;    
 
-        //Kundennummer prüfen
-        if(this.state.C_NR == ""){
-            formIsValid = false;
-            errors["C_NR"] = "Kundennummer angeben";
-        }
-
+        if(this.state.O_OT_NR == "2"){
+            //Kundennummer prüfen
+            if(this.state.C_NR == 0){
+                formIsValid = false;
+                errors["C_NR"] = "Kundennummer angeben";
+            }
+        
         this.setState({errors: errors});
         return formIsValid;
+        }
+        else{
+            return formIsValid;
+        }
     };
 
 
@@ -397,6 +468,7 @@ class NewOrderTableClass extends Component {
         const {
             data,
             columns,
+            columnsPreproduction,
             tableIcons,
 
             //UI-Elements
@@ -488,10 +560,12 @@ class NewOrderTableClass extends Component {
                                     renderInput={(params) => <TextField {...params} label="" variant="outlined"/>}
                                     onChange={(event, value) => {
                                             if(value != null){
+                                                this.setState({ values: value });
                                                 this.setState({ C_NR: value.C_NR });
                                             }
                                             else{
-                                                this.setState({ C_NR: "" });
+                                                this.setState({ values: value });
+                                                this.setState({ C_NR: 0 });
                                             }
                                         }
                                     }
@@ -518,7 +592,7 @@ class NewOrderTableClass extends Component {
                                 }}
                                 style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
                                 title="Editable Preview"
-                                columns={columns}
+                                columns={O_OT_NR == 2 ? columns : columnsPreproduction}
                                 data={data}
                                 title="Auftragspositionen"
                                 icons={tableIcons}
