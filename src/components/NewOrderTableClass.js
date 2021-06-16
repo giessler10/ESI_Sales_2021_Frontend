@@ -214,7 +214,6 @@ class NewOrderTableClass extends Component {
                 { 
                     title: "Bildname", 
                     field: "IM_FILE",
-                    initialEditValue: "",
                     editable: 'never',
                 },
                 { 
@@ -270,7 +269,7 @@ class NewOrderTableClass extends Component {
             draft: "0",       //Entwurf
             C_NR: 0,        //Kundennummer
 
-            values: [],
+            values: null,
 
             //Response
             response: [],
@@ -333,9 +332,10 @@ class NewOrderTableClass extends Component {
     createOrderitems = () => {
         if(this.handleValidation()){
             var orderitems;
+            var body;
 
             if(this.state.O_OT_NR == "1"){
-                this.setState({C_NR: 0});
+                //this.setState({C_NR: 0});
 
                 orderitems = this.state.data.map((element) => {
                     return {
@@ -343,11 +343,18 @@ class NewOrderTableClass extends Component {
                         "OI_MATERIALDESC": element.OI_MATERIALDESC,
                         "OI_HEXCOLOR": element.OI_HEXCOLOR,
                         "OI_QTY": element.OI_QTY,
-                        "IM_FILE": "",
+                        "IM_FILE": this.state.C_NR != 0 ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
                         "OI_PRICE": element.OI_PRICE,
                         "OI_VAT": 0.19  //Mehrwersteuersatz 19%
                     };
                 });
+
+                body = {
+                    C_NR: 0,        //Default 0
+                    draft: false,   //Default false
+                    orderitems: orderitems
+                }
+
             }
             else{
                 orderitems = this.state.data.map((element) => {
@@ -361,12 +368,12 @@ class NewOrderTableClass extends Component {
                         "OI_VAT": 0.19  //Mehrwersteuersatz 19%
                     };
                 });
-            }
 
-            var body = {
-                C_NR: parseInt(this.state.C_NR),
-                draft: this.valueToBoolean(this.state.draft),
-                orderitems: orderitems
+                body = {
+                    C_NR: parseInt(this.state.C_NR),
+                    draft: this.valueToBoolean(this.state.draft),
+                    orderitems: orderitems
+                }
             }
 
             body = JSON.stringify(body);
@@ -425,7 +432,7 @@ class NewOrderTableClass extends Component {
             O_OT_NR: "2",     //Ordertype default 2
             draft: "0",       //Entwurf
             C_NR: 0,         //Kundennummer
-            values: []
+            values: null
         });
 
         changeColor(2);
@@ -475,6 +482,7 @@ class NewOrderTableClass extends Component {
             O_OT_NR,
             draft,
             C_NR,
+            values,
 
             errorMessage,           //ErrorMessage
             errorMessageVisible,    //StatusErrorMessage
@@ -551,7 +559,7 @@ class NewOrderTableClass extends Component {
                             <Grid item xs={6} align="left">  
                             <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
                                 <Autocomplete
-                                    disabled={preProdDisabled(O_OT_NR)}
+                                    //disabled={preProdDisabled(O_OT_NR)}
                                     id="combo-box-Customer"
                                     options={this.state.customers}
                                     value={this.state.values}
@@ -592,7 +600,7 @@ class NewOrderTableClass extends Component {
                                 }}
                                 style={{ marginTop: "40px", marginLeft: "20px", marginRight: "20px", '&&:hover': { color: 'red', boxShadow: 'none', webkitBoxShadow: 'none', mozBoxShadow: 'none', backgroundColor: 'transparent' }}}
                                 title="Editable Preview"
-                                columns={O_OT_NR == 2 ? columns : columnsPreproduction}
+                                columns={values != null ? columns : columnsPreproduction}
                                 data={data}
                                 title="Auftragspositionen"
                                 icons={tableIcons}
