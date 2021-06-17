@@ -71,13 +71,13 @@ export default class DashboardChart extends React.PureComponent {
           <ValueAxis />
 
           <BarSeries
-            name="Auftragseingang"
+            name="Eingänge"
             valueField="NumberOrderArrivals"
             argumentField="D_DATE"
             color="#808080"
           />
           <BarSeries
-            name="Autragabschluss"
+            name="Abschlüsse"
             valueField="NumberOrderFinish"
             argumentField="D_DATE"
             color="#006064"
