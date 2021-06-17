@@ -12,7 +12,7 @@ import { GridCloseIcon } from '@material-ui/data-grid';
 import IconButton from '@material-ui/core/IconButton';
 
 //Import components
-import Chart from '../components/DashboardCurrMonth';
+import DashboardChart from '../components/DashboardChart';
 import DashboardDepositsSumQTY from '../components/DashboardDepositsSumQTY';
 import DashboardDepositsSumPrice from '../components/DashboardDepositsSumPrice';
 import DashboardDepositsSumQualityissueQTY from '../components/DashboardDepositsSumQualityissueQTY';
@@ -64,6 +64,7 @@ export default function Dashboard() {
   const [allData, setAllData] = useState([]); //alle Daten von DB.
   const [kpi, setKpi] = useState([]); //alle Daten von DB.
   const [chart, setchart] = useState([]); //alle Daten von DB.
+  const [year, setYear] = useState(new Date().getFullYear());
 
   //Error,
   const [errorMessage, setErrorMessage] = useState(null);
@@ -122,9 +123,12 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <Chart/>
+              <Paper>
+                <DashboardChart/>
               </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <h2>KPIs {year} <br></br> </h2>
             </Grid>
             <Grid item xs={6} md={4}>
               <Paper className={fixedHeightPaper}>
@@ -156,9 +160,11 @@ export default function Dashboard() {
                 <DashboardDepositsSumClaimQTY data={ kpi.length == 0 ? 0 : kpi.SumClaimQTY} sumQTY={ kpi.length == 0 ? 0 : kpi.SumQTY}/>
               </Paper>
             </Grid>
-            <Grid item xs={12} className={Paper}>
-                <h2>Aufträge der letzten X Tage<br></br> </h2>
-                <Orders />
+            <Grid item xs={12}>
+            <h2>Aufträge der letzten 7 Tage<br></br> </h2>
+            </Grid>
+            <Grid item xs={12} className={Paper}> 
+              <Orders />
             </Grid>
           </Grid>
         </Container>

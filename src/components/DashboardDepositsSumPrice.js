@@ -16,9 +16,6 @@ export default function DashboardDepositsSumPrice(props) {
       <Typography component="p" variant="h4">
         {props.data} €
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        YTD 15 März, 2021
-      </Typography>
     </React.Fragment>
   );
 }
