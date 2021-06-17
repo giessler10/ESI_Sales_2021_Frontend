@@ -21,7 +21,7 @@ export default function DashboardDepositsSumReturnQTY(props) {
 
   return (
     <React.Fragment>
-      <h2>Retunierte Ware</h2>
+      <h2>Retournierte Ware</h2>
       <Typography component="p" variant="h4">
         {props.data}
       </Typography>

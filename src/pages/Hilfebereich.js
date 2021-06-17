@@ -41,7 +41,6 @@ const Hilfebereich = () => {
            <FaqBereich/>
            </Paper>
 
-           <Chatbot/>
 
            <br></br>
            <Paper>
