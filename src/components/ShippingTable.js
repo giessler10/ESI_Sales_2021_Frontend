@@ -185,6 +185,15 @@ function sleep(ms) {
           return;
         }          
         
+        var dataSumValue = 0;
+
+        res.data.forEach( (currentObject) => {
+          dataSumValue = dataSumValue + parseFloat(currentObject.OI_QTY) * parseFloat(currentObject.OI_PRICE)*(1+parseFloat(currentObject.OI_VAT))
+        });
+
+        //Gesamtsumme
+        var sumTotal = String(parseFloat(dataSumValue).toFixed(2));
+
         //Bestellnummer
         var orderNumb = selectedData[0]["O_NR"];
 
@@ -206,7 +215,7 @@ function sleep(ms) {
        var steuersatz = String(res.data[0]["OI_VAT"]*100);
 
        var img = String(res.data[0]["OI_VAT"]*100);
-        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz, img);
+        PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz, sumTotal);
       
         })
         .catch(err => {
@@ -214,7 +223,7 @@ function sleep(ms) {
         })
         
 
-function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz, ){
+function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, logoBase64, custom_Address, customer_phone, customer_mail,steuersatz, sumTotal){
 
   console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -222,11 +231,15 @@ function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, l
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]+" (Farbe: "+OrderitemsData[index]["OI_HEXCOLOR"]+")"),
-    price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
+    //price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
+
+    price: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"] * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
+
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €",
-    total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ "0 €"
-    
+    unit: String(parseFloat(Math.round((OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
+    //unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €",
+    //total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €"
+    total: String(parseFloat(Math.round((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €"
 }));
 
 
@@ -274,7 +287,7 @@ console.log("TableData", tableData);
               var customerMail = customer_mail;
 
               //Gesamtpreis
-              var tot = tableData.total;
+              var tot = sumTotal;
 
               //Variabler Steuersatz ausgehend vom ersten Datensatz
               var vat = steuersatz;
@@ -321,7 +334,7 @@ var props = {
       tableBodyBorder: false,
       table: tableData,
       invTotal: tot,
-      invCurrency: "EUR",
+      invCurrency: "€",
       row1: {
           col1: 'Mehrwertsteuer:',
           col2: vat,
