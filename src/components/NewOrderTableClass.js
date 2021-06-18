@@ -343,7 +343,7 @@ class NewOrderTableClass extends Component {
                         "OI_MATERIALDESC": element.OI_MATERIALDESC,
                         "OI_HEXCOLOR": element.OI_HEXCOLOR,
                         "OI_QTY": element.OI_QTY,
-                        "IM_FILE": this.state.C_NR != 0 ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
+                        "IM_FILE": element.IM_FILE != undefined ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
                         "OI_PRICE": element.OI_PRICE,
                         "OI_VAT": 0.19  //Mehrwersteuersatz 19%
                     };
