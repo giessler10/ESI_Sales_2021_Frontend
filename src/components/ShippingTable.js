@@ -236,10 +236,10 @@ function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, l
     price: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"] * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
 
     quantity: String(OrderitemsData[index]["OI_QTY"]),
-    unit: String(parseFloat(Math.round((OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
+    unit: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
     //unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €",
     //total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €"
-    total: String(parseFloat(Math.round((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €"
+    total: String(parseFloat(Math.round(OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €"
 }));
 
 
