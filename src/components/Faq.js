@@ -2,16 +2,27 @@ import React from 'react';
 import Faq from 'react-faq-component';
 import Typography from '@material-ui/core/Typography';
 
+
+
 export default function FaqBereich() {
-    const data = {
+
+    const data = { 
+        
         title: "FAQ",
         rows: [
           {
-            
-            title: "Der Kunde möchte seinen Auftrag änden, ich habe ihn jedoch schon in die Produktion gegeben. Was jetzt?",
-            content: "Leider zu spät."
+            title: "Besitzen Aufträge, die ich in die Produktion zur Vorproduktion gebe, ebenfalls eine Auftragsnummer? Bzw. kann ich diese irgendwo einsehen?",
+            content: "Nein, Aufträge zur Vorproduktion, werden unter interne Aufträge gebucht und besitzen keine eigene Auftragsnummer. Sobald du eine Vorproduktion anstößt, ist sie für dich im Verkauf & Versand nicht mehr einsehbar. Das ist aber auch gar nicht weiter schlimm. Deine Kollegen in der Produktion kümmern sich um alles Weitere."
             
           },
+          {
+          title: "Der Kunde nennt mir seine gewünschte Farbe. Ich habe aber keine Ahnung, welchem Farbcode diese entsprcht. Wie gehe ich vor?",
+          content: "Beim Erfassen eines neuen Auftrages, werden dir in einer Tabelle einzelne Farben mit zugehörigem Farbwert zur Hilfestellung gegeben. Diese entsprechen den meist bestellten Farben und du kannst deren Farbwert ganz einfach in das gewünschte Feld kopieren. Ist deine gesuchte Farbe nicht dabei empfehlen wir dir bei bereits abgeschlossenen Aufträgen deines Kundens die stets bestellte Farbe einzusehen. Falls diese nicht der gewünschten Farbe entspricht, nutze das firmeninterne Intranet, dort gibt es einen Hex-Colorpicker."
+          },
+          {
+            title: "Ich habe soeben einen Auftrag entgegengenommen und gespeichert. Nun ist mir jedoch aufgefallen, dass keine Verbindung zur Datenbank gegeben war. Was bedeuted dies? Ist der Auftrag verloren?",
+            content: "Keine Panik - der Auftrag ist noch da. Erstmals als Entwurf gespeichert und sobald er an die Produktion gegangen ist, unter 'Aufträge in Bearbeitung' zu finden."
+            },
           {
             title: "In der Qualitätsprüfung des Auftrages sind minimale Mängel festgestellt worden. Gebe ich den Auftrag an den Versanddienstleister weiter?",
             content: "Nein, Qualität steht bei uns an erster Stelle. Wähle unter 'Versandbereite Aufträge' den Auftrag aus, wähle 'QS' an und fülle das Formular aus. Ein neuer Auftrag wird in der Produktion angestoßen."
@@ -25,9 +36,14 @@ export default function FaqBereich() {
             content : "Das Gewicht des Paketes darf 32 Kilogramm nicht überschreiten. Lieber ein Mal mehr wiegen."
           }]
       }
+   
+    
       const styles = {
         titleTextColor: "#006064",
         rowTitleColor: "#006064",
+        rowContentPaddingLeft: '50px',
+        rowContentAlign: "left",
+
     };
     const config = {
         animate: true,

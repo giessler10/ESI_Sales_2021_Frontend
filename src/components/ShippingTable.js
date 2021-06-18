@@ -41,39 +41,38 @@ const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  
 {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
 {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: true}}];
 
- const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-
-customToolbarSelect: (selectedRows, data) => {
-  var order = data[selectedRows.data[0].index].data;
-  var OI_O_NR = data[selectedRows.data[0].index].data[0];
-  return  <div>
-    <React.Fragment>
-      <Grid container direction="row" justify="flex-end" alignItems="center">
-      <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
-      </div>
-      <div style={{ paddingRight: "10px"}}>
-        <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
-      </div>
-      <div style={{ paddingRight: "10px"}}>
-        <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
-      </div>
-      <div style={{ paddingRight: "10px"}}>
-        <ShippingButton selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/>
-      </div>
-      </Grid>
-    </React.Fragment>
-  </div>;
-},
-
-
-textLabels: {
-  body: {
-    noMatch: "Es wurden keine passenden Aufträge gefunden.",
-    toolTip: "Sort",
-    columnHeaderTooltip: column => `Sort for ${column.label}`
-  }
-}
+const options = { 
+  onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+  customToolbarSelect: (selectedRows, data) => {
+    var order = data[selectedRows.data[0].index].data;
+    var OI_O_NR = data[selectedRows.data[0].index].data[0];
+    return  <div>
+      <React.Fragment>
+        <Grid container direction="row" justify="flex-end" alignItems="center">
+        <div style={{ paddingRight: "10px"}}>
+          <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateDelivOrder}> <DescriptionIcon/>Lieferschein</Button> 
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <Button disabled={MoreThan2Rows(selectedData)} variant="outlined" color="primary" onClick={CreateInvoice}> <ReceiptIcon/>Rechnung</Button> 
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <FullScreenQSDialog selectedRows={selectedRows.data} OI_O_NR={OI_O_NR} order={order}/>
+        </div>
+        <div style={{ paddingRight: "10px"}}>
+          <ShippingButton selectedRows={selectedRows.data} OI_O_NR={OI_O_NR}/>
+        </div>
+        </Grid>
+      </React.Fragment>
+    </div>;
+  },
+  textLabels: {
+    body: {
+      noMatch: "Es wurden keine passenden Aufträge gefunden.",
+      toolTip: "Sort",
+      columnHeaderTooltip: column => `Sort for ${column.label}`
+    }
+  },
+  selectableRows: 'single'
 };
 
 

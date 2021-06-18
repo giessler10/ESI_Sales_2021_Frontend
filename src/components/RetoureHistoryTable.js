@@ -34,15 +34,17 @@ export default function RetoureHistoryTable(props){
   {name: "OI_VAT", label: "Mehrwertsteuer", options: {filter: true, sort: true, display: true}} 
   ];
 
-  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {},
+  const options = { 
+    onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
+    customToolbarSelect: () => {},
     textLabels: {
       body: {
         noMatch: "Es wurden keine passenden Aufträge gefunden.",
         toolTip: "Sort",
         columnHeaderTooltip: column => `Sort for ${column.label}`
       }
-    }
+    },
+    selectableRows: false
   };
 
   useEffect(() => {

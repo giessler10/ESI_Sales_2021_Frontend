@@ -47,13 +47,14 @@ export default function ProgressOrders(){
       toolTip: "Sort",
       columnHeaderTooltip: column => `Sort for ${column.label}`
     }
-  }
+  },
+  selectableRows: 'single'
 };
 
 
 useEffect(() => {
   // Get Customerdata
-  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=5,6')
+  axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=5,6,10')
       .then(res => {
 
         if(res.data.length === 0) { //Check if data is available

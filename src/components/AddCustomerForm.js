@@ -38,7 +38,7 @@ class AddCustomerForm extends Component {
             C_TEL: "",          //Telefon
             C_EMAIL: "",        //E-Mail
             C_COMPANY: "",      //Firma
-            C_CT_ID: "",        //Kundentyp
+            C_CT_ID: "B2C",        //Kundentyp
 
             //Response
             response: [],
@@ -130,6 +130,10 @@ class AddCustomerForm extends Component {
   
     changeHandler = (e) => {
       this.setState({ [e.target.name]: e.target.value });
+
+      if(e.target.name == "C_CT_ID" & e.target.value == "B2C"){
+        this.setState({C_COMPANY: ""});
+      }
     };
   
     submitHandler = (e) => {
@@ -159,11 +163,13 @@ class AddCustomerForm extends Component {
                     this.setState({ responseMessageVisible: true },()=>{ 
                         window.setTimeout(()=>{
                             this.setState({responseMessageVisible: false})
-                        },5000);
+                        },6000);
                     });
+                    return data;
                 })
-                .then((response) => {
-                    console.log(response);
+                .then((data) => {
+                    //Reset State möglich
+                    this.resetStateInputData();
                 })
                 .then((response) => this.setState({ response }))
                 .catch(
@@ -178,7 +184,7 @@ class AddCustomerForm extends Component {
                         this.setState({ errorMessageVisible: true},()=>{ 
                                 window.setTimeout(()=>{
                                     this.setState({errorMessageVisible: false})
-                                },5000);
+                                },6000);
                             }
                         )
                     }
@@ -280,6 +286,44 @@ class AddCustomerForm extends Component {
 
         this.setState({errors: errors});
         return formIsValid;
+    };
+
+    proveDisabled = (C_CT_ID) => {
+        if(C_CT_ID==="B2C"){
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    resetStateInputData(){ 
+        this.setState({ 
+            C_FIRSTNAME: "",    //Vorname
+            C_LASTNAME: "",     //Nachname
+            C_STREET: "",       //Straße
+            C_HOUSENR: "",      //Hausnummer
+            C_CI_PC: "",        //Postleitzahl
+            CI_DESC:"",         //Stadt
+            CO_ID: "",          //Länderkennung
+            C_TEL: "",          //Telefon
+            C_EMAIL: "",        //E-Mail
+            C_COMPANY: "",      //Firma
+            C_CT_ID: "B2C",        //Kundentyp
+
+            /*
+            //Response
+            response: [],
+            responseMessage: null,
+            responseMessageVisible: false,
+    
+            //Error,
+            errorMessage: null,
+            errorMessageVisible: false,
+            errorObject: null,
+            errors: {}
+            */
+        });
     };
 
     render() {
@@ -433,8 +477,7 @@ class AddCustomerForm extends Component {
                                         <Select
                                             name="CO_ID"
                                             value={CO_ID}
-                                            onChange={this.changeHandler
-                                            }
+                                            onChange={this.changeHandler}
                                             style={{width:"200px"}}
                                         >
                                         {this.state.menuItemCountry}
@@ -478,7 +521,8 @@ class AddCustomerForm extends Component {
                                         name="C_COMPANY"
                                         value={C_COMPANY}
                                         onChange={this.changeHandler}
-                                        title="Firmenname, falls vorhanden"/>
+                                        disabled={this.proveDisabled(this.state.C_CT_ID)}
+                                        title="Firmenname"/>     
                                     <div>
                                         <span className={classes.error}>{this.state.errors["C_COMPANY"]}</span> 
                                     </div>                                                                     

@@ -185,7 +185,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Grund der Retoure / Reklamation",
             field: "IR_COMMENT",
             tooltip: "Grund der Retoure / Reklamation",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Position': 'Falsche Position', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
+            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Bildplatzierung': 'Falsche Bildplatzierung', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
         },
         { 
             title: "Gemeldete Menge", 
@@ -194,7 +194,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
         },
         {
             title: "Neuproduktion",
-            field: "NewProduction",
+            field: "IR_REPRODUCE",
             tooltip: "Position neu produzieren lassen?",
             lookup: { 0: 'Nein',  1: 'Ja'}
         }
@@ -266,7 +266,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
                     "IR_RT_NR": parseInt(element.IR_RT_NR),
                     "IR_QTY": element.IR_QTY,
                     "IR_COMMENT": element.IR_COMMENT,
-                    "NewProduction": parseInt(element.NewProduction)
+                    "IR_REPRODUCE": parseInt(element.IR_REPRODUCE)
                 };
             });
 
@@ -340,7 +340,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
                                 IR_RT_NR: "0",
                                 IR_COMMENT: 'Keine',
                                 IR_QTY: 0,
-                                NewProduction: "0",
+                                IR_REPRODUCE: "0",
                                 tableData: {
                                     id: index
                                 }

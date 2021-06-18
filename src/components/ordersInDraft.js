@@ -63,7 +63,8 @@ export default function DraftOrders(){
       toolTip: "Sort",
       columnHeaderTooltip: column => `Sort for ${column.label}`
     }
-  }
+  },
+  selectableRows: 'single'
 };
 
 

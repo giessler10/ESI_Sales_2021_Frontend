@@ -41,7 +41,8 @@ export default function OrderPositionsTable(props){
         toolTip: "Sort",
         columnHeaderTooltip: column => `Sort for ${column.label}`
       }
-    }
+    },
+    selectableRows: false
   };
 
   useEffect(() => {

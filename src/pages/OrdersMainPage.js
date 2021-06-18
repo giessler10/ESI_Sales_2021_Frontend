@@ -23,7 +23,6 @@ import OrdersInDraft from '../components/ordersInDraft';
 import OrdersOpen from '../components/openOrdersTable';
 import OrderTable from '../components/OrderTable';
 import RetoureTable from '../components/RetoureTable'
-import NewOrderTable from '../components/newOrderTable';
 import NewOrderTableClass from '../components/NewOrderTableClass';
 
 const useStyles = makeStyles((theme) => ({
