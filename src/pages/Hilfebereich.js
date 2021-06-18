@@ -3,8 +3,7 @@ import FaqBereich from '../components/Faq.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-//chatbot importieren
-import Chatbot from '../components/Chatbot.js';
+//Kontaktformular
 import Form from '../components/ContactForm/ContactForm';
 
 
