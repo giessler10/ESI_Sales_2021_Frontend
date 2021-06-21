@@ -7,7 +7,7 @@ This is the frontend git repository of team sales.
 
 ## Demo
 
-//Hier kommt noch ein Gif (lol)
+![](https://github.com/giessler10/ESI_Sales_2021_Frontend/blob/4ed866619c61e3bdf1070b86d7e85d19613e1092/ESI%20Sales%20yourshirt%20Gif.gif)
 
 # Get started
 ## - Create React App, Github and Amplify connection
