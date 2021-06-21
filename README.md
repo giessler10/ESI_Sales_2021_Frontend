@@ -2,12 +2,12 @@
 
 This is the frontend git repository of team sales. 
 
-- URL to Production Page: https://main.d39311pnrl2sqh.amplifyapp.com/
+- URL to Sales Page: https://main.d39311pnrl2sqh.amplifyapp.com/
 - URL to whole project: http://yourshirt.epizy.com/
 
 ## Demo
 
-![](https://github.com/sauerma/ESI_21_Prod_Frontend/blob/Master/Production.gif)
+//Hier kommt noch ein Gif (lol)
 
 # Get started
 ## - Create React App, Github and Amplify connection
