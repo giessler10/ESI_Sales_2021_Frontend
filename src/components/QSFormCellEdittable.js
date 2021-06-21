@@ -1,19 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import {Grid} from '@material-ui/core';
-
 import axios from "axios";
 import { forwardRef } from 'react';
-import OrderHeader from './OrderHeader';
-
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -21,7 +13,6 @@ import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 import Edit from '@material-ui/icons/Edit';
-import EditIcon from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
@@ -29,14 +20,21 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-
 import MaterialTable from "material-table";
 import Alert from '@material-ui/lab/Alert';
 import { Collapse } from '@material-ui/core';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 const tableIcons = {
-    //Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Add: props => {
         return (<Button variant="outlined" color="primary"> Position hinzufügen </Button>);
     },
@@ -130,11 +128,6 @@ export default function QSFormCellEdittable(props) {
             title: "Farbcode",
             field: "OI_HEXCOLOR",
             tooltip: "HEX-Code: #282C34",
-           /*  cellStyle: (input, rowData) => {
-                return {
-                    backgroundColor: rowData?.colorCode || input,
-                };
-            } */
         },
         {
             title: "Farbe",
@@ -241,16 +234,12 @@ export default function QSFormCellEdittable(props) {
                 };
             });
 
-            //console.log(body);
-            
             axios
                 .post('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/qualityIssue', body)
                 .then((res) => {
-                    //console.log(res.data);
                     var data = JSON.stringify(res.data);
                     data = JSON.parse(data);
                     data = data.message;
-                    //console.log(data);
                     return data;
                 })
                 .then((data) => {
@@ -261,7 +250,6 @@ export default function QSFormCellEdittable(props) {
                     },5000);
                 })
                 .then((response) => {
-                    //console.log(response);
                 })
                 .catch(
                     (error) => {
@@ -285,8 +273,6 @@ export default function QSFormCellEdittable(props) {
                 .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
                 .then(
                     (res) => {
-                        //console.log(res.status);
-
                         if(res.data.length === 0) { //Check if data is available
                             setData(undefined);
                             return;
@@ -394,7 +380,6 @@ export default function QSFormCellEdittable(props) {
                     cellEditable={{
                         onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
                             return new Promise((resolve, reject) => {
-                            //console.log('newValue: ' + newValue);
                             const dataUpdate = [...data]
                             const rowDataUpdate = rowData;
                             const columnField = columnDef.field;

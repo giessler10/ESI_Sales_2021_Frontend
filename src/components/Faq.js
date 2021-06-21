@@ -1,6 +1,13 @@
 import React from 'react';
 import Faq from 'react-faq-component';
-import Typography from '@material-ui/core/Typography';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 
 
@@ -41,18 +48,17 @@ export default function FaqBereich() {
       const styles = {
         titleTextColor: "#006064",
         rowTitleColor: "#006064",
-        rowContentPaddingLeft: '50px',
-        rowContentAlign: "left",
+        
+        
 
     };
     const config = {
         animate: true,
-      // arrowIcon: "V",
         tabFocus: true
     };
     
   return (
-          <div style={{ padding: '20px'}}>
+          <div style={{ padding: '20px', alignContent:"left", justifyContent: 'left'}}>
             <Faq data={data} styles={styles} config={config} />
           </div>
   );}

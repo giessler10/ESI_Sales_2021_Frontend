@@ -1,6 +1,14 @@
 import React from 'react';
 import {DataGrid} from '@material-ui/data-grid';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
   const columns = [
     {field: 'customerNo', headerName: 'Customer No.', width: 180, editable: false },
     {field: 'firstname', headerName: 'Firstname', width: 180,  editable: true },

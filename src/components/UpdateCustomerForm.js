@@ -5,6 +5,15 @@ import { withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 const useStyles = theme => ({
     root: {
         padding: theme.spacing(2),
@@ -75,7 +84,6 @@ class UpdateCustomerForm extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -110,7 +118,6 @@ class UpdateCustomerForm extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -145,7 +152,6 @@ class UpdateCustomerForm extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -204,7 +210,6 @@ class UpdateCustomerForm extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -265,7 +270,6 @@ class UpdateCustomerForm extends Component {
                 .then((response) => this.setState({ response }))
                 .catch(
                     (error) => {
-                        //console.log(e);
                         var errorObject = error.response.data;
                         var errorMessage = errorObject.errorMessage;
                         this.setState({ 
@@ -389,7 +393,6 @@ class UpdateCustomerForm extends Component {
     };
 
     render() {
-        //const options = {filterType: 'checkbox'};
         const { classes } = this.props;
 
         const {
@@ -410,7 +413,6 @@ class UpdateCustomerForm extends Component {
             responseMessageVisible  //ReponseMessageStatus
         } = this.state;
 
-        let content = "";
 
         return (
            

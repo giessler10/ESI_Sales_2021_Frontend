@@ -1,13 +1,18 @@
 
 import emailjs from 'emailjs-com';
 import React, { useState } from "react";
-import { Button, FormControl, Grid, TextField } from '@material-ui/core';
-import { makeStyles,withStyles  } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 
-
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -25,8 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }
 ));
-
-
 
 export default function ContactUs() {
   const classes = useStyles();

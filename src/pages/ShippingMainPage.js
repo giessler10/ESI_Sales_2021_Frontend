@@ -1,8 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import {Button, FormControl, Grid} from '@material-ui/core';
-
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -14,6 +12,14 @@ import AllInboxIcon from '@material-ui/icons/AllInbox';
 //importierte Seiten
 import ShippingTable from '../components/ShippingTable';
 import StorageTable from '../components/StorageTable';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
     paper: {

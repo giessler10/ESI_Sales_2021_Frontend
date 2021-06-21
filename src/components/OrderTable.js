@@ -4,7 +4,14 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles'
 import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
-import { DataGrid, gridDateTimeFormatter } from '@material-ui/data-grid';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 export default function CustomerTable(){
 
@@ -13,7 +20,6 @@ export default function CustomerTable(){
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
 
-  //Columns with properties --> TODO auf eure Spaltennamen anpassen
   const columns = [
   { name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 

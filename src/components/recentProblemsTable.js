@@ -2,14 +2,20 @@ import React from 'react';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-//TesttabelleI Aufbau
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 const columnsAuftraege = ["Position", "Product", "Quantity", "Problem"];
 const dataAuftraege = [
   ["", "", "", ""],
   ["", "", "", ""],
   ["", "", "", ""],
 ];
-//TesttabelleI Aufbau Ende
 
 const getMuiTheme = () => createMuiTheme({
   overrides: {

@@ -38,6 +38,15 @@ export default function OrderTable(){
   {name: "CI_DESC",label: "Stadt",options: {filter: true,sort: false, display: false}},
   {name: "CT_DESC", label: "Kundenart", options: {filter: true, sort: true, display: false}}];
 
+  /*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+  
+
   const options = { 
     onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
     customToolbarSelect: (selectedRows, data) => {

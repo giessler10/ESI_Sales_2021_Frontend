@@ -1,10 +1,9 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import MaterialTable from 'material-table'
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, Grid, TextField, Radio, RadioGroup, FormLabel, Button, IconButton, Collapse } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { GridCloseIcon } from '@material-ui/data-grid';
-
 import axios from "axios";
 import { forwardRef } from 'react';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -23,6 +22,14 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import { Autocomplete } from '@material-ui/lab';
 import ColorHead from "./mostUsedColorHead";
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 
 
@@ -52,25 +59,6 @@ const useStyles = theme => ({
 
 var colorDisabled ="#006064";
 
-//function changeColor(color){
-
-//var radioJa = document.getElementById("radioJa"); //Entwurf JA
-//var radioNein = document.getElementById("radioNein"); //Entwurf NEIN
-//var labelEntwurf = document.getElementById("LabelEntwurf"); //Überschrift Entwurf
-//var labelKundennummer = document.getElementById("labelKundennummer"); //Überschrift Kundennummer
-
-//if(radioJa === null || radioJa === undefined) return;
-//if(radioNein === null || radioNein === undefined) return;
-//if(labelEntwurf === null || labelEntwurf === undefined) return;
-//if(labelKundennummer === null || labelKundennummer === undefined) return;
-
-//radioJa.style.color = color;
-//radioNein.style.color = color;
-//labelEntwurf.style.color = color;
-//labelKundennummer.style.color = color;
-
-   
-//}
 
 function changeColor(e){
     if(e == 1){
@@ -92,8 +80,7 @@ function preProdDisabled(val)
 { 
     //wenn 1 dann vorproduktion
     if(val==="1"){
-        //<div>className={useStyles.greyed}</div>
-
+        
         return true;
     }
     else{
@@ -104,7 +91,6 @@ function preProdDisabled(val)
 
 function btnAddOrderDisabled(anzOrderitems){ 
     //Wenn keine Position angelegt ist Btn ausblenden
-    //var anzOrderitems = this.state.data;
     if(anzOrderitems.length == 0){
         return true;
     }
@@ -132,11 +118,7 @@ class NewOrderTableClass extends Component {
                     title: "Farbcode",
                     field: "OI_HEXCOLOR",
                     tooltip: "HEX-Code: #282C34",
-                   /*  cellStyle: (input, rowData) => {
-                        return {
-                            backgroundColor: rowData?.colorCode || input,
-                        };
-                    } */
+                   
                 },
                 {
                     title: "Farbe",
@@ -192,11 +174,7 @@ class NewOrderTableClass extends Component {
                     title: "Farbcode",
                     field: "OI_HEXCOLOR",
                     tooltip: "HEX-Code: #282C34",
-                   /*  cellStyle: (input, rowData) => {
-                        return {
-                            backgroundColor: rowData?.colorCode || input,
-                        };
-                    } */
+                  
                 },
                 {
                     title: "Farbe",
@@ -243,7 +221,7 @@ class NewOrderTableClass extends Component {
             ],
 
             tableIcons: {
-                //Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+                
                 Add: props => {
                     return (<Button variant="outlined" color="primary"> Position hinzufügen </Button>);
                 },
@@ -289,7 +267,6 @@ class NewOrderTableClass extends Component {
         axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
         .then(
             (res) => {
-                //console.log(res.status);
                 return res.data;
             }
         )
@@ -308,7 +285,6 @@ class NewOrderTableClass extends Component {
         )
         .catch(
             (error) => {
-                //console.log(error);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -335,7 +311,6 @@ class NewOrderTableClass extends Component {
             var body;
 
             if(this.state.O_OT_NR == "1"){
-                //this.setState({C_NR: 0});
 
                 orderitems = this.state.data.map((element) => {
                     return {
@@ -385,15 +360,12 @@ class NewOrderTableClass extends Component {
                     "https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders", body
                 )
                 .then((res) => {
-                    //console.log(res.data);
                     var data = JSON.stringify(res.data);
                     data = JSON.parse(data);
                     data = data.message;
-                    //console.log(data);
                     return data;
                 })
                 .then((data) => {
-                    //console.log("responseMessage: " + data);
                     this.setState({ responseMessage: data });
                     this.setState({ responseMessageVisible: true },()=>{ 
                         window.setTimeout(()=>{
@@ -408,7 +380,6 @@ class NewOrderTableClass extends Component {
                 })
                 .catch(
                     (error) => {
-                        //console.log(error);
                         var errorObject = error.response.data;
                         var errorMessage = errorObject.errorMessage;
                         this.setState({ 
@@ -559,7 +530,6 @@ class NewOrderTableClass extends Component {
                             <Grid item xs={6} align="left">  
                             <b style={{color: "#006064"}} id="LabelKundennummer">Kundennummer</b>                                  
                                 <Autocomplete
-                                    //disabled={preProdDisabled(O_OT_NR)}
                                     id="combo-box-Customer"
                                     options={this.state.customers}
                                     value={this.state.values}

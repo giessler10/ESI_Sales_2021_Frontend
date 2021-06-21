@@ -5,6 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 const useStyles = theme => ({
     root: {
         padding: theme.spacing(2),
@@ -38,7 +46,7 @@ class AddCustomerForm extends Component {
             C_TEL: "",          //Telefon
             C_EMAIL: "",        //E-Mail
             C_COMPANY: "",      //Firma
-            C_CT_ID: "B2C",        //Kundentyp
+            C_CT_ID: "B2C",     //Kundentyp
 
             //Response
             response: [],
@@ -75,7 +83,6 @@ class AddCustomerForm extends Component {
         )
         .catch(
             (error) => {
-                //console.log(e);
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;
                 this.setState({ 
@@ -174,7 +181,6 @@ class AddCustomerForm extends Component {
                 .then((response) => this.setState({ response }))
                 .catch(
                     (error) => {
-                        //console.log(e);
                         var errorObject = error.response.data;
                         var errorMessage = errorObject.errorMessage;
                         this.setState({ 
@@ -311,23 +317,10 @@ class AddCustomerForm extends Component {
             C_COMPANY: "",      //Firma
             C_CT_ID: "B2C",        //Kundentyp
 
-            /*
-            //Response
-            response: [],
-            responseMessage: null,
-            responseMessageVisible: false,
-    
-            //Error,
-            errorMessage: null,
-            errorMessageVisible: false,
-            errorObject: null,
-            errors: {}
-            */
         });
     };
 
     render() {
-        //const options = {filterType: 'checkbox'};
         const { classes } = this.props;
 
         const {

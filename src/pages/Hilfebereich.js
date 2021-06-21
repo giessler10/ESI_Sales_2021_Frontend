@@ -6,6 +6,14 @@ import Paper from '@material-ui/core/Paper';
 //Kontaktformular
 import Form from '../components/ContactForm/ContactForm';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 
 
 const options = {filterType: 'checkbox'};
@@ -36,11 +44,8 @@ const Hilfebereich = () => {
         <div align = "center" justify = "center" alignItems = "center">
             <Paper className={classes.paper}>
             <h2>Hilfebereich<br></br> </h2>   
-
            <FaqBereich/>
            </Paper>
-
-
            <br></br>
            <Paper>
            <Paper className={classes.paperII} >

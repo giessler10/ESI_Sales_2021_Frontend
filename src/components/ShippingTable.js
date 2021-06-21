@@ -5,11 +5,20 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {Button, Grid} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
-import { makeStyles } from '@material-ui/core/styles';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 import FullScreenQSDialog from '../components/FullScreenQSDialog';
 import ShippingButton from '../components/ShippingButton'
+
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 
 
 export default function ShippingOrders(){
@@ -76,9 +85,6 @@ const options = {
 };
 
 
-
-
-
  useEffect(() => {
   //Orders aus MySQL ziehen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=7')
@@ -100,7 +106,6 @@ const options = {
           console.log(err.message); //Error-Handling
       })
 });
-
 
 
   //Check if database is offline (AWS)
@@ -160,12 +165,6 @@ function MoreThan2Rows(selectedRows){
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-
-
-
-
 
 
 //#region Rechnung erstellen
@@ -231,14 +230,9 @@ function PdfCreate(OrderitemsData, company_Name, orderNumber, customer_number, l
 
     num: String(OrderitemsData[index]["OI_NR"]),
     desc: String(OrderitemsData[index]["OI_MATERIALDESC"]+" (Farbe: "+OrderitemsData[index]["OI_HEXCOLOR"]+")"),
-    //price: String(parseFloat(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"]).toFixed(2)) + " €",
-
     price: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"]/OrderitemsData[index]["OI_QTY"] * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
-
     quantity: String(OrderitemsData[index]["OI_QTY"]),
     unit: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €",
-    //unit: String(parseFloat((OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €",
-    //total: String(parseFloat((OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"]))).toFixed(2)))+ " €"
     total: String(parseFloat(Math.round(OrderitemsData[index]["OI_QTY"]*OrderitemsData[index]["OI_PRICE"]*(1+parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) /Math.pow(10,2)).toFixed(2)) + " €"
 }));
 
@@ -298,7 +292,6 @@ var props = {
   fileName: "Rechnung "+invoiceName,
   orientationLandscape: false,
   logo: {
-      //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
       src: logoBase64,
       width: 53.33, //aspect ratio = width/height
       height: 26.66,
@@ -312,7 +305,6 @@ var props = {
       address: "Schutterlindenberg 66, (DE) 77933 Lahr",
       phone: "(+49) 7821 66 66 66",
       email: "info@yourshirt.com",
-      //email_1: "info@example.al",
       website: "www.yourshirt.de",
   },
   contact: {
@@ -321,7 +313,6 @@ var props = {
       address: customerAddress,
       phone: customerPhone,
       email: customerMail,
-      /*otherInfo: "www.website.al",*/
   },
   invoice: {
       label: "Rechnung #: ",
@@ -342,14 +333,7 @@ var props = {
           style: {
               fontSize: 10 //optional, default 12
           }
-      /*},
-      row2: {
-          col1: 'SubTotal:',
-          col2: '116,199.90',
-          col3: 'EUR',
-          style: {
-              fontSize: 10 //optional, default 12
-          }*/
+
       },
       invDescLabel: "From YourShirt with Love :)",
       invDesc: "",
@@ -397,7 +381,6 @@ const pdfObject = jsPDFInvoiceTemplate(props);
         if(IsDataBaseOffline(res)) return; //Check if db is available
     
         if(res.data.length === 0) { //Check if data is available
-          //setOrderitemsData(undefined);
           return;
         }          
         
@@ -493,7 +476,6 @@ var props = {
   fileName: "Lieferschein "+invoiceName,
   orientationLandscape: false,
   logo: {
-      //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
       src: logoBase64,
       width: 53.33, //aspect ratio = width/height
       height: 26.66,
@@ -507,7 +489,6 @@ var props = {
       address: "Schutterlindenberg 66, (DE) 77933 Lahr",
       phone: "(+49) 7821 66 66 66",
       email: "info@yourshirt.com",
-      //email_1: "info@example.al",
       website: "www.yourshirt.de",
   },
   contact: {
@@ -527,25 +508,6 @@ var props = {
       headerBorder: false,
       tableBodyBorder: false,
       table: tableData,
-     /* invTotal: "145,250.50",
-      invCurrency: "EUR",
-      row1: {
-          col1: 'VAT:',
-          col2: '19',
-          col3: '%',
-          style: {
-              fontSize: 10 //optional, default 12
-          }
-
-      },
-      row2: {
-          col1: 'SubTotal:',
-          col2: '116,199.90',
-          col3: 'EUR',
-          style: {
-              fontSize: 10 //optional, default 12
-          }
-      },*/
       invDescLabel: "From YourShirt with Love :)",
       invDesc: "",
   },
@@ -586,10 +548,9 @@ const getMuiTheme = () => createMuiTheme({
   },
 });
 
-//const classes = useStyles();
 
   return (
-    <div /*className={classes.overflow}*/>
+    <div>
     <MuiThemeProvider theme={getMuiTheme()} > 
       <MUIDataTable
         data={allData}

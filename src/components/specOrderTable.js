@@ -1,10 +1,16 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
-//TesttabelleI Aufbau
+
 const orderPositionHead = ["Order. No.", "Position", "Product", "Summe_QTY", "Problem"];
 const DataOrderPosition = [
   ["1", "Schnitzelwerk", "B", "15/2/2020", "5"],
@@ -12,7 +18,6 @@ const DataOrderPosition = [
   ["3", "Rockcafe Altdorf", "B", "15/2/2020", "5"],
   ["4", "Edeka", "B","15/2/2020", "5"],
 ];
-//TesttabelleI Aufbau Ende
 
 const options = {filterType: 'checkbox'};
 

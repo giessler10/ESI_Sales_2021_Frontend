@@ -11,6 +11,15 @@ import {Button, Dialog } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import RetoureReklamationCellEdittable from './RetoureReklamationCellEdittable';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+  
+
 import RetoureHistoryTable from './RetoureHistoryTable';
 
 const useStyles = makeStyles((theme) => ({

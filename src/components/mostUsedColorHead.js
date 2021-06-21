@@ -4,6 +4,14 @@ import {Grid} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,15 +26,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px"
   }
 
-
 }));
 
 export default function OrderHeader(props) {
   
   const classes = useStyles();
-
-
-
 
   return (
 <div className={classes.root}>

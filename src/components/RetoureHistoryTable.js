@@ -4,6 +4,14 @@ import axios from "axios";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import QualityCell from'./QualityCell';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 
 export default function RetoureHistoryTable(props){
 
@@ -54,7 +62,6 @@ export default function RetoureHistoryTable(props){
       // --> AufrufREST Link
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/itemReturn')
           .then(res => {
-            //console.log(res);
             if(res.data.length === 0) { //Check if data is available
               setAllData(undefined);
               return;
