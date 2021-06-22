@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,12 +9,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import axios from "axios";
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -35,39 +35,39 @@ export default function AlertDialog(props) {
   const handleCloseConfirm = () => {
     //Auftrag löschen
     axios.delete('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.O_NR)
-    .then(
+      .then(
         (res) => {
-            console.log(res.status);
-            return res.data;
+          //console.log(res.status);
+          return res.data;
         }
-    )
-    .then(
+      )
+      .then(
         (res) => {
           setOpen(false);
         }
-    )
-    .catch(
-      (error) => {
-        var errorObject = error.response.data;
-        var errorMessage = errorObject.errorMessage;
-        console.log(errorMessage);
+      )
+      .catch(
+        (error) => {
+          var errorObject = error.response.data;
+          var errorMessage = errorObject.errorMessage;
+          console.log(errorMessage);
 
-        //Error-Handling - DB offline
-        setText("Fehler beim Löschen des Auftrags! " + errorMessage);
-      }
-    );
+          //Error-Handling - DB offline
+          setText("Fehler beim Löschen des Auftrags! " + errorMessage);
+        }
+      );
   };
 
-  function MoreThan2Rows(selectedRows){
-    if(selectedRows != undefined){
-      if(selectedRows.length > 1){
+  function MoreThan2Rows(selectedRows) {
+    if (selectedRows != undefined) {
+      if (selectedRows.length > 1) {
         return true;
       }
-      else{
+      else {
         return false;
       }
     }
-    else{
+    else {
       return false;
     }
   };
@@ -76,12 +76,12 @@ export default function AlertDialog(props) {
     <div>
       <Button
         disabled={MoreThan2Rows(props.selectedRows)}
-        color ="primary"
+        color="primary"
         type="submit"
         variant="outlined"
         onClick={handleClickOpen}
         title="Produktionsauftrag">
-          <DeleteIcon />
+        <DeleteIcon />
         Löschen
       </Button>
       <Dialog

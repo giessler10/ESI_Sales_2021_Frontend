@@ -7,16 +7,16 @@ import Slide from '@material-ui/core/Slide';
 import ReplayIcon from '@material-ui/icons/Replay';
 import OrderHeader from './OrderHeader';
 import React from "react";
-import {Button, Dialog } from '@material-ui/core';
+import { Button, Dialog } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 import QSFormCellEdittable from './QSFormCellEdittable';
 import QSHistoryTable from './QSHistoryTable';
@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
-  Button:{
+  Button: {
     color: "#006064",
     backgroundColor: "#006064",
-  },  
+  },
   table: {
     paddingLeft: '5%',
     paddingRight: '5%',
@@ -45,16 +45,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function MoreThan2Rows(selectedRows){
-  if(selectedRows != undefined){
-    if(selectedRows.length > 1){
+function MoreThan2Rows(selectedRows) {
+  if (selectedRows != undefined) {
+    if (selectedRows.length > 1) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
-  else{
+  else {
     return false;
   }
 };
@@ -78,7 +78,7 @@ export default function FullScreenQSDialog(props) {
 
   return (
     <div>
-      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <ReplayIcon />
         QS erfassen
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
@@ -92,11 +92,11 @@ export default function FullScreenQSDialog(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
-        <QSFormCellEdittable OI_O_NR={OI_O_NR}/>
+        <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+        <QSFormCellEdittable OI_O_NR={OI_O_NR} />
         <div className={classes.table}>
           <h2>Historie</h2>
-          <QSHistoryTable OI_O_NR={OI_O_NR}/>
+          <QSHistoryTable OI_O_NR={OI_O_NR} />
         </div>
       </Dialog>
     </div>

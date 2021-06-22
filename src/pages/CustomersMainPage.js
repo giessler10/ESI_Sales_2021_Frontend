@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,12 +14,12 @@ import AddCustomerForm from '../components/AddCustomerForm';
 import CustomerTable from '../components/CustomerTable';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 
-  },  
+  },
 }));
 
 function TabPanel(props) {
@@ -76,12 +76,12 @@ export default function ScrollableTabsButtonForce() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
-          TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
+          TabIndicatorProps={{ style: { backgroundColor: "#006064" } }}
           value={value}
           onChange={handleChange}
           variant="scrollable"
@@ -94,7 +94,7 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Neuen Kunden anlegen" icon={<AddToPhotosIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      
+
       <TabPanel value={value} index={0}>
         <CustomerTable></CustomerTable>
       </TabPanel>

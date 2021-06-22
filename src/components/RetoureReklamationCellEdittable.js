@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Slide from '@material-ui/core/Slide';
-import {Grid} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import axios from "axios";
 import { forwardRef } from 'react';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -26,16 +26,16 @@ import { Collapse } from '@material-ui/core';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
 const tableIcons = {
-    
+
     Add: props => {
         return (<Button variant="outlined" color="primary"> Position hinzufügen </Button>);
     },
@@ -55,40 +55,40 @@ const tableIcons = {
     SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
+};
 
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-    backgroundColor: "#006064",
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    textColor: "green",
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },  
-  table: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingBottom: '2%'
-  }
+    appBar: {
+        position: 'relative',
+        backgroundColor: "#006064",
+    },
+    title: {
+        marginLeft: theme.spacing(2),
+        flex: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+    },
+    root: {
+        flexGrow: 1,
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        textColor: "green",
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    table: {
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingBottom: '2%'
+    }
 }));
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
 });
 
 
@@ -112,7 +112,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
 
     const [columns, setColumns] = useState([
         {
-            title: "Position", 
+            title: "Position",
             field: "OI_NR",
             type: "numeric",
             editable: 'never'
@@ -135,20 +135,20 @@ export default function RetoureReklamationFormCellEdittable(props) {
             tooltip: "HEX-Code: #282C34",
             cellStyle: (input, rowData) => {
                 return {
-                    
+
                     backgroundColor: rowData?.colorCode || input,
                     color: 'rgba(0,0,0,0)'
                 };
             },
             editable: 'never'
         },
-        { 
-            title: "Bild", 
+        {
+            title: "Bild",
             field: "IM_FILE",
             editable: 'never'
         },
-        { 
-            title: "Menge", 
+        {
+            title: "Menge",
             field: "OI_QTY",
             initialEditValue: 1,
             type: "numeric",
@@ -159,7 +159,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             field: "OI_PRICE",
             tooltip: "Einzelpreis",
             type: "currency",
-            currencySetting:{ currencyCode:'EUR', minimumFractionDigits:2, maximumFractionDigits:2},
+            currencySetting: { currencyCode: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 },
             editable: 'never'
         },
         {
@@ -173,16 +173,16 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Art",
             field: "IR_RT_NR",
             tooltip: "Reklamation oder Retoure",
-            lookup: { 0: 'Keine', 1: 'Retoure', 2: 'Reklamation'}
+            lookup: { 0: 'Keine', 1: 'Retoure', 2: 'Reklamation' }
         },
         {
             title: "Grund der Retoure / Reklamation",
             field: "IR_COMMENT",
             tooltip: "Grund der Retoure / Reklamation",
-            lookup: {'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Bildplatzierung': 'Falsche Bildplatzierung', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert','Beschädigt': 'Beschädigt', 'Sonstiges' : 'Sonstiges'}
+            lookup: { 'Keine': 'Keine', 'Falsche Farbe': 'Falsche Farbe', 'Falsche Größe': 'Falsche Größe', 'Falsches Bild': 'Falsches Bild', 'Falsche Bildplatzierung': 'Falsche Bildplatzierung', 'Gefällt nicht': 'Gefällt nicht', 'Zu spät geliefert': 'Zu spät geliefert', 'Beschädigt': 'Beschädigt', 'Sonstiges': 'Sonstiges' }
         },
-        { 
-            title: "Gemeldete Menge", 
+        {
+            title: "Gemeldete Menge",
             field: "IR_QTY",
             type: "numeric",
         },
@@ -190,7 +190,7 @@ export default function RetoureReklamationFormCellEdittable(props) {
             title: "Neuproduktion",
             field: "IR_REPRODUCE",
             tooltip: "Position neu produzieren lassen?",
-            lookup: { 0: 'Nein',  1: 'Ja'}
+            lookup: { 0: 'Nein', 1: 'Ja' }
         }
     ]);
 
@@ -198,60 +198,60 @@ export default function RetoureReklamationFormCellEdittable(props) {
         var dataForQS = [];
         var errorMessage = "";
 
-        data.forEach( (currentObject, index) => {
-            if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0"){
-                if(currentObject.IR_QTY > currentObject.OI_QTY){
-                    errorMessage = "Gemeldete Menge bei Position " + (index+1) + " darf nicht größer der Auftragsmenge sein!";
+        data.forEach((currentObject, index) => {
+            if (currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0") {
+                if (currentObject.IR_QTY > currentObject.OI_QTY) {
+                    errorMessage = "Gemeldete Menge bei Position " + (index + 1) + " darf nicht größer der Auftragsmenge sein!";
                     return;
                 }
-                else{
+                else {
                     dataForQS = [...dataForQS, currentObject];
                 }
             }
-            else{
-                if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + "  einen Grund angeben!";
+            else {
+                if (currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + "  einen Grund angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + "  einen Grund und eine Menge angeben!";
+                else if (currentObject.IR_QTY == 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR != "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + "  einen Grund und eine Menge angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR == "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + "  eine Art und eine Grund angeben!";
+                else if (currentObject.IR_QTY != 0 && currentObject.IR_COMMENT == 'Keine' && currentObject.IR_RT_NR == "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + "  eine Art und eine Grund angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + "  eine Art und eine Menge angeben!";
+                else if (currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + "  eine Art und eine Menge angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + " eine Menge angeben!";
+                else if (currentObject.IR_QTY == 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR != "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + " eine Menge angeben!";
                     return;
                 }
-                else if(currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0"){
-                    errorMessage = "Bitte bei Position " + (index+1) + " eine Art angeben!";
+                else if (currentObject.IR_QTY != 0 && currentObject.IR_COMMENT != 'Keine' && currentObject.IR_RT_NR == "0") {
+                    errorMessage = "Bitte bei Position " + (index + 1) + " eine Art angeben!";
                     return;
                 }
             }
         });
 
-        if(dataForQS.length == 0 && errorMessage == ""){
+        if (dataForQS.length == 0 && errorMessage == "") {
             errorMessage = "Bitte für mindestens eine Position eine Art, eine Menge und einen Grund angeben!";
             setErrorMessage(errorMessage);
-            setErrorMessageVisible(true) 
-            window.setTimeout(()=>{
+            setErrorMessageVisible(true)
+            window.setTimeout(() => {
                 setErrorMessageVisible(false);
-            },5000);
+            }, 5000);
         }
-        else if(errorMessage != ""){
+        else if (errorMessage != "") {
             setErrorMessage(errorMessage);
-            setErrorMessageVisible(true) 
-            window.setTimeout(()=>{
+            setErrorMessageVisible(true)
+            window.setTimeout(() => {
                 setErrorMessageVisible(false);
-            },5000);
+            }, 5000);
         }
-        else{
+        else {
             const body = dataForQS.map((element) => {
                 return {
                     "IR_O_NR": OI_O_NR,
@@ -274,78 +274,74 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 .then((data) => {
                     setResponseMessage(data);
                     setResponseMessageVisible(true);
-                    window.setTimeout(()=>{
+                    window.setTimeout(() => {
                         setResponseMessageVisible(false);
-                    },5000);
-                })
-                .then((response) => {
+                    }, 5000);
                 })
                 .catch(
                     (error) => {
                         console.log(error);
                         var errorObject = error.response.data;
                         var errorMessage = errorObject.errorMessage;
-                            setErrorMessage(errorMessage);
-                            setErrorMessageVisible(true) 
-                            window.setTimeout(()=>{
-                                setErrorMessageVisible(false);
-                            },5000);
+                        setErrorMessage(errorMessage);
+                        setErrorMessageVisible(true)
+                        window.setTimeout(() => {
+                            setErrorMessageVisible(false);
+                        }, 5000);
                     }
                 );
         }
     }
 
     useEffect(() => {
-        if(data != undefined){
-            if(data.length == 0){
-                axios
-                .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
-                .then(
-                    (res) => {
-                        if(res.data.length === 0) { //Check if data is available
-                            setData(undefined);
-                            return;
-                        } 
 
-                        return res.data;
+        axios
+            .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
+            .then(
+                (res) => {
+                    if (res.data.length === 0) { //Check if data is available
+                        setData(undefined);
+                        return;
                     }
-                )
-                .then((response) => {
-                        var responseArray = response;
-                        var dataUpdate = [];
 
-                        responseArray.forEach( (currentObject, index) => {
-                            var newData = {
-                                OI_NR: currentObject.OI_NR,
-                                OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
-                                OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: currentObject.IM_FILE,
-                                OI_QTY: currentObject.OI_QTY,
-                                OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: "19%",
-                                IR_RT_NR: "0",
-                                IR_COMMENT: 'Keine',
-                                IR_QTY: 0,
-                                IR_REPRODUCE: "0",
-                                tableData: {
-                                    id: index
-                                }
-                            }
-                            dataUpdate = [...dataUpdate, newData];
-                        });
+                    return res.data;
+                }
+            )
+            .then((response) => {
+                var responseArray = response;
+                var dataUpdate = [];
 
-                        setData([...dataUpdate]);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-            }
-        }
-    }, [data]);
+                responseArray.forEach((currentObject, index) => {
+                    var newData = {
+                        OI_NR: currentObject.OI_NR,
+                        OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
+                        OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
+                        IM_FILE: currentObject.IM_FILE,
+                        OI_QTY: currentObject.OI_QTY,
+                        OI_PRICE: parseFloat(currentObject.OI_PRICE),
+                        OI_VAT: "19%",
+                        IR_RT_NR: "0",
+                        IR_COMMENT: 'Keine',
+                        IR_QTY: 0,
+                        IR_REPRODUCE: "0",
+                        tableData: {
+                            id: index
+                        }
+                    }
+                    dataUpdate = [...dataUpdate, newData];
+                });
+
+                setData([...dataUpdate]);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+    }, []);
 
     return (
         <div>
-            <div  style={{
+            <div style={{
                 paddingTop: "20px",
                 margin: "20px",
                 paddingLeft: '5%',
@@ -354,37 +350,37 @@ export default function RetoureReklamationFormCellEdittable(props) {
                 <Collapse className={classes.alert} in={errorMessageVisible}>
                     <Alert severity="error"
                         action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setErrorMessageVisible(false);
-                            }}
-                        >
-                            <GridCloseIcon fontSize="inherit" />
-                        </IconButton>
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setErrorMessageVisible(false);
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
                         }
                     >
-                    {errorMessage}
+                        {errorMessage}
                     </Alert>
                 </Collapse>
                 <Collapse className={classes.alert} in={responseMessageVisible}>
                     <Alert severity="success"
                         action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setResponseMessageVisible(false);
-                            }}
-                        >
-                            <GridCloseIcon fontSize="inherit" />
-                        </IconButton>
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setResponseMessageVisible(false);
+                                }}
+                            >
+                                <GridCloseIcon fontSize="inherit" />
+                            </IconButton>
                         }
                     >
-                    {responseMessage}
+                        {responseMessage}
                     </Alert>
                 </Collapse>
             </div>
@@ -395,17 +391,17 @@ export default function RetoureReklamationFormCellEdittable(props) {
                     columns={columns}
                     data={data}
                     options={{
-                    headerStyle: {
-                        backgroundColor: "#006064",
-                        color: "#FFFF",
-                    },
-                    textLabels: {
-                    body: {
-                        noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                        toolTip: "Sort",
-                        columnHeaderTooltip: column => `Sort for ${column.label}`
-                    }
-                    }
+                        headerStyle: {
+                            backgroundColor: "#006064",
+                            color: "#FFFF",
+                        },
+                        textLabels: {
+                            body: {
+                                noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                                toolTip: "Sort",
+                                columnHeaderTooltip: column => `Sort for ${column.label}`
+                            }
+                        }
                     }}
                     icons={tableIcons}
                     cellEditable={{
@@ -424,13 +420,13 @@ export default function RetoureReklamationFormCellEdittable(props) {
                     }}
                 />
                 <Grid item xs={12}>
-            
+
                     <Button
-                    onClick={createPostBody}
-                    style={{ float: "right", margin: "20px" }}
-                    variant="outlined"
-                    color="primary"
-                    title="Bestellung speichern"
+                        onClick={createPostBody}
+                        style={{ float: "right", margin: "20px" }}
+                        variant="outlined"
+                        color="primary"
+                        title="Bestellung speichern"
                     >
                         Reklamation und Retoure erfassen
                     </Button>

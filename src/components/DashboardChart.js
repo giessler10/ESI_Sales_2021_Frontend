@@ -13,12 +13,12 @@ import { Stack, Animation } from '@devexpress/dx-react-chart';
 import axios from 'axios';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 const legendStyles = () => ({
   root: {
@@ -48,25 +48,27 @@ export default class DashboardChart extends React.PureComponent {
     this.state = {
       data: [],
     };
+  };
 
+  async componentDidMount() {
     //Statistik laden
     axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/statistics')
-    .then(
+      .then(
         (res) => {
-            console.log(res.status);
-            return res.data;
+          //console.log(res.status);
+          return res.data;
         }
-    )
-    .then(
+      )
+      .then(
         (res) => {
-            this.setState({data: res.chart });
+          this.setState({ data: res.chart });
         }
-    )
-    .catch(
+      )
+      .catch(
         (error) => {
           console.log(error);
         }
-    );
+      );
   };
 
   render() {

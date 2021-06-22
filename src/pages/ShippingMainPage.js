@@ -14,29 +14,29 @@ import ShippingTable from '../components/ShippingTable';
 import StorageTable from '../components/StorageTable';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-    },
-    root: {
-      flexGrow: 1,
-      width: "100%",
-      backgroundColor: theme.palette.background.paper,
-      textColor: "green",
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+  },
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+    textColor: "green",
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
 
-    },  
+  },
 
-  }));
+}));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,36 +78,36 @@ export default function ScrollableTabsButtonForce() {
   };
 
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static" color="default">
-                <Tabs
-                TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
-                value={value}
-                onChange={handleChange}
-                variant="scrollable"
-                scrollButtons="on"
-                indicatorColor="primary"
-                textColor="primary"
-                aria-label="scrollable force tabs example"
-                >
-                <Tab label="Auslagerfähige Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
-                <Tab label="Versandbereite Aufträge" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
-                </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}> 
-            <div >
-              <StorageTable/>
-              </div>
-            </TabPanel>
-
-            <TabPanel value={value} index={1}>
-            <div >   
-              
-              <ShippingTable/>
-              
-              </div>
-            </TabPanel>   
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" color="default">
+        <Tabs
+          TabIndicatorProps={{ style: { backgroundColor: "#006064" } }}
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="scrollable force tabs example"
+        >
+          <Tab label="Auslagerfähige Aufträge" icon={<AllInboxIcon />} {...a11yProps(2)} />
+          <Tab label="Versandbereite Aufträge" icon={<AlarmOnTwoToneIcon />} {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <div >
+          <StorageTable />
         </div>
-    )
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
+        <div >
+
+          <ShippingTable />
+
+        </div>
+      </TabPanel>
+    </div>
+  )
 };

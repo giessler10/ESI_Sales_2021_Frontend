@@ -8,12 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import {Grid} from '@material-ui/core';
-
+import { Grid } from '@material-ui/core';
 import axios from "axios";
 import { forwardRef } from 'react';
 import OrderHeader from './OrderHeader';
-
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -29,7 +27,6 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-
 import MaterialTable from "material-table";
 import Alert from '@material-ui/lab/Alert';
 import { Collapse } from '@material-ui/core';
@@ -37,13 +34,12 @@ import { GridCloseIcon } from '@material-ui/data-grid';
 
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
-
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
 const tableIcons = {
@@ -66,48 +62,45 @@ const tableIcons = {
     SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
+};
 
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-    backgroundColor: "#006064",
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    textColor: "green",
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },  
-  table: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingBottom: '2%'
-  }
+    appBar: {
+        position: 'relative',
+        backgroundColor: "#006064",
+    },
+    title: {
+        marginLeft: theme.spacing(2),
+        flex: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+    },
+    root: {
+        flexGrow: 1,
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        textColor: "green",
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    table: {
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingBottom: '2%'
+    }
 }));
 
-function MoreThan2Rows(selectedRows){
-  if(selectedRows.length > 1) 
-    {return true;}
+function MoreThan2Rows(selectedRows) {
+    if (selectedRows.length > 1) { return true; }
     return false;
 };
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
 });
-
-
 
 export default function FullScreenDialogUpdateOrderDetails(props) {
 
@@ -150,29 +143,29 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
             tooltip: "HEX-Code: #282C34",
             cellStyle: (input, rowData) => {
                 return {
-                    
+
                     backgroundColor: rowData?.colorCode || input,
                     color: 'rgba(0,0,0,0)'
                 };
             },
             editable: 'never'
         },
-        { 
-            title: "Bild", 
-            field: "IM_FILE", 
+        {
+            title: "Bild",
+            field: "IM_FILE",
         },
-        { 
-            title: "Menge", 
+        {
+            title: "Menge",
             field: "OI_QTY",
             initialEditValue: 1,
-            type: "numeric" 
+            type: "numeric"
         },
         {
             title: "Preis",
             field: "OI_PRICE",
             tooltip: "Einzelpreis",
             type: "currency",
-            currencySetting:{ currencyCode:'EUR', minimumFractionDigits:2, maximumFractionDigits:2}
+            currencySetting: { currencyCode: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }
         },
         {
             title: "Mehrwertsteuer",
@@ -191,14 +184,14 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
         setOpen(false);
     };
 
-    function btnAddOrderDisabled(anzOrderitems){ 
-        if(anzOrderitems.length == 0){
+    function btnAddOrderDisabled(anzOrderitems) {
+        if (anzOrderitems.length == 0) {
             return true;
         }
-        else{
+        else {
             return false;
         }
-    
+
     };
 
     function createOrderitems() {
@@ -215,7 +208,7 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
         });
 
         axios
-            .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR +'/orderitems', orderitems)
+            .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems', orderitems)
             .then((res) => {
                 var data = JSON.stringify(res.data);
                 data = JSON.parse(data);
@@ -225,73 +218,63 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
             .then((data) => {
                 setResponseMessage(data);
                 setResponseMessageVisible(true);
-                window.setTimeout(()=>{
+                window.setTimeout(() => {
                     setResponseMessageVisible(false);
-                },5000);
-            })
-            .then((response) => {
+                }, 5000);
             })
             .catch(
                 (error) => {
                     console.log(error);
                     var errorObject = error.response.data;
                     var errorMessage = errorObject.errorMessage;
-                        setErrorMessage(errorMessage);
-                        setErrorMessageVisible(true) 
-                        window.setTimeout(()=>{
-                            setErrorMessageVisible(false);
-                        },5000);
+                    setErrorMessage(errorMessage);
+                    setErrorMessageVisible(true)
+                    window.setTimeout(() => {
+                        setErrorMessageVisible(false);
+                    }, 5000);
                 }
             );
     }
 
     useEffect(() => {
-        if(dataInitial != undefined){
-            if(dataInitial.length == 0){
-                axios
-                .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
-                .then(
-                    (res) => {
-                        if(res.data.length === 0) { //Check if data is available
-                            setDataInitial(undefined);
-                            setData(undefined);
-                            return;
-                        } 
-                        return res.data;
+        axios
+            .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
+            .then(
+                (res) => {
+                    return res.data;
+                }
+            )
+            .then((response) => {
+                var responseArray = response;
+                var dataUpdate = [];
+
+                responseArray.forEach((currentObject, index) => {
+                    var newData = {
+                        OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
+                        OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
+                        IM_FILE: currentObject.IM_FILE,
+                        OI_QTY: currentObject.OI_QTY,
+                        OI_PRICE: parseFloat(currentObject.OI_PRICE),
+                        OI_VAT: "19%",
+                        tableData: {
+                            id: index
+                        }
                     }
-                )
-                .then((response) => {
-                        var responseArray = response;
-                        var dataUpdate = [];
+                    dataUpdate = [...dataUpdate, newData];
+                });
 
-                        responseArray.forEach( (currentObject, index) => {
-                            var newData = {
-                                OI_MATERIALDESC: currentObject.OI_MATERIALDESC,
-                                OI_HEXCOLOR: currentObject.OI_HEXCOLOR,
-                                IM_FILE: currentObject.IM_FILE,
-                                OI_QTY: currentObject.OI_QTY,
-                                OI_PRICE: parseFloat(currentObject.OI_PRICE),
-                                OI_VAT: "19%",
-                                tableData: {
-                                    id: index
-                                }
-                            }
-                            dataUpdate = [...dataUpdate, newData];
-                        });
+                setDataInitial([...dataUpdate]);
+                setData([...dataUpdate]);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
 
-                        setDataInitial([...dataUpdate]);
-                        setData([...dataUpdate]);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-            }
-        }
-    }, [data]);
+    }, []);
 
     return (
         <div>
-            <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <EditIcon/>
+            <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <EditIcon />
                 Auftrag bearbeiten
             </Button>
             <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
@@ -305,8 +288,8 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
-                <div  style={{
+                <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+                <div style={{
                     paddingTop: "20px",
                     margin: "20px",
                     paddingLeft: '5%',
@@ -315,37 +298,37 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                     <Collapse className={classes.alert} in={errorMessageVisible}>
                         <Alert severity="error"
                             action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    setErrorMessageVisible(false);
-                                }}
-                            >
-                                <GridCloseIcon fontSize="inherit" />
-                            </IconButton>
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setErrorMessageVisible(false);
+                                    }}
+                                >
+                                    <GridCloseIcon fontSize="inherit" />
+                                </IconButton>
                             }
                         >
-                        {errorMessage}
+                            {errorMessage}
                         </Alert>
                     </Collapse>
                     <Collapse className={classes.alert} in={responseMessageVisible}>
                         <Alert severity="success"
                             action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    setResponseMessageVisible(false);
-                                }}
-                            >
-                                <GridCloseIcon fontSize="inherit" />
-                            </IconButton>
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setResponseMessageVisible(false);
+                                    }}
+                                >
+                                    <GridCloseIcon fontSize="inherit" />
+                                </IconButton>
                             }
                         >
-                        {responseMessage}
+                            {responseMessage}
                         </Alert>
                     </Collapse>
                 </div>
@@ -356,60 +339,60 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                         columns={columns}
                         data={data}
                         options={{
-                        headerStyle: {
-                            backgroundColor: "#006064",
-                            color: "#FFFF",
-                        },
-                        textLabels: {
-                        body: {
-                            noMatch: "Es wurden keine passenden Aufträge gefunden.",
-                            toolTip: "Sort",
-                            columnHeaderTooltip: column => `Sort for ${column.label}`
-                        }
-                        }
+                            headerStyle: {
+                                backgroundColor: "#006064",
+                                color: "#FFFF",
+                            },
+                            textLabels: {
+                                body: {
+                                    noMatch: "Es wurden keine passenden Aufträge gefunden.",
+                                    toolTip: "Sort",
+                                    columnHeaderTooltip: column => `Sort for ${column.label}`
+                                }
+                            }
                         }}
                         icons={tableIcons}
                         editable={{
-                        onRowAdd: (newData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                setData([...data, newData]);
-                                resolve();
-                            }, 1000);
-                            }),
-                        onRowUpdate: (newData, oldData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                const dataUpdate = [...data];
-                                const index = oldData.tableData.id;
-                                dataUpdate[index] = newData;
-                                setData([...dataUpdate]);
-            
-                                resolve();
-                            }, 1000);
-                            }),
-                        onRowDelete: (oldData) =>
-                            new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                const dataDelete = [...data];
-                                const index = oldData.tableData.id;
-                                dataDelete.splice(index, 1);
-                                setData([...dataDelete]);
-            
-                                resolve();
-                            }, 1000);
-                            }),
+                            onRowAdd: (newData) =>
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        setData([...data, newData]);
+                                        resolve();
+                                    }, 1000);
+                                }),
+                            onRowUpdate: (newData, oldData) =>
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        const dataUpdate = [...data];
+                                        const index = oldData.tableData.id;
+                                        dataUpdate[index] = newData;
+                                        setData([...dataUpdate]);
+
+                                        resolve();
+                                    }, 1000);
+                                }),
+                            onRowDelete: (oldData) =>
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        const dataDelete = [...data];
+                                        const index = oldData.tableData.id;
+                                        dataDelete.splice(index, 1);
+                                        setData([...dataDelete]);
+
+                                        resolve();
+                                    }, 1000);
+                                }),
                         }}
                     />
                     <Grid item xs={12}>
-                
+
                         <Button
-                        disabled={btnAddOrderDisabled(data)}
-                        onClick={createOrderitems}
-                        style={{ float: "right", margin: "20px" }}
-                        variant="outlined"
-                        color="primary"
-                        title="Bestellung speichern"
+                            disabled={btnAddOrderDisabled(data)}
+                            onClick={createOrderitems}
+                            style={{ float: "right", margin: "20px" }}
+                            variant="outlined"
+                            color="primary"
+                            title="Bestellung speichern"
                         >
                             Änderungen speichern
                         </Button>
