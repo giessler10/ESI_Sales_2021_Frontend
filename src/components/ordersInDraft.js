@@ -96,7 +96,7 @@ export default function DraftOrders() {
   }, []);
 
   function updateData() {
-    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=8')
+    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=9')
       .then(res => {
 
         if (DataAreEqual(allData, res.data)){
