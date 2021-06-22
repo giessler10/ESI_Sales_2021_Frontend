@@ -4,6 +4,15 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import axios from "axios";
 import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 export default function RecentOrders(){
 
   //Define Constants
@@ -40,8 +49,6 @@ export default function RecentOrders(){
           setAllData(res.data); //Set new table data
         
           var last7Days=new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000)).toISOString(); // Set on the last 7 days // <- That one here is starting "useEffect" every second again - If not it would work properly -> Maybe kill useEffect() if possible
-          //var last7Days = "2021-05-26T00:00:00.000Z"
-          //Set filters for 'recently' inserted Orders
           var filtereddata= res.data.filter(function(obj) { return obj.O_TIMESTAMP >= last7Days;});    
 
           setfilteredData(filtereddata); //Set new table data      

@@ -11,6 +11,16 @@ import { Collapse } from '@material-ui/core';
 import { GridCloseIcon } from '@material-ui/data-grid';
 import IconButton from '@material-ui/core/IconButton';
 
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 //Import components
 import DashboardChart from '../components/DashboardChart';
 import DashboardDepositsSumQTY from '../components/DashboardDepositsSumQTY';
@@ -51,7 +61,6 @@ export default function Dashboard() {
       display: 'flex',
       overflow: 'auto',
       flexDirection: 'column',
-      /*backgroundColor: '#282c34', */
     },
     fixedHeight: {
       height: 240,
@@ -75,16 +84,12 @@ export default function Dashboard() {
       axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/statistics')
           .then(
             (res) => {
-              //console.log(res);
-
               setAllData(res.data); //Set new table data
               setKpi(res.data.KPIs); //Set new table data
               setchart(res.data.chart); //Set new table data
           })
           .catch(
             (error) => {
-                //console.log(error);
-
                 //Error-Meldung ausgeben
                 var errorObject = error.response.data;
                 var errorMessage = errorObject.errorMessage;

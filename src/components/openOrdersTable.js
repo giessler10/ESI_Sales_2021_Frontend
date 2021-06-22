@@ -5,9 +5,15 @@ import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import { useState, useEffect} from "react";
 import axios from "axios";
 
-import Button from '@material-ui/core/Button';
-import ReplayIcon from '@material-ui/icons/Replay';
-import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 
 
 export default function ProgressOrders(){
@@ -21,7 +27,6 @@ export default function ProgressOrders(){
     setOpen(true);
   };
 
-  //Columns with properties --> TODO auf eure Spaltennamen anpassen
   const columns = [
   { name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 

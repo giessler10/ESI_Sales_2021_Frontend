@@ -5,13 +5,20 @@ import axios from "axios";
 import QualityCell from './QualityCell.js';
 import FullScreenDialogOrderDetails from "./FullScreenDialogOrderDetails.js";
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
 export default function CustomerOrders(props){
 
   //Variables and constants  
   const [selectedData, setSelectedData] =  useState([]); 
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
-  //Columns with properties --> TODO auf eure Spaltennamen anpassen
   const columns = [{ name: "O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: true}}, 
   {name: "O_C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: false }}, 
   {name: "O_OST_NR", label: "Auftragsstatus-Nr", options: {filter: true, sort: false, display: false}},  
@@ -52,9 +59,7 @@ export default function CustomerOrders(props){
 
 useEffect(() => {
   var C_NR = props.C_NR;
-  //console.log(props.C_NR);
 
-  // --> AufrufREST Link
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?customerId=' + C_NR)
       .then(res => {
         if(res.data.length === 0) { //Check if data is available

@@ -8,6 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from "axios";
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 export default function AlertDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [text, setText] = React.useState("Sie sind sich sicher, die selektierten Aufträge vom Lager bereitstellen zu lassen?");
@@ -39,7 +48,6 @@ export default function AlertDialog(props) {
     axios.post('https://9j8oo3h3yk.execute-api.eu-central-1.amazonaws.com/Main/insertauslagerungvv', props.body)
     .then(
         (res) => {
-            //console.log(res.status);
             if(IsDataBaseOffline(res)){
                 setText("Die selektierten Aufträge konnten nicht an das Lager übergeben werden. Die Datenbank der Materialwirtschaft ist offline.");
             }

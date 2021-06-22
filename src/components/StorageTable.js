@@ -3,10 +3,17 @@ import React, { useState, useEffect} from "react";
 import MUIDataTable from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import axios from "axios";
-
 import FullScreenDialogOrderDetails from'./FullScreenDialogOrderDetails';
 import StorageButton from'./StorageButton';
 import { Grid } from "@material-ui/core";
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 
 export default function StorageOrders(){
@@ -65,7 +72,6 @@ export default function StorageOrders(){
     //Orders aus MySQL ziehen
     axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=8')
         .then(res => {
-        //console.log("Response Orderlist:", res); //Data from Gateway
 
         if(res.data.length === 0) { //Check if data is available
           setAllData(undefined);

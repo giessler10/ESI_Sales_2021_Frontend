@@ -1,6 +1,14 @@
 import React from 'react';
-import { Button, FormControl, Grid, TextField } from '@material-ui/core';
+import { FormControl, Grid, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 
 const options = {filterType: 'checkbox'};

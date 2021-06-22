@@ -6,6 +6,15 @@ import { useState, useEffect} from "react";
 import axios from "axios";
 import { Button } from '@material-ui/core';
 
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
 export default function CustomerTable(){
 
   //Variables and constants  
@@ -13,7 +22,6 @@ export default function CustomerTable(){
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
 
-  //Columns with properties --> TODO auf eure Spaltennamen anpassen
   const columns = [
   {name: "C_NR", label: "Kunden-Nr", options: {filter: true, sort: true, display: true}}, 
   {name: "C_CT_ID", label: "Kundenart-Nr", options: {filter: true, sort: true, display: false}}, 
@@ -55,10 +63,8 @@ export default function CustomerTable(){
 
 
 useEffect(() => {
-  // --> TODO  eurem REST Link einfügen
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
-      //console.log("RESPONSE:", res); //Data from Gateway
 
       if(res.data.length === 0) { //Check if data is available
         setAllData(undefined);
@@ -79,7 +85,6 @@ useEffect(() => {
 const updateView = () => {
   axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
   .then(res => {
-  //console.log("RESPONSE:", res); //Data from Gateway
 
   if(res.data.length === 0) { //Check if data is available
     setAllData(undefined);
@@ -122,7 +127,6 @@ function rowSelectEvent(curRowSelected, allRowsSelected){
     _selectedData.push(allData[element.dataIndex])
   });
  
-  //console.log("Selektierte Daten: ", _selectedData)
   setSelectedData(_selectedData);
   return;
 }

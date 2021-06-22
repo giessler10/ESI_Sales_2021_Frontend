@@ -16,14 +16,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {ShoppingCart, FindInPage, Group, Dashboard, LocalShipping, BarChart, Undo, RemoveShoppingCart, Info, Home} from '@material-ui/icons';
+import {ShoppingCart, Group, Dashboard} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import logo from './img/yourshirt_full.png';
 import yourshirt from './img/android-chrome-144x144.png';
-import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
 import Icon from '@material-ui/core/Icon';
-import RestoreIcon from '@material-ui/icons/Restore';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 
@@ -32,10 +30,17 @@ import DashboardMainPage from './pages/DashboardMainPage';
 import CustomersMainPage from './pages/CustomersMainPage';
 import OrdersMainPage from './pages/OrdersMainPage';
 import ShippingMainPage from './pages/ShippingMainPage';
-//import EinstellungPage from './pages/Einstellungen.js';
 import HilfebereichPage from './pages/Hilfebereich.js';
 import Footer from './footer'
 import OrderDetails from './components/specOrderDetails';
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 
 const drawerWidth = 240;
@@ -152,9 +157,6 @@ function App() {
       setSelectedIndex(3);
      }
 
-     /*else if (window.location.href.endsWith("Einstellungen")){
-      setSelectedIndex(4);
-     }*/
 
      else if (window.location.href.endsWith("Hilfebereich")){
       setSelectedIndex(5);
@@ -267,14 +269,6 @@ return (
 
           <Divider />
 
-         {/*   <ListItem button component={Link} to="/Einstellungen"  key="einstellungen" className={classes.activeTab} selected={selectedIndex === 4}
-          onClick={event => handleListItemClick(event, 4)}>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Einstellungen" />
-            </ListItem>*/}
-
             <ListItem button component={Link} to="/Hilfebereich"  key="hilfebereich" className={classes.activeTab} selected={selectedIndex === 5}
           onClick={event => handleListItemClick(event, 5)}>
               <ListItemIcon>
@@ -323,9 +317,6 @@ return (
           <Route exact path="/Hilfebereich">
             <HilfebereichPage />
           </Route>
-       {/* <Route exact path="/Einstellungen">
-            <EinstellungPage />
-          </Route>*/}
           <Route exact path="/OrderDetails">
             <OrderDetails/>
           </Route>

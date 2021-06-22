@@ -35,8 +35,18 @@ import Alert from '@material-ui/lab/Alert';
 import { Collapse } from '@material-ui/core';
 import { GridCloseIcon } from '@material-ui/data-grid';
 
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+
+
 const tableIcons = {
-    //Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Add: props => {
         return (<Button variant="outlined" color="primary"> Position hinzufügen </Button>);
     },
@@ -133,11 +143,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
             title: "Farbcode",
             field: "OI_HEXCOLOR",
             tooltip: "HEX-Code: #282C34",
-           /*  cellStyle: (input, rowData) => {
-                return {
-                    backgroundColor: rowData?.colorCode || input,
-                };
-            } */
         },
         {
             title: "Farbe",
@@ -187,8 +192,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
     };
 
     function btnAddOrderDisabled(anzOrderitems){ 
-        //Wenn keine Position angelegt ist Btn ausblenden
-        //var anzOrderitems = this.state.data;
         if(anzOrderitems.length == 0){
             return true;
         }
@@ -214,11 +217,9 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
         axios
             .put('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR +'/orderitems', orderitems)
             .then((res) => {
-                //console.log(res.data);
                 var data = JSON.stringify(res.data);
                 data = JSON.parse(data);
                 data = data.message;
-                //console.log(data);
                 return data;
             })
             .then((data) => {
@@ -229,7 +230,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                 },5000);
             })
             .then((response) => {
-                //console.log(response);
             })
             .catch(
                 (error) => {
@@ -252,7 +252,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                 .get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
                 .then(
                     (res) => {
-                        //console.log(res);
                         if(res.data.length === 0) { //Check if data is available
                             setDataInitial(undefined);
                             setData(undefined);
@@ -375,8 +374,6 @@ export default function FullScreenDialogUpdateOrderDetails(props) {
                             new Promise((resolve, reject) => {
                             setTimeout(() => {
                                 setData([...data, newData]);
-                                //console.log(count, newData);
-            
                                 resolve();
                             }, 1000);
                             }),

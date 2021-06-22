@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, FormControl, Grid} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -7,6 +7,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from "axios";
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -35,8 +43,6 @@ export default function AlertDialog(props) {
     )
     .then(
         (res) => {
-          //console.log(res.body);    
-               
           setOpen(false);
         }
     )

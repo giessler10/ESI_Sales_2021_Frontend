@@ -8,6 +8,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import axios from "axios";
 
+
+/*-----------------------------------------------------------------------*/
+  // Autor: ESI SoSe21 - Team sale & shipping
+  // University: University of Applied Science Offenburg
+  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+  /*-----------------------------------------------------------------------*/
+
+  
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [text, setText] = React.useState("Sie sind sich sicher, dass der Auftrag vollständig ist und an den Versanddienstleister übergeben werden kann?");
