@@ -6,15 +6,15 @@ import SpecOrderForm from './specOrderForm';
 import SpecOrderTable from './specOrderTable';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
-const options = {filterType: 'checkbox'};
+const options = { filterType: 'checkbox' };
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -22,23 +22,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     textColor: "green",
     textAlign: 'center',
-  },  
+  },
 }));
 
 
 const SpecOrderDetails = () => {
-    const classes = useStyles();
-    return (
-        <div className={classes.root}>
-            
-        <h2> Details zu Auftrag: xxxxxxxxxx</h2>
-        <SpecOrderForm />
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
 
-        <h2> Auftragsbestandteile </h2>
-        <SpecOrderTable />
+      <h2> Details zu Auftrag: xxxxxxxxxx</h2>
+      <SpecOrderForm />
 
-        </div>
-    )
+      <h2> Auftragsbestandteile </h2>
+      <SpecOrderTable />
+
+    </div>
+  )
 }
 
 export default SpecOrderDetails

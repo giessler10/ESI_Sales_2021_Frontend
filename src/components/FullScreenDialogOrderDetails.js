@@ -13,12 +13,12 @@ import OrderPositionsTable from './orderPositionsTable.js';
 import OrderHeader from './OrderHeader';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     textColor: "green",
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },  
+  },
   table: {
     paddingLeft: '5%',
     paddingRight: '5%',
@@ -49,10 +49,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MoreThan2Rows(selectedRows){
-  if(selectedRows.length > 1) 
-    {return true;}
-    return false;
+function MoreThan2Rows(selectedRows) {
+  if (selectedRows.length > 1) { return true; }
+  return false;
 };
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -60,7 +59,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function FullScreenDialogOrderDetails(props) {
-  
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -76,10 +75,9 @@ export default function FullScreenDialogOrderDetails(props) {
     setOpen(false);
   };
 
-
   return (
     <div>
-      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon/>
+      <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon />
         Auftragdetails
       </Button>
       <Dialog fullScreen open={open} onClose={handleClickOpen} TransitionComponent={Transition}>
@@ -93,7 +91,7 @@ export default function FullScreenDialogOrderDetails(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <OrderHeader OI_O_NR={OI_O_NR} order={order}/>
+        <OrderHeader OI_O_NR={OI_O_NR} order={order} />
         <div className={classes.table}>
           <h2>Auftragspositionen</h2>
           <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>

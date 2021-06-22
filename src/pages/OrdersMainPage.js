@@ -24,12 +24,12 @@ import RetoureTable from '../components/RetoureTable'
 import NewOrderTableClass from '../components/NewOrderTableClass';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 
-  },  
+  },
 }));
 
 function TabPanel(props) {
@@ -91,7 +91,7 @@ export default function ScrollableTabsButtonForce() {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
-          TabIndicatorProps={{style: {backgroundColor: "#006064"}}}
+          TabIndicatorProps={{ style: { backgroundColor: "#006064" } }}
           value={value}
           onChange={handleChange}
           variant="scrollable"
@@ -115,7 +115,7 @@ export default function ScrollableTabsButtonForce() {
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <OrdersInDraft/>
+        <OrdersInDraft />
       </TabPanel>
 
       <TabPanel value={value} index={2}>
@@ -131,12 +131,13 @@ export default function ScrollableTabsButtonForce() {
       </TabPanel>
 
       <TabPanel value={value} index={5}>
-        <RetoureTable/>    
+        <RetoureTable />
       </TabPanel>
 
       <TabPanel value={value} index={6}>
-          <NewOrderTableClass/>
+        <NewOrderTableClass />
       </TabPanel>
-        
+
     </div>
-  )}
+  )
+}

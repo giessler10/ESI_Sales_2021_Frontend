@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,12 +13,12 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
 //Import components
@@ -81,55 +81,55 @@ export default function Dashboard() {
 
   useEffect(() => {
     // Get Statisitc
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/statistics')
-          .then(
-            (res) => {
-              setAllData(res.data); //Set new table data
-              setKpi(res.data.KPIs); //Set new table data
-              setchart(res.data.chart); //Set new table data
-          })
-          .catch(
-            (error) => {
-                //Error-Meldung ausgeben
-                var errorObject = error.response.data;
-                var errorMessage = errorObject.errorMessage;
-                    setErrorMessage(errorMessage);
-                    setErrorMessageVisible(true) 
-                    window.setTimeout(()=>{
-                        setErrorMessageVisible(false);
-                    },5000);
-            }
+    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/statistics')
+      .then(
+        (res) => {
+          setAllData(res.data); //Set new table data
+          setKpi(res.data.KPIs); //Set new table data
+          setchart(res.data.chart); //Set new table data
+        })
+      .catch(
+        (error) => {
+          //Error-Meldung ausgeben
+          var errorObject = error.response.data;
+          var errorMessage = errorObject.errorMessage;
+          setErrorMessage(errorMessage);
+          setErrorMessageVisible(true)
+          window.setTimeout(() => {
+            setErrorMessageVisible(false);
+          }, 5000);
+        }
       );
   }, []);
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Collapse className={classes.alert} in={errorMessageVisible}>
-        <Alert severity="error"
+          <Alert severity="error"
             action={
-            <IconButton
+              <IconButton
                 aria-label="close"
                 color="inherit"
                 size="small"
                 onClick={() => {
-                    setErrorMessageVisible(false);
+                  setErrorMessageVisible(false);
                 }}
-            >
+              >
                 <GridCloseIcon fontSize="inherit" />
-            </IconButton>
+              </IconButton>
             }
-        >
-        {errorMessage}
-        </Alert>
-      </Collapse>
+          >
+            {errorMessage}
+          </Alert>
+        </Collapse>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper>
-                <DashboardChart/>
+                <DashboardChart />
               </Paper>
             </Grid>
             <Grid item xs={12}>
@@ -137,38 +137,38 @@ export default function Dashboard() {
             </Grid>
             <Grid item xs={6} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsSumQTY data={ kpi.length == 0 ? 0 : kpi.SumQTY}/>
+                <DashboardDepositsSumQTY data={kpi.length === 0 ? 0 : kpi.SumQTY} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsSumPrice data={ kpi.length == 0 ? 0 : kpi.SumPrice}/>
+                <DashboardDepositsSumPrice data={kpi.length === 0 ? 0 : kpi.SumPrice} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsDistinctHexColors data={ kpi.length == 0 ? 0 : kpi.DistinctHexColors}/>
+                <DashboardDepositsDistinctHexColors data={kpi.length === 0 ? 0 : kpi.DistinctHexColors} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsSumQualityissueQTY data={ kpi.length == 0 ? 0 : kpi.SumQualityissueQTY} sumQTY={ kpi.length == 0 ? 0 : kpi.SumQTY}/>
+                <DashboardDepositsSumQualityissueQTY data={kpi.length === 0 ? 0 : kpi.SumQualityissueQTY} sumQTY={kpi.length === 0 ? 0 : kpi.SumQTY} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsSumReturnQTY data={ kpi.length == 0 ? 0 : kpi.SumReturnQTY} sumQTY={ kpi.length == 0 ? 0 : kpi.SumQTY}/>
+                <DashboardDepositsSumReturnQTY data={kpi.length === 0 ? 0 : kpi.SumReturnQTY} sumQTY={kpi.length === 0 ? 0 : kpi.SumQTY} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper className={fixedHeightPaper}>
-                <DashboardDepositsSumClaimQTY data={ kpi.length == 0 ? 0 : kpi.SumClaimQTY} sumQTY={ kpi.length == 0 ? 0 : kpi.SumQTY}/>
+                <DashboardDepositsSumClaimQTY data={kpi.length === 0 ? 0 : kpi.SumClaimQTY} sumQTY={kpi.length === 0 ? 0 : kpi.SumQTY} />
               </Paper>
             </Grid>
             <Grid item xs={12}>
-            <h2>Aufträge der letzten 7 Tage<br></br> </h2>
+              <h2>Aufträge der letzten 7 Tage<br></br> </h2>
             </Grid>
-            <Grid item xs={12} className={Paper}> 
+            <Grid item xs={12} className={Paper}>
               <Orders />
             </Grid>
           </Grid>

@@ -1,48 +1,54 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import QualityCell from'./QualityCell';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import QualityCell from './QualityCell';
 
 /*-----------------------------------------------------------------------*/
-  // Autor: ESI SoSe21 - Team sale & shipping
-  // University: University of Applied Science Offenburg
-  // Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
-  // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
-  //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
-  /*-----------------------------------------------------------------------*/
+// Autor: ESI SoSe21 - Team sale & shipping
+// University: University of Applied Science Offenburg
+// Members: Tobias Gießler, Christoph Werner, Katarina Helbig, Aline Schaub
+// Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
+//          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
+/*-----------------------------------------------------------------------*/
 
 
-export default function OrderPositionsTable(props){
+export default function OrderPositionsTable(props) {
 
   //Variables and constants  
-  const [selectedData, setSelectedData] =  useState([]); 
+  const [selectedData, setSelectedData] = useState([]);
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
   //Columns with properties
   const columns = [
-  {name: "OI_O_NR", label: "Bestell-Nr",  options: {filter: true,  sort: true, display: false}}, 
-  {name: "OI_NR", label: "Position", options: {filter: true, sort: true, display: true }}, 
-  {name: "IST_DESC", label: "Status", options: {filter: true,  sort: false,  display: true}}, 
-  {name: "OI_MATERIALDESC", label: "Materialbeschreibung", options: {filter: true, sort: false, display: true}},  
-  {name: "OI_HEXCOLOR", label: "Farbwert", options: {filter: true, sort: true, display: true}},
-  {name: "OI_HEXCOLOR", label: "Farbe", options: {filter: true,sort: true, display: true, 
-    customBodyRender: (value, tableMeta, updateValue) => {
-      return (
-        <QualityCell
-          value={value}
-          index={tableMeta.columnIndex}
-          change={event => updateValue(event)}
-        />
-      );}}},
-  {name: "IM_FILE", label: "Bild", options: {filter: true, sort: true, display: true}}, 
-  {name: "OI_QTY", label: "Menge", options: {filter: true, sort: true, display: true}}, 
-  {name: "OI_PRICE", label: "Preis", options: {filter: true, sort: true, display: true}}, 
-  {name: "OI_VAT", label: "Mehrwertsteuer", options: {filter: true, sort: true, display: true}} 
+    { name: "OI_O_NR", label: "Bestell-Nr", options: { filter: true, sort: true, display: false } },
+    { name: "OI_NR", label: "Position", options: { filter: true, sort: true, display: true } },
+    { name: "IST_DESC", label: "Status", options: { filter: true, sort: false, display: true } },
+    { name: "OI_MATERIALDESC", label: "Materialbeschreibung", options: { filter: true, sort: false, display: true } },
+    { name: "OI_HEXCOLOR", label: "Farbwert", options: { filter: true, sort: true, display: true } },
+    {
+      name: "OI_HEXCOLOR", label: "Farbe", options: {
+        filter: true, sort: true, display: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <QualityCell
+              value={value}
+              index={tableMeta.columnIndex}
+              change={event => updateValue(event)}
+            />
+          );
+        }
+      }
+    },
+    { name: "IM_FILE", label: "Bild", options: { filter: true, sort: true, display: true } },
+    { name: "OI_QTY", label: "Menge", options: { filter: true, sort: true, display: true } },
+    { name: "OI_PRICE", label: "Preis", options: { filter: true, sort: true, display: true } },
+    { name: "OI_VAT", label: "Mehrwertsteuer", options: { filter: true, sort: true, display: true } }
   ];
 
-  const options = { onRowSelectionChange : (curRowSelected, allRowsSelected) => {rowSelectEvent(curRowSelected, allRowsSelected);},
-  customToolbarSelect: () => {},
+  const options = {
+    onRowSelectionChange: (curRowSelected, allRowsSelected) => { rowSelectEvent(curRowSelected, allRowsSelected); },
+    customToolbarSelect: () => { },
     textLabels: {
       body: {
         noMatch: "Es wurden keine passenden Aufträge gefunden.",
@@ -54,45 +60,29 @@ export default function OrderPositionsTable(props){
   };
 
   useEffect(() => {
-    var OI_O_NR = props.OI_O_NR;
-    if(allData != undefined){
-      if(allData.length == 0){
-      axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + OI_O_NR + '/orderitems')
-          .then(res => {
-            if(res.data.length === 0) { //Check if data is available
-              setAllData(undefined);
-              return;
-            } 
-  
-            setAllData(res.data); //Set new table data
-            return res.data;
 
-          })
-          .catch( error => {
-            var errorObject = error.response.data;
-            var errorMessage = errorObject.errorMessage;
-            console.log(errorMessage); //Error-Handling
-          })
-    }
-    }
-  }, [allData]);
+    axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders/' + props.OI_O_NR + '/orderitems')
+      .then(res => {
 
+        setAllData(res.data); //Set new table data
+        return res.data;
 
-  //Check if old data = new data
-  function DataAreEqual(data, sortedOrders){
-    if(data.sort().join(',') === sortedOrders.sort().join(',')){
-      return true;
-      }
-      else return false;
-  }
+      })
+      .catch(error => {
+        var errorObject = error.response.data;
+        var errorMessage = errorObject.errorMessage;
+        console.log(errorMessage); //Error-Handling
+      })
+
+  }, []);
 
   //Get selected rows
-  function rowSelectEvent(curRowSelected, allRowsSelected){  
+  function rowSelectEvent(curRowSelected, allRowsSelected) {
 
     var _selectedData = [];
 
     //No selection
-    if(allRowsSelected.length === 0) { 
+    if (allRowsSelected.length === 0) {
       setSelectedData(undefined);
       return;
     }
@@ -101,8 +91,8 @@ export default function OrderPositionsTable(props){
     allRowsSelected.forEach(element => {
       _selectedData.push(allData[element.dataIndex])
     });
-  
-    console.log("Selektierte Daten: ", _selectedData)
+
+    //console.log("Selektierte Daten: ", _selectedData)
     setSelectedData(_selectedData);
     return;
   }
@@ -110,22 +100,22 @@ export default function OrderPositionsTable(props){
   const getMuiTheme = () => createMuiTheme({
     overrides: {
       MuiTypography: {
-            h6: {
-              fontWeight: "600",
-            }
+        h6: {
+          fontWeight: "600",
         }
+      }
     }
   });
 
   return (
     <div>
-    <MuiThemeProvider theme={getMuiTheme()} > 
-      <MUIDataTable
-        data={allData}
-        columns={columns}
-        options={options}/>
+      <MuiThemeProvider theme={getMuiTheme()} >
+        <MUIDataTable
+          data={allData}
+          columns={columns}
+          options={options} />
         <br></br>
-    </MuiThemeProvider>
-   </div>
-  );            
+      </MuiThemeProvider>
+    </div>
+  );
 }
