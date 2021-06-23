@@ -24,26 +24,20 @@ export default function CustomerOrders(props) {
   { name: "O_OST_NR", label: "Auftragsstatus-Nr", options: { filter: true, sort: false, display: false } },
   { name: "O_TIMESTAMP_FORMAT", label: "Bestelldatum", options: { filter: true, sort: true, display: true } },
   { name: "OST_DESC", label: "Auftragsstatus", options: { filter: true, sort: true, display: true } },
-  { name: "C_NR", label: "Kunden-Nr", options: { filter: true, sort: true, display: true } },
+  { name: "C_NR", label: "Kunden-Nr", options: { filter: true, sort: true, display: false } },
   { name: "C_CT_ID", label: "Kundenart-Nr", options: { filter: true, sort: true, display: false } },
   { name: "C_COMPANY", label: "Firma", options: { filter: true, sort: false, display: true } },
   { name: "C_FIRSTNAME", label: "Vorname", options: { filter: true, sort: false, display: true } },
   { name: "C_LASTNAME", label: "Nachname", options: { filter: true, sort: false, display: true } },
-  {
-    name: "HEXCOLOR", label: "Farbe", options: {
-      filter: true, sort: true, display: true,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        return (
-          <QualityCell
-            value={value}
-            index={tableMeta.columnIndex}
-            change={event => updateValue(event)}
-          />
-        );
-      }
-    }
-  },
-  ];
+  { name: "C_CO_ID", label: "Ländercode", options: { filter: true, sort: false, display: false } },
+  { name: "C_CI_PC", label: "Postleitzahl", options: { filter: true, sort: true, display: false } },
+  { name: "C_STREET", label: "Straße", options: { filter: true, sort: true, display: false } },
+  { name: "C_HOUSENR", label: "Hausnummer", options: { filter: true, sort: true, display: false } },
+  { name: "C_EMAIL", label: "Email", options: { filter: true, sort: false, display: false } },
+  { name: "C_TEL", label: "Telefon", options: { filter: true, sort: false, display: false } },
+  { name: "CO_DESC", label: "Land", options: { filter: true, sort: false, display: false } },
+  { name: "CI_DESC", label: "Stadt", options: { filter: true, sort: false, display: false } },
+  { name: "CT_DESC", label: "Kundenart", options: { filter: true, sort: true, display: true } }];
 
   const options = {
     onRowSelectionChange: (curRowSelected, allRowsSelected) => { rowSelectEvent(curRowSelected, allRowsSelected); },
