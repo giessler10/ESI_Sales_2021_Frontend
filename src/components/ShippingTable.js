@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
@@ -52,7 +51,10 @@ export default function ShippingOrders() {
   const options = {
     onRowSelectionChange: (curRowSelected, allRowsSelected) => {
       rowSelectEvent(curRowSelected, allRowsSelected);
-      updateData(); //Daten aktualisieren
+      //No selection
+      if (allRowsSelected.length === 0) {
+        updateData();   //Daten aktualisieren
+      }
     },
     customToolbarSelect: (selectedRows, data) => {
       var order = data[selectedRows.data[0].index].data;

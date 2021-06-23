@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
@@ -43,9 +42,12 @@ export default function StorageOrders() {
   { name: "CT_DESC", label: "Kundenart", options: { filter: true, sort: true, display: true } }];
 
   const options = {
-    onRowSelectionChange: (curRowSelected, allRowsSelected) => { 
-      rowSelectEvent(curRowSelected, allRowsSelected); 
-      updateData(); //Daten aktualisieren
+    onRowSelectionChange: (curRowSelected, allRowsSelected) => {
+      rowSelectEvent(curRowSelected, allRowsSelected);
+      //No selection
+      if (allRowsSelected.length === 0) {
+        updateData();   //Daten aktualisieren
+      }
     },
     customToolbarSelect: (selectedRows, data) => {
       var order = data[selectedRows.data[0].index].data;
@@ -82,16 +84,16 @@ export default function StorageOrders() {
       .catch(err => {
         console.log(err.message); //Error-Handling
       })
-    }, []);
+  }, []);
 
   function updateData() {
     axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=8')
       .then(res => {
 
-        if (DataAreEqual(allData, res.data)){
+        if (DataAreEqual(allData, res.data)) {
           return; //Check if data has changed
         }
-        else{
+        else {
           //console.log("Change Data");
           setAllData(res.data); //Set new table data
         }
@@ -107,11 +109,11 @@ export default function StorageOrders() {
     var dataString = JSON.stringify(data);
     var newDataString = JSON.stringify(newData);
 
-    if(dataString === newDataString){
+    if (dataString === newDataString) {
       //console.log("Equal");
       return true;
     }
-    else{
+    else {
       //console.log("Not equal");
       return false;
     }

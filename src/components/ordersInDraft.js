@@ -46,10 +46,13 @@ export default function DraftOrders() {
     { name: "CT_DESC", label: "Kundenart", options: { filter: true, sort: true, display: false } }];
 
   const options = {
-    filterType: 'checkbox', 
-    onRowSelectionChange: (curRowSelected, allRowsSelected) => { 
+    filterType: 'checkbox',
+    onRowSelectionChange: (curRowSelected, allRowsSelected) => {
       rowSelectEvent(curRowSelected, allRowsSelected);
-      updateData();
+      //No selection
+      if (allRowsSelected.length === 0) {
+        updateData();   //Daten aktualisieren
+      }
     },
     customToolbarSelect: (selectedRows, data) => {
       var order = data[selectedRows.data[0].index].data;
@@ -99,10 +102,10 @@ export default function DraftOrders() {
     axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/orders?status=9')
       .then(res => {
 
-        if (DataAreEqual(allData, res.data)){
+        if (DataAreEqual(allData, res.data)) {
           return; //Check if data has changed
         }
-        else{
+        else {
           //console.log("Change Data");
           setAllData(res.data); //Set new table data
         }
@@ -118,11 +121,11 @@ export default function DraftOrders() {
     var dataString = JSON.stringify(data);
     var newDataString = JSON.stringify(newData);
 
-    if(dataString === newDataString){
+    if (dataString === newDataString) {
       //console.log("Equal");
       return true;
     }
-    else{
+    else {
       //console.log("Not equal");
       return false;
     }
