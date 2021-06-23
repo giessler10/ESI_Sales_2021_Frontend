@@ -26,6 +26,8 @@ export default function DashboardDepositsSumQualityissueQTY(props) {
     var precentData = Math.round((props.data / props.sumQTY), 2);
     var precentData = (props.data / props.sumQTY) * 100;
     percent = precentData.toFixed(2) + "%";
+  }else{
+    percent = "0%";
   }
 
   return (

@@ -205,7 +205,7 @@ export default function ShippingOrders() {
 
         var steuersatz = String(res.data[0]["OI_VAT"] * 100);
 
-        var img = String(res.data[0]["OI_VAT"] * 100);
+        //var img = String(res.data[0]["OI_VAT"] * 100);
         PdfCreate(res.data, company_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, steuersatz, sumTotal);
 
       })
@@ -377,10 +377,9 @@ export default function ShippingOrders() {
         var orderDate = selectedData[0]["O_TIMESTAMP_FORMAT"];
 
         //bild
-        var img = selectedData[0]["IM_FILE"];
+        //var img = selectedData[0]["IM_FILE"] != undefined ? selectedData[0]["IM_FILE"] : "-";
 
-
-        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate, img);
+        PdfCreate(res.data, customer_Name, orderNumb, customer_number, logoBase64.src, custom_Address, customer_phone, customer_mail, orderDate);
 
       })
       .catch(err => {
@@ -388,7 +387,7 @@ export default function ShippingOrders() {
       })
 
 
-    function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date, img) {
+    function PdfCreate(OrderitemsData, customer_Name, orderNumb, customer_number, logoBase64, custom_Address, customer_phone, customer_mail, order_date) {
 
       //console.log("Orderitemdata Länge:", OrderitemsData.length);
 
@@ -397,7 +396,7 @@ export default function ShippingOrders() {
         desc: String(OrderitemsData[index]["OI_MATERIALDESC"]),
         price: String(OrderitemsData[index]["OI_HEXCOLOR"]),
         quantity: String(OrderitemsData[index]["OI_QTY"] + " Stk."),
-        unit: String(img),
+        unit: String(OrderitemsData[index]["IM_FILE"]),
         total: ""
       }));
 
