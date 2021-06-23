@@ -30,9 +30,12 @@ export default function CustomerTable() {
     { name: "CT_DESC", label: "Kundenart", options: { filter: true, sort: true, display: true } }];
 
   const options = {
-    onRowSelectionChange: (curRowSelected, allRowsSelected) => { 
+    onRowSelectionChange: (curRowSelected, allRowsSelected) => {
       rowSelectEvent(curRowSelected, allRowsSelected);
-      updateData();
+      //No selection
+      if (allRowsSelected.length === 0) {
+        updateData();   //Daten aktualisieren
+      }
     },
     customToolbarSelect: (selectedRows, data) => {
       var C_NR = data[selectedRows.data[0].index].data[0];
@@ -84,10 +87,10 @@ export default function CustomerTable() {
     axios.get('https://hfmbwiwpid.execute-api.eu-central-1.amazonaws.com/sales/customers')
       .then(res => {
 
-        if (DataAreEqual(allData, res.data)){
+        if (DataAreEqual(allData, res.data)) {
           return; //Check if data has changed
         }
-        else{
+        else {
           //console.log("Change Data");
           setAllData(res.data); //Set new table data
         }
@@ -103,12 +106,12 @@ export default function CustomerTable() {
     var dataString = JSON.stringify(data);
     var newDataString = JSON.stringify(newData);
 
-    if(dataString === newDataString){
-      console.log("Equal");
+    if (dataString === newDataString) {
+      //console.log("Equal");
       return true;
     }
-    else{
-      console.log("Not equal");
+    else {
+      //console.log("Not equal");
       return false;
     }
   }

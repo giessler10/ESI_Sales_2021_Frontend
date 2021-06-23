@@ -50,7 +50,10 @@ export default function OrderTable() {
   const options = {
     onRowSelectionChange: (curRowSelected, allRowsSelected) => {
       rowSelectEvent(curRowSelected, allRowsSelected);
-      updateData();
+      //No selection
+      if (allRowsSelected.length === 0) {
+        updateData();   //Daten aktualisieren
+      }
     },
     customToolbarSelect: (selectedRows, data) => {
       var order = data[selectedRows.data[0].index].data;
