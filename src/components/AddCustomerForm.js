@@ -222,7 +222,7 @@ class AddCustomerForm extends Component {
             errors["C_STREET"] = "Straße angeben";
         }
         if (this.state.C_STREET != "") {
-            if (!this.state.C_STREET.match(/^[a-zA-Z,ß,-]+$/)) {
+            if (!this.state.C_STREET.match(/^[a-zA-Z,ß,ö,Ö,ü,Ü,ä,Ä,-]+$/)) {
                 formIsValid = false;
                 errors["C_STREET"] = "Nur Buchstaben erlaubt";
             }
