@@ -26,7 +26,10 @@ export default function CustomerTable() {
     { name: "C_COMPANY", label: "Firma", options: { filter: true, sort: false, display: true } },
     { name: "C_FIRSTNAME", label: "Vorname", options: { filter: true, sort: false, display: true } },
     { name: "C_LASTNAME", label: "Nachname", options: { filter: true, sort: false, display: true } },
+    { name: "C_STREET", label: "Straße", options: { filter: true, sort: true, display: false } },
+    { name: "C_HOUSENR", label: "Hausnummer", options: { filter: true, sort: true, display: false } },
     { name: "C_CI_PC", label: "Postleitzahl", options: { filter: true, sort: true, display: true } },
+    { name: "CI_DESC", label: "Stadt", options: { filter: true, sort: true, display: true } },
     { name: "CT_DESC", label: "Kundenart", options: { filter: true, sort: true, display: true } }];
 
   const options = {
