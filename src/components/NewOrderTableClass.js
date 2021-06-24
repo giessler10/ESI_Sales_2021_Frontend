@@ -108,7 +108,8 @@ class NewOrderTableClass extends Component {
                     title: "Materialbeschreibung",
                     field: "OI_MATERIALDESC",
                     tooltip: "Materialbeschreibung",
-                    lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' }
+                    lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' },
+                    initialEditValue: 'Weißes T-Shirt'
                 },
                 {
                     title: "Farbcode",
@@ -148,7 +149,8 @@ class NewOrderTableClass extends Component {
                         currencyCode: 'EUR',
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
-                    }
+                    },
+                    initialEditValue: 3.0
                 },
                 {
                     title: "Mehrwertsteuer",
@@ -164,7 +166,8 @@ class NewOrderTableClass extends Component {
                     title: "Materialbeschreibung",
                     field: "OI_MATERIALDESC",
                     tooltip: "Materialbeschreibung",
-                    lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' }
+                    lookup: { 'Weißes T-Shirt': 'Weißes T-Shirt' },
+                    initialEditValue: 'Weißes T-Shirt'
                 },
                 {
                     title: "Farbcode",
@@ -205,7 +208,8 @@ class NewOrderTableClass extends Component {
                         currencyCode: 'EUR',
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
-                    }
+                    },
+                    initialEditValue: 3.0
                 },
                 {
                     title: "Mehrwertsteuer",
@@ -315,7 +319,7 @@ class NewOrderTableClass extends Component {
                     return {
                         "OI_NR": element.tableData.id + 1,
                         "OI_MATERIALDESC": element.OI_MATERIALDESC,
-                        "OI_HEXCOLOR": element.OI_HEXCOLOR,
+                        "OI_HEXCOLOR": element.OI_HEXCOLOR != undefined ? element.OI_HEXCOLOR : "#FFFFFF",  //Default-Value Weiß
                         "OI_QTY": element.OI_QTY,
                         "IM_FILE": element.IM_FILE != undefined ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
                         "OI_PRICE": element.OI_PRICE,
@@ -335,7 +339,7 @@ class NewOrderTableClass extends Component {
                     return {
                         "OI_NR": element.tableData.id + 1,
                         "OI_MATERIALDESC": element.OI_MATERIALDESC,
-                        "OI_HEXCOLOR": element.OI_HEXCOLOR,
+                        "OI_HEXCOLOR": element.OI_HEXCOLOR != undefined ? element.OI_HEXCOLOR : "#FFFFFF",  //Default-Value Weiß
                         "OI_QTY": element.OI_QTY,
                         "IM_FILE": element.IM_FILE != undefined ? "P:/images/" + this.state.C_NR + "/" + element.IM_FILE : "",
                         "OI_PRICE": element.OI_PRICE,
