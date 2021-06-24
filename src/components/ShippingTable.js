@@ -224,7 +224,7 @@ export default function ShippingOrders() {
 
         num: String(OrderitemsData[index]["OI_NR"]),
         desc: String(OrderitemsData[index]["OI_MATERIALDESC"] + " (Farbe: " + OrderitemsData[index]["OI_HEXCOLOR"] + ")"),
-        price: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"] / OrderitemsData[index]["OI_QTY"] * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2)) + " €",
+        price: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"] * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2)) + " €",
         quantity: String(OrderitemsData[index]["OI_QTY"]),
         unit: String(parseFloat(Math.round(OrderitemsData[index]["OI_PRICE"] * (1 + parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2)) + " €",
         total: String(parseFloat(Math.round(OrderitemsData[index]["OI_QTY"] * OrderitemsData[index]["OI_PRICE"] * (1 + parseFloat(OrderitemsData[index]["OI_VAT"])) * Math.pow(10, 2)) / Math.pow(10, 2)).toFixed(2)) + " €"
