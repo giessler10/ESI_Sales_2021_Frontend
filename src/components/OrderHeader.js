@@ -30,7 +30,7 @@ export default function OrderHeader(props) {
     var order = props.order;
 
     return (
-        <div className={classes.root}>
+        <div>
             <br />
             <Grid xs={4}>
                 <TextField

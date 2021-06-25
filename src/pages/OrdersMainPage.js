@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 
-  },
+  }
 }));
 
 function TabPanel(props) {
@@ -98,44 +98,42 @@ export default function ScrollableTabsButtonForce() {
           scrollButtons="on"
           indicatorColor="primary"
           textColor="primary"
-          aria-label="scrollable force tabs example"
         >
+          <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
           <Tab label="Alle Aufträge" icon={<AllInclusiveIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge im Entwurf" icon={<BrushIcon />} {...a11yProps(2)} />
           <Tab label="Offene Aufträge" icon={<AssignmentIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge in Bearbeitung" icon={<DoubleArrowIcon />} {...a11yProps(2)} />
           <Tab label="Aufträge mit Problemen" icon={<NotificationImportantIcon />} {...a11yProps(2)} />
           <Tab label="Geschlossene Aufträge" icon={<AssignmentTurnedInIcon />} {...a11yProps(2)} />
-          <Tab label="Neuer Auftrag erfassen" icon={<AddIcon />} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-
       <TabPanel value={value} index={0}>
-        <OrderTable></OrderTable>
+        <NewOrderTableClass />
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <OrdersInDraft />
+        <OrderTable></OrderTable>
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        <OrdersOpen />
+        <OrdersInDraft />
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        <OrdersInProgress />
+        <OrdersOpen />
       </TabPanel>
 
       <TabPanel value={value} index={4}>
-        <OrdersWithProblems />
+        <OrdersInProgress />
       </TabPanel>
 
       <TabPanel value={value} index={5}>
-        <RetoureTable />
+        <OrdersWithProblems />
       </TabPanel>
 
       <TabPanel value={value} index={6}>
-        <NewOrderTableClass />
+        <RetoureTable />
       </TabPanel>
 
     </div>
