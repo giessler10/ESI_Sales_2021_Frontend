@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import QualityCell from './QualityCell';
 
 /*-----------------------------------------------------------------------*/
@@ -12,6 +12,12 @@ import QualityCell from './QualityCell';
 //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
 /*-----------------------------------------------------------------------*/
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    //overflow: 'auto',
+    //width: '100%',
+  }
+}));
 
 export default function QSHistoryTable(props) {
 
@@ -19,10 +25,14 @@ export default function QSHistoryTable(props) {
   const [selectedData, setSelectedData] = useState([]);
   const [allData, setAllData] = useState([]); //alle Daten von DB.
 
+  const classes = useStyles();
+
   //Columns with properties
   const columns = [
-    { name: "QI_O_NR", label: "Bestell-Nr", options: { filter: true, sort: true, display: false } },
     { name: "QI_OI_NR", label: "Position", options: { filter: true, sort: true, display: true } },
+    { name: "QI_COMMENT", label: "Grund", options: { filter: true, sort: true, display: true } },
+    { name: "QI_QTY", label: "Gemeldete Menge", options: { filter: true, sort: true, display: true } },
+    { name: "QI_O_NR", label: "Bestell-Nr", options: { filter: true, sort: true, display: false } },
     { name: "QSST_DESC", label: "Status", options: { filter: true, sort: false, display: true } },
     { name: "OI_MATERIALDESC", label: "Materialbeschreibung", options: { filter: true, sort: false, display: true } },
     { name: "OI_HEXCOLOR", label: "Farbwert", options: { filter: true, sort: true, display: true } },
@@ -41,7 +51,6 @@ export default function QSHistoryTable(props) {
       }
     },
     { name: "IM_FILE", label: "Bild", options: { filter: true, sort: true, display: true } },
-    { name: "QI_QTY", label: "Fehlerhafte Menge", options: { filter: true, sort: true, display: true } },
     { name: "OI_PRICE", label: "Preis", options: { filter: true, sort: true, display: true } },
     { name: "OI_VAT", label: "Mehrwertsteuer", options: { filter: true, sort: true, display: true } }
   ];
@@ -51,7 +60,7 @@ export default function QSHistoryTable(props) {
     customToolbarSelect: () => { },
     textLabels: {
       body: {
-        noMatch: "Es wurden keine passenden Aufträge gefunden.",
+        noMatch: "Keine Probleme.",
         toolTip: "Sort",
         columnHeaderTooltip: column => `Sort for ${column.label}`
       }
@@ -108,7 +117,7 @@ export default function QSHistoryTable(props) {
   });
 
   return (
-    <div>
+    <div className={classes.root}>
       <MuiThemeProvider theme={getMuiTheme()} >
         <MUIDataTable
           data={allData}
