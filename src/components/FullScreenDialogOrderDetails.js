@@ -11,6 +11,10 @@ import Slide from '@material-ui/core/Slide';
 import DescriptionIcon from '@material-ui/icons/Description';
 import OrderPositionsTable from './orderPositionsTable.js';
 import OrderHeader from './OrderHeader';
+import QSHistoryTable from './QSHistoryTable';
+import RetoureHistoryTable from './RetoureHistoryTable';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 /*-----------------------------------------------------------------------*/
 // Autor: ESI SoSe21 - Team sale & shipping
@@ -35,18 +39,28 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   root: {
-    flexGrow: 1,
+    //flexGrow: 1,
+    overflow: 'auto',
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    textColor: "green",
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+    //backgroundColor: theme.palette.background.paper,
+    //textColor: "green",
+    //textAlign: 'center',
+    //color: theme.palette.text.secondary,
   },
   table: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingBottom: '2%'
+    paddingBottom: '2%',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  content: {
+    display: 'block'
   }
+
 }));
 
 function MoreThan2Rows(selectedRows) {
@@ -76,7 +90,7 @@ export default function FullScreenDialogOrderDetails(props) {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <Button disabled={MoreThan2Rows(selectedRows)} variant="outlined" color="primary" onClick={handleClickOpen}> <DescriptionIcon />
         Auftragdetails
       </Button>
@@ -91,10 +105,42 @@ export default function FullScreenDialogOrderDetails(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+        <div className={classes.table}>
+          <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+        </div>
         <div className={classes.table}>
           <h2>Auftragspositionen</h2>
           <OrderPositionsTable OI_O_NR={OI_O_NR}></OrderPositionsTable>
+        </div>
+        <div className={classes.table}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Probleme mit Qualitätssicherung</Typography>
+            </AccordionSummary>
+            <AccordionDetails className={classes.content}>
+              <Typography>
+                <QSHistoryTable OI_O_NR={OI_O_NR} />
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Probleme mit Retoure und Reklamation</Typography>
+            </AccordionSummary>
+            <AccordionDetails className={classes.content}>
+              <Typography>
+                <RetoureHistoryTable OI_O_NR={OI_O_NR} />
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </div>
       </Dialog>
     </div>
