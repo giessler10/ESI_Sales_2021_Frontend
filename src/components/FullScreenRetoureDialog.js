@@ -10,6 +10,7 @@ import React from "react";
 import { Button, Dialog } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import RetoureReklamationCellEdittable from './RetoureReklamationCellEdittable';
+import RetoureHistoryTable from './RetoureHistoryTable';
 
 /*-----------------------------------------------------------------------*/
 // Autor: ESI SoSe21 - Team sale & shipping
@@ -18,9 +19,6 @@ import RetoureReklamationCellEdittable from './RetoureReklamationCellEdittable';
 // Contact: ehelbig@stud.hs-offenburg.de, saline@stud.hs-offenburg.de,
 //          cwerner@stud.hs-offenburg.de, tgiessle@stud.hs-offenburg.de
 /*-----------------------------------------------------------------------*/
-
-
-import RetoureHistoryTable from './RetoureHistoryTable';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
