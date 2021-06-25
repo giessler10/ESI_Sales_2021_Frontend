@@ -314,7 +314,7 @@ export default function ShippingOrders() {
           num: invoiceNumber,
           invDate: "Rechnungsdatum: " + invoicedate,
           invGenDate: "Zahlungsziel: " + paymentdate,
-          header: ["#", "Beschreibung", "Stückpreis (Netto)", "Menge", "Einzelpreis (Brutto)", "Gesamtpreis (Brutto)"],
+          header: ["#", "Beschreibung", "Stückpreis (Netto)", "Menge", "Stückpreis (Brutto)", "Gesamtpreis (Brutto)"],
           headerBorder: false,
           tableBodyBorder: false,
           table: tableData,

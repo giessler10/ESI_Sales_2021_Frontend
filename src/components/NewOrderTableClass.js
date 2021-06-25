@@ -150,9 +150,9 @@ class NewOrderTableClass extends Component {
                     type: "numeric"
                 },
                 {
-                    title: "Einzelpreis (Netto)",
+                    title: "Stückpreis (Netto)",
                     field: "OI_PRICE",
-                    tooltip: "Einzelpreis (Netto)",
+                    tooltip: "Stückpreis (Netto)",
                     type: "currency",
                     currencySetting: {
                         currencyCode: 'EUR',
@@ -169,14 +169,14 @@ class NewOrderTableClass extends Component {
                     editable: 'never'
                 },
                 {
-                    title: "Einzelpreis (Brutto)",
+                    title: "Stückpreis (Brutto)",
                     render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19).toFixed(2),
-                    tooltip: "Einzelpreis (Brutto)"
+                    tooltip: "Stückpreis (Brutto)"
                 },
                 {
-                    title: "Summe (Brutto)",
+                    title: "Gesamtpreis (Brutto)",
                     render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19 * rowData.OI_QTY).toFixed(2),
-                    tooltip: "Summe (Brutto)"
+                    tooltip: "Gesamtpreis (Brutto)"
                 }
             ],
 
@@ -228,9 +228,9 @@ class NewOrderTableClass extends Component {
                     type: "numeric"
                 },
                 {
-                    title: "Einzelpreis (Netto)",
+                    title: "Stückpreis (Netto)",
                     field: "OI_PRICE",
-                    tooltip: "Einzelpreis (Netto)",
+                    tooltip: "Stückpreis (Netto)",
                     type: "currency",
                     currencySetting: {
                         currencyCode: 'EUR',
@@ -247,14 +247,14 @@ class NewOrderTableClass extends Component {
                     editable: 'never'
                 },
                 {
-                    title: "Einzelpreis (Brutto)",
+                    title: "Stückpreis (Brutto)",
                     render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19).toFixed(2),
-                    tooltip: "Einzelpreis (Brutto)"
+                    tooltip: "Stückpreis (Brutto)"
                 },
                 {
-                    title: "Summe (Brutto)",
+                    title: "Gesamtpreis (Brutto)",
                     render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19 * rowData.OI_QTY).toFixed(2),
-                    tooltip: "Summe (Brutto)"
+                    tooltip: "Gesamtpreis (Brutto)"
                 }
             ],
 
