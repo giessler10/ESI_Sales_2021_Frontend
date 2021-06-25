@@ -105,6 +105,15 @@ class NewOrderTableClass extends Component {
             data: [],
             columns: [
                 {
+                    title: '#',
+                    tooltip: "Position",
+                    render: (rowData) => rowData.tableData.id + 1,
+                    cellStyle: {
+                        width: 10,
+                        maxWidth: 10
+                    }
+                },
+                {
                     title: "Materialbeschreibung",
                     field: "OI_MATERIALDESC",
                     tooltip: "Materialbeschreibung",
@@ -115,7 +124,7 @@ class NewOrderTableClass extends Component {
                     title: "Farbcode",
                     field: "OI_HEXCOLOR",
                     tooltip: "HEX-Code: #282C34",
-
+                    validate: rowData => rowData.OI_HEXCOLOR === '' ? { isValid: false, helperText: 'Farbcode ungültig' } : true
                 },
                 {
                     title: "Farbe",
@@ -141,9 +150,9 @@ class NewOrderTableClass extends Component {
                     type: "numeric"
                 },
                 {
-                    title: "Preis",
+                    title: "Einzelpreis (Netto)",
                     field: "OI_PRICE",
-                    tooltip: "Einzelpreis",
+                    tooltip: "Einzelpreis (Netto)",
                     type: "currency",
                     currencySetting: {
                         currencyCode: 'EUR',
@@ -158,10 +167,29 @@ class NewOrderTableClass extends Component {
                     initialEditValue: "19%",
                     tooltip: "Mehrwertsteuer",
                     editable: 'never'
+                },
+                {
+                    title: "Einzelpreis (Brutto)",
+                    render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19).toFixed(2),
+                    tooltip: "Einzelpreis (Brutto)"
+                },
+                {
+                    title: "Summe (Brutto)",
+                    render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19 * rowData.OI_QTY).toFixed(2),
+                    tooltip: "Summe (Brutto)"
                 }
             ],
 
             columnsPreproduction: [
+                {
+                    title: '#',
+                    tooltip: "Position",
+                    render: (rowData) => rowData.tableData.id + 1,
+                    cellStyle: {
+                        width: 10,
+                        maxWidth: 10
+                    }
+                },
                 {
                     title: "Materialbeschreibung",
                     field: "OI_MATERIALDESC",
@@ -173,7 +201,7 @@ class NewOrderTableClass extends Component {
                     title: "Farbcode",
                     field: "OI_HEXCOLOR",
                     tooltip: "HEX-Code: #282C34",
-
+                    validate: rowData => rowData.OI_HEXCOLOR === '' ? { isValid: false, helperText: 'Farbcode ungültig' } : true
                 },
                 {
                     title: "Farbe",
@@ -200,9 +228,9 @@ class NewOrderTableClass extends Component {
                     type: "numeric"
                 },
                 {
-                    title: "Preis",
+                    title: "Einzelpreis (Netto)",
                     field: "OI_PRICE",
-                    tooltip: "Einzelpreis",
+                    tooltip: "Einzelpreis (Netto)",
                     type: "currency",
                     currencySetting: {
                         currencyCode: 'EUR',
@@ -217,6 +245,16 @@ class NewOrderTableClass extends Component {
                     initialEditValue: "19%",
                     tooltip: "Mehrwertsteuer",
                     editable: 'never'
+                },
+                {
+                    title: "Einzelpreis (Brutto)",
+                    render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19).toFixed(2),
+                    tooltip: "Einzelpreis (Brutto)"
+                },
+                {
+                    title: "Summe (Brutto)",
+                    render: (rowData) => "€" + Number.parseFloat(rowData.OI_PRICE * 1.19 * rowData.OI_QTY).toFixed(2),
+                    tooltip: "Summe (Brutto)"
                 }
             ],
 
