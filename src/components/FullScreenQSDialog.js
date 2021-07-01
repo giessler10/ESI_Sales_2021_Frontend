@@ -92,7 +92,9 @@ export default function FullScreenQSDialog(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+        <div className={classes.table}>
+          <OrderHeader OI_O_NR={OI_O_NR} order={order} />
+        </div>
         <QSFormCellEdittable OI_O_NR={OI_O_NR} />
         <div className={classes.table}>
           <h2>Historie</h2>
